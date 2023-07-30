@@ -15,6 +15,8 @@ public class AdminController {
         return "admin/AddBrands";
     }
 
+    
+
     @GetMapping("/admin/AddCategories")
     public String AddCategories() {
         return "admin/AddCategories";
@@ -84,5 +86,6 @@ public class AdminController {
     public String ReportRevenue() {
         return "admin/ReportRevenue";
     }
+
     
 }
