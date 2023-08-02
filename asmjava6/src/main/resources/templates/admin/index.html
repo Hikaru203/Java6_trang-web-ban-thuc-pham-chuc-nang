@@ -190,7 +190,6 @@
               <!-- /.col -->
               <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                  
                   <li class="breadcrumb-item active">Sản phẩm</li>
                 </ol>
               </div>
@@ -208,8 +207,7 @@
             <!-- /.card-header -->
             <div>
               <a
-              th:href="@{/admin/AddProduct}"
-
+                th:href="@{/admin/AddProduct}"
                 style="margin-left: 20px; margin-top: 15px"
                 class="btn btn-primary"
               >
@@ -223,25 +221,21 @@
                     display: none;
                   }
 
-                  .pagination {
-                    display: none;
-                  }
+                  
                 </style>
                 <thead>
                   <tr>
                     <th>Tên sản phẩm</th>
                     <th>Giá</th>
                     <th>Mô tả</th>
-                    <th>Nhà phân phối</th>
                     <th>Tùy chỉnh</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>Trident</td>
-                    <td>Internet Explorer 4.0</td>
-                    <td>Win 95+</td>
-                    <td>4</td>
+                  <tr th:each="item : ${products}">
+                    <td th:text="${item.name}"></td>
+                    <td th:text="${item.price}"></td>
+                    <td th:text="${item.description}"></td>
                     <td>
                       <a class="fas fa-trash-alt"></a>
                       <a class="fas fa-edit"></a>
