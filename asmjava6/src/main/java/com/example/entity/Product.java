@@ -29,7 +29,8 @@ public class Product implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
+    
+    @JoinColumn(name = "name")
     private String name;
 
     private String image;
