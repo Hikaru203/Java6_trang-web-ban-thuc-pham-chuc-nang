@@ -8,7 +8,7 @@ app.controller("myCtrl", function ($scope, $http) {
 
   };
   $scope.load_all = function () {
-    $http.get(host + "/admin/index").then(resp => {
+    $http.get(host + "/ManagedProduct").then(resp => {
       $scope.items = resp.data;
       console.log("thanh cong", resp);
 
@@ -29,10 +29,11 @@ app.controller("myCtrl", function ($scope, $http) {
 
   $scope.create = function () {
     var item = angular.copy($scope.form);
-    var url = host + '/Students';
+    var url = host + '/ManagedProduct';
+    alert("Thêm thành công");
+    console.log("thanh cong", resp);
+
     $http.post(url, item).then(resp => {
-      $scope.email = resp.data.name;
-      $scope.items[$scope.email] = item;
       $scope.reset();
       $scope.load_all();
       console.log("thanh cong", resp);
@@ -64,7 +65,21 @@ app.controller("myCtrl", function ($scope, $http) {
       console.log(error);
     });
   };
+  $scope.uploadedFile = function (files) {
+    var data = new FormData();
+    data.append('file', files[0]);
+    $http.post(host + '/upload/statis', data, {
+      transformRequest: angular.identity,
+      headers: { "Content-Type": undefined }
+    }).then(resp => {
+      $scope.form.image = resp.data.name;
+      console.log("thanh cong", resp);
+    }).catch(error => {
+      console.log(error);
+    });
+  };
 
   $scope.load_all();
   $scope.reset();
 });
+

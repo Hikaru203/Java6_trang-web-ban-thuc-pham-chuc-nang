@@ -223,6 +223,9 @@
                   label {
                     display: none;
                   }
+                  .dataTables_empty{
+                    display: none;
+                  }
                 </style>
                 <thead>
                   <tr>
@@ -232,7 +235,17 @@
                     <th>Tùy chỉnh</th>
                   </tr>
                 </thead>
-                <tbody></tbody>
+                <tbody>
+                  <tr ng-repeat="product in items" ng-if="product.isActive = true">
+                    <td>{{ product.name }}</td>
+                    <td style="width: 130px;">{{ product.price }} VND</td>
+                    <td>{{ product.description }}</td>
+                    <td>
+                      <a class="fas fa-trash-alt"></a>
+                      <a class="fas fa-edit"></a>
+                    </td>
+                  </tr>
+                </tbody>
               </table>
             </div>
             <!-- /.card-body -->
@@ -279,6 +292,6 @@
           .appendTo("#example1_wrapper .col-md-6:eq(0)");
       });
     </script>
-    <script th:src="@{/Admin/plugins/product-ctrl.js}"></script>
+    <script th:src="@{/Admin/plugins/AngularJS/product-ctrl.js}"></script>
   </body>
 </html>
