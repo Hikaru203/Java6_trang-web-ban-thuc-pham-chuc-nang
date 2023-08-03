@@ -1,16 +1,17 @@
 package com.example.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.example.jparepository.CategoryRepository;
 import com.example.jparepository.DiscountRepository;
 import com.example.jparepository.ProductRepository;
 import com.example.jparepository.UserRepository;
-
-@Controller
+@CrossOrigin({ "*" })
+@RestController
 public class AdminController {
     @Autowired
     private ProductRepository productRepository;
@@ -24,11 +25,9 @@ public class AdminController {
     @Autowired
     private CategoryRepository categoryRepository;
 
-    @GetMapping("/admin/index")
-    public String index(Model model) {
-
-        model.addAttribute("products", productRepository.findAll());
-        return "admin/index";
+    @GetMapping({ "/admin/index" })
+    public Object getProducts() {
+        return this.productRepository.findAll();
     }
 
     @GetMapping("/admin/AddBrands")
@@ -64,7 +63,7 @@ public class AdminController {
 
     @GetMapping("/admin/ManagedAccount")
     public String ManagedAccount(Model model) {
-        model.addAttribute("users", userRepository.findAll());
+        // model.addAttribute("users", userRepository.findAll());
         return "admin/ManagedAccount";
     }
 
@@ -75,13 +74,13 @@ public class AdminController {
 
     @GetMapping("/admin/ManagedCategories")
     public String ManagedCategories(Model model) {
-        model.addAttribute("categories", categoryRepository.findAll());
+        // model.addAttribute("categories", categoryRepository.findAll());
         return "admin/ManagedCategories";
     }
 
     @GetMapping("/admin/ManagedDiscount")
     public String ManagedDiscount(Model model) {
-        model.addAttribute("discounts", discountRepository.findAll());
+        // model.addAttribute("discounts", discountRepository.findAll());
         return "admin/ManagedDiscount";
     }
 

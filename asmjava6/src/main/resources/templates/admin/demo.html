@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AngularJS App</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+</head>
+<body ng-app="myApp">
+
+<div ng-controller="ProductController">
+    <h2>Product List</h2>
+    <ul>
+        <li ng-repeat="product in products">
+            {{ product.name }} - {{ product.price }}
+        </li>
+    </ul>
+</div>
+
+<script>
+    var app = angular.module("myApp", []);
+
+    app.controller("ProductController", function($scope, $http) {
+        $http.get("http://localhost:8080/admin/index") // Đảm bảo thay đổi URL tới API của bạn nếu cần
+        .then(function(response) {
+            $scope.products = response.data;
+        }, function(error) {
+            console.error("Error fetching data:", error);
+        });
+    });
+</script>
+
+</body>
+</html>

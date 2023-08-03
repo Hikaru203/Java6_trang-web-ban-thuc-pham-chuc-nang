@@ -4,10 +4,13 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>ORIHIRO OFFICIAL STORE | ADMIN</title>
-    <th:block th:include="admin/layout :: css"></th:block>
+    <div th:insert="~{admin/layout :: css}"></div>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
   </head>
 
   <body
+    ng-app="myApp"
+    ng-controller="myCtrl"
     class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed"
   >
     <div class="wrapper">
@@ -25,7 +28,7 @@
       </div>
 
       <!-- Navbar -->
-      <th:block th:include="admin/layout :: nav"></th:block>
+      <div th:insert="~{admin/layout :: nav}"></div>
 
       <!-- /.navbar -->
 
@@ -220,8 +223,6 @@
                   label {
                     display: none;
                   }
-
-                  
                 </style>
                 <thead>
                   <tr>
@@ -231,17 +232,7 @@
                     <th>Tùy chỉnh</th>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr th:each="item : ${products}">
-                    <td th:text="${item.name}"></td>
-                    <td th:text="${item.price}"></td>
-                    <td th:text="${item.description}"></td>
-                    <td>
-                      <a class="fas fa-trash-alt"></a>
-                      <a class="fas fa-edit"></a>
-                    </td>
-                  </tr>
-                </tbody>
+                <tbody></tbody>
               </table>
             </div>
             <!-- /.card-body -->
@@ -272,7 +263,7 @@
 
     <!-- REQUIRED SCRIPTS -->
     <!-- jQuery -->
-    <th:block th:include="admin/layout :: js"></th:block>
+    <div th:insert="~{admin/layout :: js}"></div>
 
     <script>
       $(function () {
@@ -288,5 +279,6 @@
           .appendTo("#example1_wrapper .col-md-6:eq(0)");
       });
     </script>
+    <script th:src="@{/Admin/plugins/product-ctrl.js}"></script>
   </body>
 </html>
