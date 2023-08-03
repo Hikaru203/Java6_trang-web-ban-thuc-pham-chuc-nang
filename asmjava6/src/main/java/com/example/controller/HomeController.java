@@ -24,13 +24,13 @@ public class HomeController {
 
 
 
-	@GetMapping("/login")
+	@RequestMapping("/login")
 	public String showLoginFrom(Model model) {
 		model.addAttribute("user", new User());
 		return "login";
 	}
 
-	@GetMapping("/sinup")
+	@RequestMapping("/sinup")
 	public String showsinupFrom(Model model) {
 		model.addAttribute("user", new User());
 		return "dangky";
