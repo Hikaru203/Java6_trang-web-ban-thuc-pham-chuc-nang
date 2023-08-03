@@ -12,13 +12,22 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.util.List;
 
 @Entity
 @Table(name = "Categories")
+@Getter
+@Setter
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
+
+
 public class Category implements Serializable {
     private static final long serialVersionUID = 1L;
 
