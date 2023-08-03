@@ -8,22 +8,25 @@
     <meta content="Free HTML Templates" name="keywords">
     <meta content="Free HTML Templates" name="description">
 
-    <!-- Favicon -->
-    <link href="img/favicon.ico" rel="icon">
+  <link th:href="@{/../img/favicon.ico}" rel="icon">
 
-    <!-- Google Web Fonts -->
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<!-- Google Web Fonts -->
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link
+	th:href="@{https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap}"
+	rel="stylesheet">
 
-    <!-- Font Awesome -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+<!-- Font Awesome -->
+<link
+	th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css}"
+	rel="stylesheet">
 
-    <!-- Libraries Stylesheet -->
-    <link href="lib/animate/animate.min.css" rel="stylesheet">
-    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+<!-- Libraries Stylesheet -->
+<link th:href="@{/lib/owlcarousel/assets/owl.carousel.min.css}"
+	rel="stylesheet">
 
-    <!-- Customized Bootstrap Stylesheet -->
-    <link href="css/style.css" rel="stylesheet">
+<!-- Customized Bootstrap Stylesheet -->
+<link th:href="@{/css/style.css}" rel="stylesheet">
 </head>
 
 <body>
@@ -104,25 +107,7 @@
                 <nav class="collapse position-absolute navbar navbar-vertical navbar-light align-items-start p-0 bg-light"
                     id="navbar-vertical" style="width: calc(100% - 30px); z-index: 999;">
                     <div class="navbar-nav w-100">
-
-                        <a href="" class="nav-item nav-link">Bổ Gan, Thanh Nhiệt</a>
-                        <a href="" class="nav-item nav-link">Bổ não</a>
-                        <a href="" class="nav-item nav-link">Bổ phế, hô hấp</a>
-                        <a href="" class="nav-item nav-link">Bổ trợ xương khớp</a>
-                        <a href="" class="nav-item nav-link">Hỗ trợ tiêu hóa</a>
-                        <a href="" class="nav-item nav-link">Làm đẹp, giảm cân</a>
-                        <a href="" class="nav-item nav-link">Dầu cá, bổ mắt</a>
-                        <a href="" class="nav-item nav-link">Vitamin và khoáng chất</a>
-                        <a href="" class="nav-item nav-link">Thảo dược tự nhiên</a>
-
-                        <a href="" class="nav-item nav-link">Hỗ trợ tim mạch</a>
-                        <a href="" class="nav-item nav-link">Hỗ trợ tiểu đường</a>
-                        <a href="" class="nav-item nav-link">Tăng sinh lý, bổ thận</a>
-                        <a href="" class="nav-item nav-link">Nội tiết tố nữ</a>
-                        <a href="" class="nav-item nav-link">Hỗ trợ trị ung thư</a>
-                        <a href="" class="nav-item nav-link">Hỗ trợ trị giãn tĩnh mạch, trĩ, táo bón</a>
-                        <a href="" class="nav-item nav-link">Kẹo ngậm, viên ngậm</a>
-
+                        <a th:each="c:${cates}" th:href="@{|/index?cid=${c.id}|}" class="nav-item nav-link">[[${c.name}]]</a>
                     </div>
                 </nav>
             </div>
@@ -148,7 +133,7 @@
                                     <a href="checkout" class="dropdown-item">Thanh toán</a>
                                 </div>
                             </div>
-                            <a href="contact" class="nav-item nav-link">Yêu thích</a>
+                            <a href="favoriteProductPage.html" class="nav-item nav-link">Yêu thích</a>
                         </div>
                         <div class="navbar-nav ml-auto py-0 d-none d-lg-block">
                             <a href="" class="btn px-0">
@@ -264,26 +249,25 @@
     <!-- Featured End -->
     <!-- Products Start -->
     <div class="container-fluid pt-5 pb-3">
-        <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Sản phẩm
-                nổi bật</span></h2>
-        <div class="row px-xl-5" th:each="item : ${products}">
-            <div class="col-lg-3 col-md-4 col-sm-6 pb-1" >
-                <div class="product-item bg-light mb-4" style="height: 450px;" >
+        <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Sản phẩm yêu thích</span></h2>
+        <div class="row px-xl-5" >
+            <div class="col-lg-3 col-md-4 col-sm-6 pb-1" th:each="item : ${products}">
+                <div class="product-item bg-light mb-4" style="height: 500px;" >
                     <div class="product-img position-relative overflow-hidden">
-                        <img class="img-fluid w-100" src="images/sp1.jpg" alt="" height="200px" width="95%">
+                        <img class="img-fluid w-100" th:src="@{|/images/${item.image}|}" alt="" height="200px" width="95%">
                         <div class="product-action">
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
+                            <a class="btn btn-outline-dark btn-square" ><i class="fa fa-shopping-cart"></i></a>
                             <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
                             <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a>
+                            <a class="btn btn-outline-dark btn-square" th:href="@{|/detail/${item.id}|}	"><i class="fa fa-search"></i></a>
                         </div>
                     </div>
                     <div class="text-center py-4">
-                        <a class="h6 text-decoration-none text-truncate" href="" style="white-space: normal;"th:text="${item.description}"></a>
                         <div class="d-flex align-items-center justify-content-center mt-2">
-                            <h5 th:text="${item.name}"></h5>
-                            <h6 class="text-muted ml-2"><del>200.000đ</del></h6>
+                            <h5 th:text="${item.name}"></h5>  
                         </div>
+                        <span class="regular-price"
+									th:text="${#numbers.formatDecimal(item.price, 0, 'COMMA', 0, 'POINT')}"></span>vnđ
                     </div>
                 </div>
             </div>
