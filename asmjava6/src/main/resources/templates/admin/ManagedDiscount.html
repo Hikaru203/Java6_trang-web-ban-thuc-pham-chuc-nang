@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="utf-8">
@@ -7,7 +7,7 @@
     <title>ORIHIRO OFFICIAL STORE | ADMIN</title>
 
     <!-- Google Font: Source Sans Pro -->
-    <th:block th:include="admin/layout :: css"></th:block>
+    <div th:insert="~{admin/layout :: css}"></div>
 
 </head>
 
@@ -20,7 +20,7 @@
         </div>
 
         <!-- Navbar -->
-        <th:block th:include="admin/layout :: nav"></th:block>
+        <div th:insert="~{admin/layout :: nav}"></div>
 
         <!-- /.navbar -->
 
@@ -196,22 +196,19 @@
                             <thead>
                                 <tr>
                                     <th>Sản phẩm khuyến mãi</th>
-                                    <th>Số % khuyến mãi</th>
+                                    <th>Giá khuyến mãi</th>
                                     <th>Ngày bắt đầu</th>
                                     <th>Ngày kết thúc</th>
-                                    <th>Số lượng</th>
                                     <th>Tùy chỉnh</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>Trident</td>
-                                    <td>Internet
-                                        Explorer 4.0
+                                <tr th:each="discount : ${discounts}">
+                                    <td th:text="${discount.product.name}"></td>
+                                    <td th:text="${discount.discountAmount}">
                                     </td>
-                                    <td>Win 95+</td>
-                                    <td>Win 95+</td>
-                                    <td> 4</td>
+                                    <td th:text="${discount.startDate}"></td>
+                                    <td th:text="${discount.endDate}"></td>
                                     <td><a class="fas fa-trash-alt"></a>
                                         <a class="fas fa-edit"></a>
                                     </td>
@@ -247,12 +244,7 @@
     <!-- ./wrapper -->
 
     <!-- REQUIRED SCRIPTS -->
-    <th:block th:include="admin/layout :: js"></th:block>
-
-    <!-- AdminLTE for demo purposes -->
-    <script src="dist/js/demo.js"></script>
-    <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-    <script src="dist/js/pages/dashboard2.js"></script>
+    <div th:insert="~{admin/layout :: js}"></div>
     <script>
         $(function () {
             $("#example1").DataTable({

@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>ORIHIRO OFFICIAL STORE | ADMIN</title>
 
     <!-- Google Font: Source Sans Pro -->
-    <th:block th:include="admin/layout :: css"></th:block>
+    <div th:insert="~{admin/layout :: css}"></div>
   </head>
 
   <body
@@ -27,7 +27,7 @@
       </div>
 
       <!-- Navbar -->
-      <th:block th:include="admin/layout :: nav"></th:block>
+      <div th:insert="~{admin/layout :: nav}"></div>
 
       <!-- /.navbar -->
 
@@ -194,7 +194,6 @@
               <!-- /.col -->
               <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                  
                   <li class="breadcrumb-item active">Tài khoản</li>
                 </ol>
               </div>
@@ -226,27 +225,23 @@
                     display: none;
                   }
 
-                  .pagination {
-                    display: none;
-                  }
+                  
                 </style>
                 <thead>
                   <tr>
                     <th>Họ tên</th>
                     <th>Tài khoản</th>
                     <th>Email</th>
-                    <th>Số điện thoại</th>
                     <th>Chức vụ</th>
                     <th>Tùy chỉnh</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>Trident</td>
-                    <td>Internet Explorer 4.0</td>
-                    <td>Win 95+</td>
-                    <td>Win 95+</td>
-                    <td>4</td>
+                  <tr th:each="user : ${users}">
+                    <td th:text="${user.fullName}"></td>
+                    <td th:text="${user.userName}"></td>
+                    <td th:text="${user.email}"></td>
+                    <td th:text="${user.isAdmin}?'Admin':'User'"></td>
                     <td>
                       <a class="fas fa-trash-alt"></a>
                       <a class="fas fa-edit"></a>
@@ -282,7 +277,7 @@
     <!-- ./wrapper -->
 
     <!-- REQUIRED SCRIPTS -->
-    <th:block th:include="admin/layout :: js"></th:block>
+    <div th:insert="~{admin/layout :: js}"></div>
 
     <script>
       $(function () {
