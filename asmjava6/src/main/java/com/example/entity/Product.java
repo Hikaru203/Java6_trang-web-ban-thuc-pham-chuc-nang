@@ -17,6 +17,8 @@ import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.DecimalMin;
 
 @Entity
 @Table(name = "Products")
@@ -37,6 +39,8 @@ public class Product implements Serializable {
 
     private String description;
 
+    @NotNull(message = "{NotNull.Product.price}")
+    @DecimalMin(value = "0.00", inclusive = false, message = "{DecimalMin.Product.price}")
     private BigDecimal price;
 
     @JsonIgnore
