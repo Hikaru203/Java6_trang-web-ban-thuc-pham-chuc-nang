@@ -51,6 +51,7 @@ html {
 
 article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
   display: block;
+  
 }
 
 body {
@@ -62,6 +63,7 @@ body {
   color: #6C757D;
   text-align: left;
   background-color: #F5F5F5;
+
 }
 
 [tabindex="-1"]:focus:not(:focus-visible) {
@@ -6079,7 +6081,9 @@ a.close.disabled {
 
 .align-middle {
   vertical-align: middle !important;
+ 
 }
+
 
 .align-bottom {
   vertical-align: bottom !important;
@@ -9161,6 +9165,11 @@ button.bg-dark:focus {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  overflow-wrap: break-word;
+    white-space: normal;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
 }
 
 .text-left {
@@ -9172,7 +9181,8 @@ button.bg-dark:focus {
 }
 
 .text-center {
-  text-align: center !important;
+  /* text-align: center !important; */
+ 
 }
 
 @media (min-width: 576px) {

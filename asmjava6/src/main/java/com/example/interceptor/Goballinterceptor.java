@@ -7,8 +7,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.example.jparepository.CategoryRepository;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @Component
 public class Goballinterceptor implements HandlerInterceptor{
