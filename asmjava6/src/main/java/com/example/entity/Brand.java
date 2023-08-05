@@ -25,11 +25,9 @@ public class Brand implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(nullable = false)
+    @Column(name = "name")
     private String name;
 
-    @Column(name = "product_name")
-    private String productName;
 
     @Column(name = "responsible_name")
     private String responsibleName;
