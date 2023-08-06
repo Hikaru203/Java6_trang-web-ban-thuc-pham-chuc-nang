@@ -18,9 +18,11 @@ public class UploadServiceImpl implements UploadImagesService {
     ServletContext app;
 
     public File save(MultipartFile file, String folder) {
-        
+
         try {
-            File dir = ResourceUtils.getFile("classpath:static/images/");
+            // Lấy đường dẫn tới thư mục 'src/main/resources/static/images/'
+            String appRootPath = ResourceUtils.getURL("classpath:static/images/").getPath();
+            File dir = new File(appRootPath);
             System.out.println(dir.getAbsolutePath());
             if (!dir.exists()) {
                 dir.mkdirs();
@@ -28,10 +30,10 @@ public class UploadServiceImpl implements UploadImagesService {
 
             String s = System.currentTimeMillis() + "-" + file.getOriginalFilename();
             String name = Integer.toHexString(s.hashCode()) + "-" + s.substring(s.lastIndexOf("."));
-
             File savedFile = new File(dir, name);
             file.transferTo(savedFile);
             System.out.println(savedFile.getAbsolutePath());
+
             return savedFile;
         } catch (IllegalStateException e) {
             // Handle IllegalStateException (e.g., if the file is larger than allowed)
@@ -46,6 +48,7 @@ public class UploadServiceImpl implements UploadImagesService {
             e.printStackTrace();
             throw new RuntimeException(e);
         }
+
     }
 
 }

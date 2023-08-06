@@ -223,7 +223,7 @@
                   label {
                     display: none;
                   }
-                  .dataTables_empty{
+                  .dataTables_empty {
                     display: none;
                   }
                 </style>
@@ -236,13 +236,13 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr ng-repeat="product in items" ng-if="product.isActive = true">
+                  <tr ng-repeat="product in items" ng-if="product.active">
                     <td>{{ product.name }}</td>
-                    <td style="width: 130px;">{{ product.price }} VND</td>
+                    <td style="width: 130px">{{ product.price }} VND</td>
                     <td>{{ product.description }}</td>
                     <td>
-                      <a class="fas fa-trash-alt"></a>
-                      <a class="fas fa-edit"></a>
+                      <a class="fas fa-trash-alt" ng-click="editRemove(product.id)"></a>
+                      <a class="fas fa-edit" ng-click="edit(product.id)"></a>
                     </td>
                   </tr>
                 </tbody>
