@@ -14,12 +14,6 @@ import javax.persistence.Table;
 import lombok.Data;
 
 import java.io.Serializable;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
 
 @Data
 @Entity
@@ -31,11 +25,9 @@ public class Brand implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(nullable = false)
+    @Column(name = "name")
     private String name;
 
-    @Column(name = "product_name")
-    private String productName;
 
     @Column(name = "responsible_name")
     private String responsibleName;

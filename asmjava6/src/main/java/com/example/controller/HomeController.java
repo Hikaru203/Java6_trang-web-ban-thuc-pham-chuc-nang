@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.entity.Product;
 import com.example.jparepository.ProductRepository;
-import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 
 @Controller
 public class HomeController {
