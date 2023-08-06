@@ -37,7 +37,7 @@ public class HomeController {
 
 	@RequestMapping(value = "/detail/{id}")
 	public String detail(Model model,@PathVariable("id")int id) {
-		Product item= daoProduct.findById(id).get();
+		Product item= daoProduct.findById(id);
 		model.addAttribute("itemDetail",item);
 		return "detail";
 	}
