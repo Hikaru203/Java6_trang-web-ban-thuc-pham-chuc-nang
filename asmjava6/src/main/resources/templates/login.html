@@ -155,18 +155,18 @@
         <h4 class="card-title mt-3 text-center">Đăng nhập</h4>
         <p class="text-center">Đăng nhập vào tài khoản của bạn</p>
       
-        <form>
+        <form action="/client/processinglogin" method="POST">
             <div class="form-group input-group">
                 <div class="input-group-prepend">
                     <span class="input-group-text"> <i class="fa fa-user"></i> </span>
                 </div>
-                <input name="text" class="form-control" placeholder="Tên tài khoản" type="text">
+                <input name="username" class="form-control" placeholder="Tên tài khoản" type="text">
             </div> <!-- form-group// -->
             <div class="form-group input-group">
                 <div class="input-group-prepend">
                     <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
                 </div>
-                <input class="form-control" placeholder="Mật khẩu" type="password">
+                <input name="password" class="form-control" placeholder="Mật khẩu" type="password">
             </div> <!-- form-group// -->
             <div class="form-group">
                 <button type="submit" class="btn btn-primary btn-block"> Đăng nhập </button>
@@ -177,7 +177,7 @@
 
             <div class="row">
                 <div class="col-md-12">
-                  <a class="btn btn-lg btn-google btn-block text-uppercase btn-outline" href="#"><img src="https://img.icons8.com/color/16/000000/google-logo.png"> Đăng nhập bằng Google </a>
+                  <a class="btn btn-lg btn-google btn-block text-uppercase btn-outline" th:href="@{/oauth2/authorization/google}"><img src="https://img.icons8.com/color/16/000000/google-logo.png"> Đăng nhập bằng Google </a>
 
                 </div>
             </div>
