@@ -21,8 +21,8 @@ public class HomeController {
 	ProductRepository daoProduct;
 
 	@RequestMapping("/index")
-	public String index(Model model,@RequestParam("cid") Optional<String> cid) {
-		System.out.println(cid);
+	public String index(Model model,@RequestParam("cid") Optional<Integer> cid) {
+		
 		if(cid.isPresent()) {
 			
 			List<Product> page = daoProduct.findByCategory(cid.get());
@@ -41,5 +41,9 @@ public class HomeController {
 		model.addAttribute("itemDetail",item);
 		return "detail";
 	}
-	
+	@RequestMapping(value = "/cart")
+	public String cart() {
+		
+		return "cart";
+	}
 }

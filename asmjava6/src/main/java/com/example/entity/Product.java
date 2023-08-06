@@ -1,27 +1,24 @@
 package com.example.entity;
-
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.Size;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.DecimalMin;
 
 @Entity
 @Table(name = "Products")
@@ -35,21 +32,18 @@ public class Product implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     
-    @NotBlank(message = "Tên sản phẩm không được để trống")
-    @Size(min = 1, max = 100, message = "Tên sản phẩm phải có từ 1 đến 100 ký tự")
     @JoinColumn(name = "name")
     private String name;
 
-    @NotBlank(message = "Ảnh sản phẩm không được để trống")
     private String image;
 
     private String description;
 
-    @NotNull(message = "Giá sản phẩm không được null")
-    @Positive(message = "Giá sản phẩm phải là số dương")
+    @NotNull(message = "{NotNull.Product.price}")
+    @DecimalMin(value = "0.00", inclusive = false, message = "{DecimalMin.Product.price}")
     private BigDecimal price;
 
-    @NotNull(message = "Danh mục sản phẩm không được null")
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
