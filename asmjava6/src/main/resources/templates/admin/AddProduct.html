@@ -222,6 +222,7 @@
                   <!-- form start -->
                   <form>
                     <div class="card-body">
+                      <!-- Thông báo lỗi cho tên sản phẩm -->
                       <div class="form-group">
                         <label for="exampleInputEmail1">Tên sản phẩm</label>
                         <input
@@ -231,7 +232,12 @@
                           id="exampleInputEmail1"
                           placeholder="Nhập tên sản phẩm"
                         />
+                        <div class="text-danger" ng-if="formErrors.name">
+                          {{ formErrors.name }}
+                        </div>
                       </div>
+
+                      <!-- Thông báo lỗi cho giá sản phẩm -->
                       <div class="form-group">
                         <label for="exampleInputEmail1">Giá</label>
                         <input
@@ -241,18 +247,24 @@
                           id="exampleInputEmail1"
                           placeholder="Nhập giá"
                         />
+                        <div class="text-danger" ng-if="formErrors.price">
+                          {{ formErrors.price }}
+                        </div>
                       </div>
+
                       <!-- select -->
                       <div class="form-group">
                         <label>Loại thuốc</label>
-                        <select class="form-control" ng-model="form.category.id">
-                          <option
-                            ng-repeat="item in Categories"
-                            ng-value="item.id"
-                          >
-                            {{ item.name }}
-                          </option>
+                        <select
+                          class="form-control"
+                          ng-model="form.category.id"
+                          ng-options="item.id as item.name for item in Categories"
+                        >
+                          <option value="">Chọn loại thuốc</option>
                         </select>
+                        <div class="text-danger" ng-if="formErrors.category">
+                          {{ formErrors.category }}
+                        </div>
                       </div>
 
                       <!-- textarea -->
@@ -265,11 +277,12 @@
                           placeholder="Enter ..."
                         ></textarea>
                       </div>
+
+                      <!-- Thông báo lỗi cho chọn ảnh -->
                       <div class="form-group">
                         <label for="exampleInputFile">Chọn ảnh</label>
                         <div class="input-group">
                           <div class="custom-file">
-                            <!-- Thêm thuộc tính ng-model để lưu trữ thông tin tệp ảnh khi người dùng chọn -->
                             <input
                               type="file"
                               class="custom-file-input"
@@ -287,9 +300,13 @@
                             <span class="input-group-text">Upload</span>
                           </div>
                         </div>
+                        <div class="text-danger" ng-if="formErrors.image">
+                          {{ formErrors.image }}
+                        </div>
                       </div>
                     </div>
                     <!-- /.card-body -->
+
                     <div class="card-footer">
                       <button
                         type="submit"
@@ -302,11 +319,10 @@
                       <button
                         type="submit"
                         ng-click="update()"
-                        ng-disabled="isSubediting"
-
                         class="btn btn-primary"
+                        ng-disabled="isSubediting"
                       >
-                        Updata
+                        Update
                       </button>
                     </div>
                   </form>
