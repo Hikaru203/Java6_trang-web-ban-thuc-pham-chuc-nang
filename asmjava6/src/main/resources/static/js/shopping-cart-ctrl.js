@@ -8,19 +8,20 @@ app.controller("shopping-cart-ctrl", function($scope, $http) {
 			const item = this.items.find(item => item.id == id);
 			if (item) {
 				item.qty++;
-				this.saveToLocalStorage();
+				this.saveToDtabase();
 			} else {
 				$http.get(`/rest/products/${id}`).then(resp => {
 					resp.data.qty = 1;
 					this.items.push(resp.data);
-					this.saveToLocalStorage();
+					this.saveToDtabase();
 				});
 			}
 		},
-		saveToLocalStorage() {
-			const json = JSON.stringify(angular.copy(this.items));
-			localStorage.setItem("cart", json);
-			console.log(json);
+		saveToDatabase() {
+			const json = angular.toJson(this.items);
+			$http.post("/rest/cart", json).then(resp => {
+				console.log("Cart data saved to database.");
+			});
 		},
 		get count() {
 			return this.items
@@ -45,7 +46,6 @@ app.controller("shopping-cart-ctrl", function($scope, $http) {
 			this.items = []
 			this.saveToLocalStorage();
 		},
-
 	};
 	$scope.cart.loadFromLocalStorage()
 	// Hàm tăng qty
@@ -53,7 +53,6 @@ app.controller("shopping-cart-ctrl", function($scope, $http) {
 		item.qty++;
 		$scope.cart.saveToLocalStorage();
 	};
-
 	// Hàm giảm qty
 	$scope.decreaseQty = function(item) {
 		if (item.qty > 1) {
@@ -69,4 +68,28 @@ app.controller("shopping-cart-ctrl", function($scope, $http) {
 		// Kiểm tra nếu có ít nhất một hàng được chọn, hiển thị nút xóa
 		$scope.showDeleteButton = totalChecked > 0;
 	};
+	$scope.order = {
+		address: "",
+		account: { username: $("#fullName").text() },
+		get orderDetail() {
+			return $scope.cart.items.map(item => {
+				return {
+					product: { id: item.id },
+					price: item.price,
+					quantity: item.qty
+				}
+			})
+		},
+		purchase() {
+			var order = angular.copy(this);
+			$http.post("/rest/orders", order).then(resp => {
+				alert("Đặt hàng thành công!")
+				$scope.cart.clear();
+				location.href = "/order/detail/" + resp.data.id;
+			}).catch(error => {
+				alert("Đặt hàng Thất Bại!")
+				console.log(error)
+			})
+		}
+	}
 });

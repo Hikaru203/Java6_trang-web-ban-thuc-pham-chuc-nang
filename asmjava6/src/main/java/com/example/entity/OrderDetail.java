@@ -16,27 +16,24 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "Order_Details")
-public class OrderDetail implements Serializable {
-    private static final long serialVersionUID = 1L;
 
-    @Id
+public class OrderDetail implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "order_id", nullable = false)
+    @JoinColumn(name = "order_id", referencedColumnName = "id", nullable = false)
     private Order order;
 
+    @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "product_id", nullable = false)
-    private Product product;
+    @JoinColumn(name = "cart_id", referencedColumnName = "id")
+    private Cart cart;
 
-    @Column(nullable = false)
-    private int quantity;
-
-    @Column(nullable = false)
-    private String address;
-
-    // Constructors, getters, setters, and other methods as needed.
+    // Getters and setters, constructors, and other methods
 }
