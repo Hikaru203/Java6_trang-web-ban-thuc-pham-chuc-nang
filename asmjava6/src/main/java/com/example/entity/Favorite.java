@@ -24,7 +24,7 @@ public class Favorite implements Serializable {
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    private Account user;
 
     @ManyToOne
     @JoinColumn(name = "product_id", nullable = false)
