@@ -23,18 +23,17 @@ public class Order implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private Account user;
+    @Column(name = "user_id")
+    private int user_id;
 
-    @Column(name = "order_date", nullable = false)
-    private Date orderDate;
+    @Column(name = "adress")
+    private String adress;
 
-    @Column(name = "total_amount", nullable = false)
-    private BigDecimal totalAmount;
+    @Column(name = "phoneNumber")
+    private String phoneNumber;
 
-    @Column(nullable = false)
-    private String note;
+    @Column(name = "country")
+    private String country;
 
     @OneToMany(mappedBy = "order")
     private List<OrderDetail> orderDetails;

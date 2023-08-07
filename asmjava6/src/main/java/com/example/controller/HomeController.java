@@ -1,5 +1,6 @@
 package com.example.controller;
 
+
 import java.lang.ProcessBuilder.Redirect;
 import java.util.List;
 import java.util.Optional;
@@ -29,10 +30,9 @@ public class HomeController {
 		model.addAttribute("user", new Account());
 		return "login";
 	}
-
 	@RequestMapping("/client/denied")
 	public String error(Model model) {
-		System.out.println("chú m k có tuổi");
+		
 		return "redirect:/client/index";
 	}
 
@@ -43,7 +43,7 @@ public class HomeController {
 	}
 
 	@RequestMapping("/client/index")
-	public String index(Model model, @RequestParam("cid") Optional<String> cid) {
+	public String index(Model model, @RequestParam("cid") Optional<Integer> cid) {
 		System.out.println(cid);
 		if (cid.isPresent()) {
 
@@ -63,24 +63,21 @@ public class HomeController {
 		model.addAttribute("itemDetail", item);
 		return "detail";
 	}
-
 	@RequestMapping(value = "/client/login/success")
-	public String ht(Model model) {
-		System.out.println("đăng nhập thành công");
-		model.addAttribute("successMessage", "Đăng nhập từ Google thành công!");
-		return "redirect:/client/index";
-	}
-
-	@RequestMapping(value = "/client/signin/error")
-	public String loi(Model model) {
-		model.addAttribute("loi", "Sai thông tin đăng nhập, Vui lòng nhập lại");
-		return "login";
-	}
-
-	@RequestMapping(value = "/client/social/success")
-	public String loginGG(Model model) {
-
-		return "redirect:/client/index";
-	}
-
+	   public String ht (Model model) {
+		  System.out.println("đăng nhập thành công");
+		  model.addAttribute("successMessage", "Đăng nhập từ Google thành công!");
+		  return "redirect:/client/index";
+	  }
+	  @RequestMapping(value = "/client/signin/error")
+	   public String loi (Model model) {
+		  model.addAttribute("loi", "Sai thông tin đăng nhập, Vui lòng nhập lại");
+		  return "login";
+	  }
+	  
+	  @RequestMapping(value = "/client/social/success")
+	   public String loginGG (Model model) {
+		 
+		  return "redirect:/client/index";
+	  }
 }

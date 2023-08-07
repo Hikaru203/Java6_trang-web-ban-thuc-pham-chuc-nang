@@ -55,10 +55,6 @@ public class Account implements Serializable {
     
    
     @OneToMany(fetch = FetchType.EAGER,mappedBy = "user")
-    private List<Order> orders;
-    
-
-    @OneToMany(fetch = FetchType.EAGER,mappedBy = "user")
     private List<Favorite> favorites;
 
     // Constructors, getters, setters, and other methods as needed.
