@@ -14,34 +14,34 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.entity.Brand;
-import com.example.service.BrandService;
+import com.example.jparepository.BrandRepository;
 
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/rest/brands")
 public class BrandRestController {
     @Autowired
-    BrandService brandService;
+    BrandRepository brandRepository;
 
     @GetMapping()
     public List<Brand> getAll() {
-        return brandService.findAll();
+        return brandRepository.findAll();
     }
 
     @GetMapping("{id}")
     public Brand getOne(@PathVariable("id") Integer id) {
-        return brandService.findById(id);
+        return brandRepository.findById(id).get();
     }
     @PostMapping()
     public Brand create(@RequestBody Brand brand) {
-        return brandService.create(brand);
+        return brandRepository.save(brand);
     }
     @PutMapping("{id}")
     public Brand update(@PathVariable("id") Integer id, @RequestBody Brand brand) {
-        return brandService.update(brand);
+        return brandRepository.save(brand);
     }
     @DeleteMapping("{id}")
     public void delete(@PathVariable("id") Integer id) {
-        brandService.deleteById(id);
+        brandRepository.deleteById(id);
     }
 }
