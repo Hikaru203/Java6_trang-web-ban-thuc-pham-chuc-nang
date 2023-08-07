@@ -33,7 +33,7 @@ public class Brand implements Serializable {
     private String responsibleName;
 
     private String origin;
-    
+
     @JsonIgnore
     @OneToMany(mappedBy = "brand")
     private List<BrandSupplier> brandSuppliers;

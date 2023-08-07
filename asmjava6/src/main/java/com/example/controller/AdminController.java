@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import com.example.jparepository.CategoryRepository;
 import com.example.jparepository.DiscountRepository;
 import com.example.jparepository.ProductRepository;
-import com.example.jparepository.UserRepository;
+import com.example.jparepository.AccountRepository;
 
 @Controller
 public class AdminController {
@@ -16,7 +16,7 @@ public class AdminController {
     private ProductRepository productRepository;
 
     @Autowired
-    private UserRepository userRepository;
+    private AccountRepository userRepository;
 
     @Autowired
     private DiscountRepository discountRepository;

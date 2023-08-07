@@ -25,7 +25,7 @@ public class Order implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    private Account user;
 
     @Column(name = "order_date", nullable = false)
     private Date orderDate;
