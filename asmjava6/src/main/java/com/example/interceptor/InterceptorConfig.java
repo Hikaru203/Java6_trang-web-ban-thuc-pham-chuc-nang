@@ -7,8 +7,10 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.example.service.BrandService;
+import com.example.service.CartService;
 import com.example.service.DistributorService;
 import com.example.service.impl.BrandServiceImpl;
+import com.example.service.impl.CartServiceImpl;
 import com.example.service.impl.DistributorServiceImpl;
 
 @Configuration
@@ -31,5 +33,9 @@ public class InterceptorConfig implements WebMvcConfigurer {
 	@Bean
 	public DistributorService distributorService() {
 		return new DistributorServiceImpl();
+	}
+	@Bean
+	public CartService cartService() {
+		return new CartServiceImpl();
 	}
 }

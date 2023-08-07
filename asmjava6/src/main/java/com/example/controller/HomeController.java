@@ -11,14 +11,20 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.entity.Cart;
 import com.example.entity.Product;
 import com.example.jparepository.ProductRepository;
+import com.example.service.CartService;
+import com.example.service.impl.CartServiceImpl;
 
 @Controller
 public class HomeController {
 	@Autowired
 	ProductRepository daoProduct;
 
+	@Autowired
+	CartService cartService;
+	
 	@RequestMapping("/index")
 	public String index(Model model,@RequestParam("cid") Optional<Integer> cid) {
 		
@@ -30,7 +36,8 @@ public class HomeController {
 			List<Product> page = daoProduct.findAll();
 			model.addAttribute("products", page);
 		}
-	
+		List<Cart> cartItem=cartService.findAll();
+		model.addAttribute("cartItem",cartItem);
 		return "index";
 	}
 
