@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.entity.Account;
 import com.example.entity.Product;
 import com.example.jparepository.AccountRepository;
 import com.example.jparepository.CategoryRepository;
@@ -61,4 +62,29 @@ public class AdminAPI {
         return product;
     }
 
+
+    @GetMapping({ "/ManagedAccount" })
+    public Object getAccounts() {
+        return userRepository.findAll();
+    }
+
+    @GetMapping({ "/ManagedAccount/{id}" })
+    public Optional<Account> getAccount(@PathVariable("id") int id) {
+        return userRepository.findById(id);
+    }
+
+    @PostMapping({ "/ManagedAccount" })
+    public Account addAccounts(@RequestBody Account account) {
+        account.setActive(true);
+        this.userRepository.save(account);
+        return account;
+    }
+
+    @PutMapping({ "/ManagedAccount/{id}" })
+    public Account updateAccount(@PathVariable("id") Integer id, @RequestBody Account account) {
+        this.userRepository.save(account);
+        return account;
+    }
+
+    
 }

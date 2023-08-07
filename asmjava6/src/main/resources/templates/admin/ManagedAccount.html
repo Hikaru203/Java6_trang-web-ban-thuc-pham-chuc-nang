@@ -10,6 +10,8 @@
   </head>
 
   <body
+    ng-app="myApp"
+    ng-controller="myCtrl"
     class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed"
   >
     <div class="wrapper">
@@ -224,8 +226,6 @@
                   label {
                     display: none;
                   }
-
-                  
                 </style>
                 <thead>
                   <tr>
@@ -237,18 +237,71 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr th:each="user : ${users}">
-                    <td th:text="${user.fullName}"></td>
-                    <td th:text="${user.userName}"></td>
-                    <td th:text="${user.email}"></td>
-                    <td th:text="${user.isAdmin}?'Admin':'User'"></td>
+                  <tr ng-repeat="user in getCurrentPageUsers()" ng-if="user.active">
+                    <td>{{ user.fullName }}</td>
+                    <td>{{ user.userName }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.admin ? 'Admin' : 'User' }}</td>
                     <td>
-                      <a class="fas fa-trash-alt"></a>
-                      <a class="fas fa-edit"></a>
+                      <a
+                        class="fas fa-trash-alt"
+                        ng-click="editRemove(user.id)"
+                      ></a>
+                      <a class="fas fa-edit" ng-click="edit(user.id)"></a>
                     </td>
                   </tr>
                 </tbody>
               </table>
+              <br />
+              <ul class="pagination justify-content-end">
+                <li
+                  class="page-item"
+                  ng-class="{ disabled: currentPage === 1 }"
+                >
+                  <a class="page-link" href="#" ng-click="setPage(1)"
+                    >&laquo;</a
+                  >
+                </li>
+                <li
+                  class="page-item"
+                  ng-class="{ disabled: currentPage === 1 }"
+                >
+                  <a
+                    class="page-link"
+                    href="#"
+                    ng-click="setPage(currentPage - 1)"
+                    >&lt;</a
+                  >
+                </li>
+                <li
+                  class="page-item"
+                  ng-repeat="page in getPagesRange()"
+                  ng-class="{ active: isCurrentPage(page) }"
+                >
+                  <a class="page-link" href="#" ng-click="setPage(page)"
+                    >{{ page }}</a
+                  >
+                </li>
+                <li
+                  class="page-item"
+                  ng-class="{ disabled: currentPage === totalPages() }"
+                >
+                  <a
+                    class="page-link"
+                    href="#"
+                    ng-click="setPage(currentPage + 1)"
+                    >&gt;</a
+                  >
+                </li>
+                <li
+                  class="page-item"
+                  ng-class="{ disabled: currentPage === totalPages() }"
+                >
+                  <a class="page-link" href="#" ng-click="setPage(totalPages())"
+                    >&raquo;</a
+                  >
+                </li>
+              </ul>
             </div>
             <!-- /.card-body -->
           </div>
@@ -261,14 +314,7 @@
       <aside class="control-sidebar control-sidebar-dark">
         <!-- Control sidebar content goes here -->
 
-        <div class="card">
-          <div class="card-header">
-            <h3 class="card-title">DataTable with default features</h3>
-          </div>
-          <!-- /.card-header -->
-
-          <!-- /.card-body -->
-        </div>
+        
       </aside>
       <!-- /.control-sidebar -->
 
@@ -293,5 +339,6 @@
           .appendTo("#example1_wrapper .col-md-6:eq(0)");
       });
     </script>
+    <script th:src="@{/Admin/plugins/AngularJS/accounts-ctrl.js}"></script>
   </body>
 </html>
