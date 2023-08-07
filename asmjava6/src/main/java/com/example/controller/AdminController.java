@@ -36,4 +36,18 @@ public class AdminController {
         return "admin/AddUser";
     }
 
+    @GetMapping({ "/admin/ManagedDiscount" })
+    public String GetDiscount() {
+        return "admin/ManagedDiscount";
+    }
+
+     @GetMapping({ "/admin/AddDiscount" })
+    public String AddDiscount() {
+        return "admin/AddDiscount";
+    }
+
+    @GetMapping({ "/admin/EditDiscount/{id}" })
+    public String EditDiscount() {
+        return "admin/AddDiscount";
+    }
 }

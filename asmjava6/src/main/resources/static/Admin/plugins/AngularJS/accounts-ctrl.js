@@ -32,8 +32,14 @@ app.controller("myCtrl", function ($scope, $http, $window) {
   };
 
   $scope.totalPages = function () {
+    if (!$scope.users || !Array.isArray($scope.users)) {
+      // Handle the case when $scope.users is not defined or not an array
+      return 0;
+    }
+  
     return Math.ceil($scope.users.length / $scope.itemsPerPage);
   };
+  
 
   $scope.setPage = function (page) {
     if (page >= 1 && page <= $scope.totalPages()) {
@@ -46,10 +52,28 @@ app.controller("myCtrl", function ($scope, $http, $window) {
   };
 
   $scope.getCurrentPageUsers = function () {
+    if (!$scope.users || !Array.isArray($scope.users)) {
+      // Handle the case when $scope.users is not defined or not an array
+      return [];
+    }
+  
     const startIndex = ($scope.currentPage - 1) * $scope.itemsPerPage;
     const endIndex = startIndex + $scope.itemsPerPage;
-    return $scope.users.slice(startIndex, endIndex);
+  
+    // Check if a search keyword is provided
+    const searchKeyword = $scope.searchKeyword ? $scope.searchKeyword.toLowerCase() : '';
+  
+    const filteredUsers = $scope.users.filter(user => {
+      const fullName = user.fullName ? user.fullName.toLowerCase() : '';
+      const userName = user.userName ? user.userName.toLowerCase() : '';
+      const email = user.email ? user.email.toLowerCase() : '';
+      return fullName.includes(searchKeyword) || userName.includes(searchKeyword) || email.includes(searchKeyword);
+    });
+  
+    return filteredUsers.slice(startIndex, endIndex);
   };
+  
+  
 
   $scope.getPagesRange = function () {
     const totalPages = $scope.totalPages();

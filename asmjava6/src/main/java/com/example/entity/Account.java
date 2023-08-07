@@ -2,13 +2,13 @@ package com.example.entity;
 import java.io.Serializable;
 import java.util.List;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -48,7 +48,7 @@ public class Account implements Serializable {
 
     @OneToMany(mappedBy = "user")
     private List<Order> orders;
-
+    
     @OneToMany(mappedBy = "user")
     private List<Favorite> favorites;
 

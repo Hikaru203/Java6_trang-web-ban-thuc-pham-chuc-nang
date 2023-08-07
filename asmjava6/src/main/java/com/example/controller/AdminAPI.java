@@ -1,9 +1,11 @@
 package com.example.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.entity.Account;
+import com.example.entity.Discount;
 import com.example.entity.Product;
 import com.example.jparepository.AccountRepository;
 import com.example.jparepository.CategoryRepository;
@@ -62,14 +65,13 @@ public class AdminAPI {
         return product;
     }
 
-
     @GetMapping({ "/ManagedAccount" })
-    public Object getAccounts() {
+    public List<Account> getAccounts() {
         return userRepository.findAll();
     }
 
     @GetMapping({ "/ManagedAccount/{id}" })
-    public Optional<Account> getAccount(@PathVariable("id") int id) {
+    public Account getAccount(@PathVariable("id") int id) {
         return userRepository.findById(id);
     }
 
@@ -86,5 +88,31 @@ public class AdminAPI {
         return account;
     }
 
-    
+    @GetMapping({ "/ManagedDiscount" })
+    public Object getDiscounts() {
+        return discountRepository.findAll();
+    }
+
+    @GetMapping({ "/ManagedDiscount/{id}" })
+    public Optional<Discount> getDiscount(@PathVariable("id") int id) {
+        return discountRepository.findById(id);
+    }
+
+    @PostMapping({ "/ManagedDiscount" })
+    public Discount addDiscount(@RequestBody Discount discount) {
+        this.discountRepository.save(discount);
+        return discount;
+    }
+
+    @PutMapping({ "/ManagedDiscount/{id}" })
+    public Discount updateDiscount(@PathVariable("id") Integer id, @RequestBody Discount discount) {
+        this.discountRepository.save(discount);
+        return discount;
+    }
+
+    @DeleteMapping({ "/ManagedDiscount/{id}" })
+    public void deleteDiscount(@PathVariable("id") Integer id) {
+        this.discountRepository.deleteById(id);
+    }
+
 }
