@@ -6,9 +6,9 @@ var fileNameLabel = document.querySelector('.custom-file-label');
 
 app.controller("myCtrl", function ($scope, $http, $window) {
 	$scope.form = {};
+	$scope.items = [];
 	$scope.discounts = []; // Thay đổi tên biến 'users' thành 'discounts'
 	$scope.currentPage = 1;
-	$scope.items = [];
 	$scope.itemsPerPage = 2;
 	$scope.isSubmitting = false;
 	$scope.isSubediting = true;

@@ -50,4 +50,19 @@ public class AdminController {
     public String EditDiscount() {
         return "admin/AddDiscount";
     }
+
+    @GetMapping({ "/admin/ManagedCategories" })
+    public String GetCategories() {
+        return "admin/ManagedCategories";
+    }
+
+     @GetMapping({ "/admin/AddCategories" })
+    public String AddCategories() {
+        return "admin/AddCategories";
+    }
+
+    @GetMapping({ "/admin/EditCategories/{id}" })
+    public String EditCategories() {
+        return "admin/AddCategories";
+    }
 }

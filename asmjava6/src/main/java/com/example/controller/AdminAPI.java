@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.entity.Account;
+import com.example.entity.Category;
 import com.example.entity.Discount;
 import com.example.entity.Product;
 import com.example.jparepository.AccountRepository;
@@ -45,11 +46,6 @@ public class AdminAPI {
     @GetMapping({ "/ManagedProduct/{id}" })
     public Optional<Product> getProduct(@PathVariable("id") int id) {
         return productRepository.findById(id);
-    }
-
-    @GetMapping({ "/ManagedCategories" })
-    public Object getCategories() {
-        return this.categoryRepository.findAll();
     }
 
     @PostMapping({ "/ManagedProduct" })
@@ -114,5 +110,29 @@ public class AdminAPI {
     public void deleteDiscount(@PathVariable("id") Integer id) {
         this.discountRepository.deleteById(id);
     }
+
+    @GetMapping({ "/ManagedCategories" })
+    public Object getCategories() {
+        return this.categoryRepository.findAll();
+    }
+
+    @GetMapping({ "/ManagedCategories/{id}" })
+    public Optional<Category> getCategory(@PathVariable("id") int id) {
+        return categoryRepository.findById(id);
+    }
+
+    @PostMapping({ "/ManagedCategories" })
+    public Category addCategories(@RequestBody Category category) {
+        this.categoryRepository.save(category);
+        return category;
+    }
+
+    @PutMapping({ "/ManagedCategories/{id}" })
+    public Category updateCategories(@PathVariable("id") Integer id, @RequestBody Category category) {
+        this.categoryRepository.save(category);
+        return category;
+    }
+
+
 
 }
