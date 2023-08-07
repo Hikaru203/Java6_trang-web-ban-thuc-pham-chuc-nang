@@ -16,7 +16,7 @@
 	href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
 	rel="stylesheet">
 <script src="https://unpkg.com/currency.js@~2.0.0/dist/currency.min.js"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.1/dist/sweetalert2.min.js"></script>
 <!-- Font Awesome -->
 <link
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
@@ -218,7 +218,8 @@
 						<tr ng-repeat="item in items">
 							<td class=""><img src="images/{{item.product.image}}" alt=""
 								style="width: 50px;">{{item.product.name}}</td>
-							<td class="align-middle">{{item.product.price| vnCurrency }} </td>
+							<td class="align-middle">{{item.product.price| vnCurrency }}
+							</td>
 							<td class="align-middle">
 								<div class="input-group quantity mx-auto" style="width: 100px;">
 									<div class="input-group-btn">
@@ -239,8 +240,9 @@
 							</td>
 
 
-							<td class="align-middle">{{item.quantity*item.product.price| vnCurrency}}</td>
-							<td class="align-middle" ><button
+							<td class="align-middle">{{item.quantity*item.product.price|
+								vnCurrency}}</td>
+							<td class="align-middle"><button
 									ng-click="removeItem(item.id)" class="btn btn-sm btn-danger">
 									<i class="fa fa-times"></i>
 								</button></td>
@@ -251,8 +253,7 @@
 				</table>
 
 				<div class="text-right" style="padding-top: 10px">
-					<button class="btn btn-danger" >Xóa
-						hết</button>
+					<button class="btn btn-danger">Xóa hết</button>
 				</div>
 				<div class="container-fluid pt-5 pb-3">
 					<h2
@@ -458,7 +459,8 @@
 	<!-- Contact Javascript File -->
 	<script src="mail/jqBootstrapValidation.min.js"></script>
 	<script src="mail/contact.js"></script>
-
+	<script
+		src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.1/dist/sweetalert2.min.js"></script>
 	<!-- Template Javascript -->
 	<script src="js/main.js"></script>
 	<script src="/js/test.js"></script>

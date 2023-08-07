@@ -19,7 +19,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.1/dist/sweetalert2.min.js"></script>
 <!-- Font Awesome -->
 <link
 	th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css}"
@@ -297,7 +297,7 @@
 							alt="" height="200px" width="95%">
 						<div class="product-action">
 							<a class="btn btn-outline-dark btn-square"
-								th:attr="ng-click=@{|cart.addToCart(${item.id})|}" ><i
+								th:attr="ng-click=@{|cart.addToCart(${item.id})|}"><i
 								class="fa fa-shopping-cart"></i></a> <a
 								class="btn btn-outline-dark btn-square" href=""><i
 								class="far fa-heart"></i></a> <a
@@ -306,7 +306,7 @@
 								class="btn btn-outline-dark btn-square"
 								th:href="@{|/detail/${item.id}|}"><i class="fa fa-search"></i></a>
 						</div>
-						
+
 					</div>
 					<div class="text-center py-4">
 						<div class="d-flex align-items-center justify-content-center mt-2">
@@ -504,7 +504,8 @@
 	<!-- Contact Javascript File -->
 	<script th:src="@{/mail/jqBootstrapValidation.min.js}"></script>
 	<script th:src="@{/mail/contact.js}"></script>
-
+	<script
+		src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.1/dist/sweetalert2.min.js"></script>
 	<!-- Template Javascript -->
 	<script th:src="@{/js/main.js}"></script>
 	<script th:src="@{/js/test.js}"></script>

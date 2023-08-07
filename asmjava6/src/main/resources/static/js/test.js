@@ -17,7 +17,7 @@ app.controller("shopping-cart-ctrl", function($scope, $http) {
 			const activeItems = resp.data.filter(item => item.active);
 			console.log('Sản phẩm có isActive = true:', activeItems);
 
-			if (activeItems.length > 0) {
+			if (activeItems.length >= 0) {
 				$scope.items = activeItems;
 			} else {
 				console.log('Không có sản phẩm nào có isActive = true.');
@@ -33,7 +33,7 @@ app.controller("shopping-cart-ctrl", function($scope, $http) {
 		items: [],
 		addToCart(ProductId) {
 			var item = this.items.find(item => item.product.id == ProductId);
-			alert(ProductId)
+			
 			if (item) {
 				item.quantity += 1;
 				this.saveToDatabase(ProductId, UserId, item.quantity);
@@ -80,7 +80,7 @@ app.controller("shopping-cart-ctrl", function($scope, $http) {
 			.then(response => {
 				console.log(response.data);
 				// Load lại danh sách sản phẩm trong giỏ hàng sau khi cập nhật
-				$scope.loadCartItems(UserId);
+				$scope.cart.loadCartItems(UserId);
 			})
 			.catch(error => {
 				console.error(error);
@@ -114,19 +114,15 @@ app.controller("shopping-cart-ctrl", function($scope, $http) {
 		}
 		return totalPrice;
 	};
-	$scope.removeItem = function(item) {
-		// Đánh dấu sản phẩm là đã bị xóa trong danh sách sản phẩm của giỏ hàng
-		item.deleted = true;
-
-		// Nếu bạn muốn xóa sản phẩm khỏi CSDL thì có thể gọi API hoặc hàm xử lý tại đây
-		// $http.delete(`/rest/carts/deleteCart/${item.id}`)
-		//     .then(response => {
-		//         // Xóa sản phẩm thành công, cập nhật lại danh sách sản phẩm trong giỏ hàng
-		//         $scope.loadCartItems();
-		//     })
-		//     .catch(error => {
-		//         console.error(error);
-		//     });
+	$scope.removeItem = function(id) {
+		$http.put(`/rest/carts/deleteCart/${id}`)
+			.then(response => {
+				// Xóa sản phẩm thành công, cập nhật lại danh sách sản phẩm trong giỏ hàng
+				$scope.initialize(); // Gọi hàm loadCartItems để cập nhật danh sách giỏ hàng sau khi xóa
+			})
+			.catch(error => {
+				console.error(error);
+			});
 	};
 
 	$scope.cart.loadCartItems(UserId);

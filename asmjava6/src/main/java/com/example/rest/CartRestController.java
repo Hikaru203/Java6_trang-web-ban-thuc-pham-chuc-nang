@@ -87,6 +87,7 @@ public class CartRestController {
 			cart = cartRepository.save(cart);
 		} else {
 			cart.setQuantity(cart.getQuantity() + 1);
+			cart.setActive(true);
 			cart = cartRepository.save(cart);
 		}
 
@@ -109,6 +110,18 @@ public class CartRestController {
 		return ResponseEntity.ok("{\"message\": \"Quantity updated successfully!\"}");
 	}
 
-	
+	@PutMapping("/deleteCart/{id}")
+	public ResponseEntity<String> deleteCart(@PathVariable("id") Integer id) {
+		Cart cart = cartService.findById(id);
+
+		if (cart == null) {
+			return ResponseEntity.notFound().build();
+		}
+
+		cart.setActive(false);
+		cartRepository.save(cart);
+
+		return ResponseEntity.ok("{\"message\": \"Cart marked as inactive!\"}");
+	}
 
 }
