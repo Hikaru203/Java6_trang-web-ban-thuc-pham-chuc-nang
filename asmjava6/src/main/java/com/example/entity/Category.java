@@ -3,6 +3,8 @@ package com.example.entity;
 import java.io.Serializable;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -27,19 +29,19 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 
-
 public class Category implements Serializable {
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
 
-    @Column(nullable = false)
-    private String name;
+	@Column(nullable = false)
+	private String name;
+	@JsonIgnore
 
-    @OneToMany(mappedBy = "category")
-    private List<Product> products;
+	@OneToMany(mappedBy = "category")
+	private List<Product> products;
 
-    // Constructors, getters, setters, and other methods as needed.
+	// Constructors, getters, setters, and other methods as needed.
 }
