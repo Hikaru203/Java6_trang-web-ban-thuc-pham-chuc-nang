@@ -26,7 +26,6 @@ public class AdminController {
 
     @GetMapping("/admin/index")
     public String index(Model model) {
-
         model.addAttribute("products", productRepository.findAll());
         return "admin/index";
     }

@@ -65,13 +65,21 @@ public class HomeController {
 	}
 	  @RequestMapping(value = "/client/login/success")
 	   public String ht (Model model) {
-		  
+		  System.out.println("đăng nhập thành công");
+		  model.addAttribute("successMessage", "Đăng nhập từ Google thành công!");
 		  return "redirect:/client/index";
 	  }
+	  @RequestMapping(value = "/client/signin/error")
+	   public String loi (Model model) {
+		  model.addAttribute("loi", "Sai thông tin đăng nhập, Vui lòng nhập lại");
+		  return "login";
+	  }
+	  
 	  @RequestMapping(value = "/client/social/success")
 	   public String loginGG (Model model) {
-		  
+		 
 		  return "redirect:/client/index";
 	  }
+	  
 
 }
