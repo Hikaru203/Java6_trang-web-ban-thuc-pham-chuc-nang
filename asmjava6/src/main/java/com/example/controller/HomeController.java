@@ -43,7 +43,7 @@ public class HomeController {
 	}
 
 	@RequestMapping("/client/index")
-	public String index(Model model, @RequestParam("cid") Optional<String> cid) {
+	public String index(Model model, @RequestParam("cid") Optional<Integer> cid) {
 		System.out.println(cid);
 		if (cid.isPresent()) {
 
