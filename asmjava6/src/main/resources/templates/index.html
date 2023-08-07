@@ -297,7 +297,7 @@
 							alt="" height="200px" width="95%">
 						<div class="product-action">
 							<a class="btn btn-outline-dark btn-square"
-								th:attr="ng-click=@{|cart.add(${item.id})|}"><i
+								th:attr="ng-click=@{|cart.addToCart(${item.id})|}" ><i
 								class="fa fa-shopping-cart"></i></a> <a
 								class="btn btn-outline-dark btn-square" href=""><i
 								class="far fa-heart"></i></a> <a
@@ -306,6 +306,7 @@
 								class="btn btn-outline-dark btn-square"
 								th:href="@{|/detail/${item.id}|}"><i class="fa fa-search"></i></a>
 						</div>
+						
 					</div>
 					<div class="text-center py-4">
 						<div class="d-flex align-items-center justify-content-center mt-2">
@@ -506,7 +507,7 @@
 
 	<!-- Template Javascript -->
 	<script th:src="@{/js/main.js}"></script>
-	<script th:src="@{/js/shopping-cart-ctrl.js}"></script>
+	<script th:src="@{/js/test.js}"></script>
 </body>
 
 </html>
