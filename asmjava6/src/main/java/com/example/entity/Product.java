@@ -43,7 +43,6 @@ public class Product implements Serializable {
     @DecimalMin(value = "0.00", inclusive = false, message = "{DecimalMin.Product.price}")
     private BigDecimal price;
 
-    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;

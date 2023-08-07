@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.ServletContext;
+import jakarta.servlet.ServletContext;
 
 @Service
 public class UploadServiceImpl implements UploadImagesService {
