@@ -1,44 +1,49 @@
 package com.example.entity;
 
 import java.io.Serializable;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
 @Entity
 @Table(name = "Orders")
-public class Order implements Serializable {
-    private static final long serialVersionUID = 1L;
+@Data
+@Getter
+@Setter
+public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private Account user;
-
-    @Column(name = "order_date", nullable = false)
-    private Date orderDate;
-
-    @Column(name = "total_amount", nullable = false)
-    private BigDecimal totalAmount;
+    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
+    private User user;
 
     @Column(nullable = false)
-    private String note;
+    private String address;
 
-    @OneToMany(mappedBy = "order")
-    private List<OrderDetail> orderDetails;
+    @Column(nullable = false, length = 20)
+    private String phoneNumber;
 
-    // Constructors, getters, setters, and other methods as needed.
+    @Column(nullable = false)
+    private String country;
+
+    // Getters and setters, constructors, and other methods
 }
+
 

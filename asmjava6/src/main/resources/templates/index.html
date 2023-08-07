@@ -219,154 +219,118 @@
     <!-- Carousel End -->
 
 
-    <!-- Featured Start -->
-    <div class="container-fluid pt-5">
-        <div class="row px-xl-5 pb-3">
-            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
-                <div class="d-flex align-items-center bg-light mb-4" style="padding: 30px;">
-                    <h1 class="fa fa-check text-primary m-0 mr-3"></h1>
-                    <h5 class="font-weight-semi-bold m-0">Sản phẩm chất lượng</h5>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
-                <div class="d-flex align-items-center bg-light mb-4" style="padding: 30px;">
-                    <h1 class="fa fa-shipping-fast text-primary m-0 mr-2"></h1>
-                    <h5 class="font-weight-semi-bold m-0">Giao hàng miễn phí</h5>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
-                <div class="d-flex align-items-center bg-light mb-4" style="padding: 30px;">
-                    <h1 class="fas fa-exchange-alt text-primary m-0 mr-3"></h1>
-                    <h5 class="font-weight-semi-bold m-0">Đổi trả nếu hàng không chất lượng</h5>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
-                <div class="d-flex align-items-center bg-light mb-4" style="padding: 30px;">
-                    <h1 class="fa fa-phone-volume text-primary m-0 mr-3"></h1>
-                    <h5 class="font-weight-semi-bold m-0">Hỗ trợ 24/7</h5>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Featured End -->
-    <!-- Products Start -->
-    <div class="container-fluid pt-5 pb-3">
-        <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Sản phẩm yêu thích</span></h2>
-        <div class="row px-xl-5" >
-            <div class="col-lg-3 col-md-4 col-sm-6 pb-1" th:each="item : ${products}">
-                <div class="product-item bg-light mb-4" style="height: 500px;" >
-                    <div class="product-img position-relative overflow-hidden">
-                        <img class="img-fluid w-100" th:src="@{|/images/${item.image}|}" alt="" height="200px" width="95%">
-                        <div class="product-action">
-                            <a class="btn btn-outline-dark btn-square" ><i class="fa fa-shopping-cart"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
-                            <a class="btn btn-outline-dark btn-square" th:href="@{|/client/detail/${item.id}|}	"><i class="fa fa-search"></i></a>
-                        </div>
-                    </div>
-                    <div class="text-center py-4">
-                        <div class="d-flex align-items-center justify-content-center mt-2">
-                            <h5 th:text="${item.name}"></h5>  
-                        </div>
-                        <span class="regular-price"
-									th:text="${#numbers.formatDecimal(item.price, 0, 'COMMA', 0, 'POINT')}"></span>vnđ
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Products End -->
-    <!-- Products Start -->
-    <div class="container-fluid pt-5 pb-3">
-        <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Sản phẩm
-                được yêu thích nhất</span></h2>
-        <div class="row px-xl-5">
-            <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
-                <div class="product-item bg-light mb-4" style="height: 450px;">
-                    <div class="product-img position-relative overflow-hidden">
-                        <img class="img-fluid w-100" src="images/sp1.jpg" alt="">
-                        <div class="product-action">
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a>
-                        </div>
-                    </div>
-                    <div class="text-center py-4">
-                        <a class="h6 text-decoration-none text-truncate" href="" style="white-space: normal;">Thực phẩm bổ sung Canxi và Vitamin D An Huy Anfa Calcium D (Hộp 30 viên)</a>
-                        <div class="d-flex align-items-center justify-content-center mt-2">
-                            <h5>185.000đ</h5>
-                            <h6 class="text-muted ml-2"><del>200.000đ</del></h6>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
-                <div class="product-item bg-light mb-4" style="height: 450px;">
-                    <div class="product-img position-relative overflow-hidden">
-                        <img class="img-fluid w-100" src="images/sp2.jpg" alt="">
-                        <div class="product-action">
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a>
-                        </div>
-                    </div>
-                    <div class="text-center py-4">
-                        <a class="h6 text-decoration-none text-truncate" href="" style="white-space: normal;">Thực phẩm hỗ trợ giảm thoái hóa khớp An Huy Nakomin Extra (Hộp 60 viên)</a>
-                        <div class="d-flex align-items-center justify-content-center mt-2">
-                            <h5>269.000đ</h5>
-                            <h6 class="text-muted ml-2"><del>299.000đ</del></h6>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
-                <div class="product-item bg-light mb-4" style="height: 450px;">
-                    <div class="product-img position-relative overflow-hidden">
-                        <img class="img-fluid w-100" src="images/sp3.jpg" alt="">
-                        <div class="product-action">
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a>
-                        </div>
-                    </div>
-                    <div class="text-center py-4">
-                        <a class="h6 text-decoration-none text-truncate" href="" style="white-space: normal;">Thực phẩm bảo vệ sức khỏe viên uống 
-                            hỗ trợ giảm acid uric trong máu Baigout (Hộp 20 viên)</a>
-                        <div class="d-flex align-items-center justify-content-center mt-2">
-                            <h5>239.000đ</h5>
-                            <h6 class="text-muted ml-2"><del>259.000đ</del></h6>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
-                <div class="product-item bg-light mb-4" style="height: 450px;">
-                    <div class="product-img position-relative overflow-hidden">
-                        <img class="img-fluid w-100" src="images/sp5.jpg" alt="">
-                        <div class="product-action">
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a>
-                        </div>
-                    </div>
-                    <div class="text-center py-4">
-                        <a class="h6 text-decoration-none text-truncate" href="" style="white-space: normal;">Hỗ trợ giảm đau và phục hồi sụn khớp 
-                            Khương Thảo Đan Gold Gold (Hộp 30 viên)</a>
-                        <div class="d-flex align-items-center justify-content-center mt-2">
-                            <h5>173.000 đ</h5>
-                            <h6 class="text-muted ml-2"><del>185.000đ</del></h6>
-                        </div>
-                    </div>
-                </div>
-            </div>
+	<!-- Featured Start -->
+	<div class="container-fluid pt-5">
+		<div class="row px-xl-5 pb-3">
+			<div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+				<div class="d-flex align-items-center bg-light mb-4"
+					style="padding: 30px;">
+					<h1 class="fa fa-check text-primary m-0 mr-3"></h1>
+					<h5 class="font-weight-semi-bold m-0">Sản phẩm chất lượng</h5>
+				</div>
+			</div>
+			<div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+				<div class="d-flex align-items-center bg-light mb-4"
+					style="padding: 30px;">
+					<h1 class="fa fa-shipping-fast text-primary m-0 mr-2"></h1>
+					<h5 class="font-weight-semi-bold m-0">Giao hàng miễn phí</h5>
+				</div>
+			</div>
+			<div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+				<div class="d-flex align-items-center bg-light mb-4"
+					style="padding: 30px;">
+					<h1 class="fas fa-exchange-alt text-primary m-0 mr-3"></h1>
+					<h5 class="font-weight-semi-bold m-0">Đổi trả nếu hàng không
+						chất lượng</h5>
+				</div>
+			</div>
+			<div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+				<div class="d-flex align-items-center bg-light mb-4"
+					style="padding: 30px;">
+					<h1 class="fa fa-phone-volume text-primary m-0 mr-3"></h1>
+					<h5 class="font-weight-semi-bold m-0">Hỗ trợ 24/7</h5>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Featured End -->
+	<!-- Products Start -->
+	<div class="container-fluid pt-5 pb-3">
+		<h2
+			class="section-title position-relative text-uppercase mx-xl-5 mb-4">
+			<span class="bg-secondary pr-3">Sản phẩm nổi bật</span>
+		</h2>
+		<div class="row px-xl-5">
+			<div class="col-lg-3 col-md-4 col-sm-6 pb-1"
+				th:each="item : ${products}">
+				<div class="product-item bg-light mb-4" style="height: 450px;">
+					<div class="product-img position-relative overflow-hidden">
+						<img class="img-fluid w-100" th:src="@{|/images/${item.image}|}"
+							alt="" height="200px" width="95%">
+						<div class="product-action">
+							<a class="btn btn-outline-dark btn-square"
+								th:attr="ng-click=@{|cart.add(${item.id})|}"><i
+								class="fa fa-shopping-cart"></i></a> <a
+								class="btn btn-outline-dark btn-square" href=""><i
+								class="far fa-heart"></i></a> <a
+								class="btn btn-outline-dark btn-square" href=""><i
+								class="fa fa-sync-alt"></i></a> <a
+								class="btn btn-outline-dark btn-square"
+								th:href="@{|/detail/${item.id}|}"><i class="fa fa-search"></i></a>
+						</div>
+					</div>
+					<div class="text-center py-4">
+						<div class="d-flex align-items-center justify-content-center mt-2">
+							<h5 th:text="${item.name}"></h5>
+							<h6 class="text-muted ml-2">
+								<del th:text="${item.price}"></del>
+							</h6>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Products End -->
+	<!-- Products Start -->
+	<div class="container-fluid pt-5 pb-3">
+		<h2
+			class="section-title position-relative text-uppercase mx-xl-5 mb-4">
+			<span class="bg-secondary pr-3">Sản phẩm được yêu thích nhất</span>
+		</h2>
+		<div class="row px-xl-5">
+			<div class="col-lg-3 col-md-4 col-sm-6 pb-1">
+				<div class="product-item bg-light mb-4" style="height: 450px;">
+					<div class="product-img position-relative overflow-hidden">
+						<img class="img-fluid w-100" src="images/sp1.jpg" alt="">
+						<div class="product-action">
+							<a class="btn btn-outline-dark btn-square" href=""><i
+								class="fa fa-shopping-cart"></i></a> <a
+								class="btn btn-outline-dark btn-square" href=""><i
+								class="far fa-heart"></i></a> <a
+								class="btn btn-outline-dark btn-square" href=""><i
+								class="fa fa-sync-alt"></i></a> <a
+								class="btn btn-outline-dark btn-square" href=""><i
+								class="fa fa-search"></i></a>
+						</div>
+					</div>
+					<div class="text-center py-4">
+						<a class="h6 text-decoration-none text-truncate" href=""
+							style="white-space: normal;">Thực phẩm bổ sung Canxi và
+							Vitamin D An Huy Anfa Calcium D (Hộp 30 viên)</a>
+						<div class="d-flex align-items-center justify-content-center mt-2">
+							<h5>185.000đ</h5>
+							<h6 class="text-muted ml-2">
+								<del>200.000đ</del>
+							</h6>
+						</div>
+					</div>
+				</div>
+			</div>
 
-        </div>
-    </div>
-    <!-- Products End -->
+		</div>
+	</div>
+	<!-- Products End -->
 
 
     <!-- Vendor Start -->
