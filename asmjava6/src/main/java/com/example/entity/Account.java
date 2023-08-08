@@ -13,8 +13,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,7 +23,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Account implements Serializable {
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,13 +47,17 @@ public class Account implements Serializable {
 	@Column(name = "active", nullable = false)
 	private boolean isActive;
 
- 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
-   private List<Cart> carts;
-    
-   
-    @OneToMany(fetch = FetchType.EAGER,mappedBy = "user")
-    private List<Favorite> favorites;
+	@OneToMany(mappedBy = "user")
+	@JsonIgnore
+	private List<Cart> carts;
 
-    // Constructors, getters, setters, and other methods as needed.
+	@OneToMany(mappedBy = "user")
+	@JsonIgnore
+	private List<Order> orders;
+
+	@OneToMany(mappedBy = "user")
+	@JsonIgnore
+	private List<Favorite> favorites;
+
+	// Constructors, getters, setters, and other methods as needed.
 }
