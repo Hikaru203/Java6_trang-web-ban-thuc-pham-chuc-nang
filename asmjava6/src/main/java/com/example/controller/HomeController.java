@@ -1,30 +1,26 @@
 package com.example.controller;
 
-import java.lang.ProcessBuilder.Redirect;
 import java.util.List;
 import java.util.Optional;
 
-import org.apache.catalina.authenticator.SpnegoAuthenticator.AuthenticateAction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.view.RedirectView;
 
+import com.example.entity.Account;
 import com.example.entity.Cart;
 import com.example.entity.Product;
-import com.example.entity.Account;
 import com.example.jparepository.AccountRepository;
 import com.example.jparepository.ProductRepository;
+import com.example.service.CartService;
 import com.example.service.CookieService;
 
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
@@ -32,14 +28,37 @@ public class HomeController {
 	@Autowired
 	ProductRepository daoProduct;
 	@Autowired
+	CartService cartService;
+	@Autowired
 	AccountRepository daoAccount;
 	@Autowired
-	private CookieService cookieService;
+	CookieService cookieService;
+
+	@RequestMapping(value = "/client/detail/{id}")
+	public String detail(Model model, @PathVariable("id") int id) {
+		Product item = daoProduct.findById(id).get();
+		model.addAttribute("itemDetail", item);
+		return "detail";
+	}
+
+	
+
+	@RequestMapping(value = "/client/social/success")
+	public String loginGG(Model model) {
+
+		return "redirect:/client/index";
+	}
 
 	@RequestMapping("/client/login")
-	public String lgoin(Model model) {
+	public String showLoginFrom(Model model) {
 		model.addAttribute("user", new Account());
 		return "login";
+	}
+
+	@RequestMapping("/client/denied")
+	public String error(Model model) {
+		System.out.println("chú m k có tuổi");
+		return "redirect:/client/index";
 	}
 
 	@RequestMapping("/client/signin")
@@ -64,11 +83,11 @@ public class HomeController {
 		return "index";
 	}
 
-	@RequestMapping(value = "/client/detail/{id}")
-	public String detail(Model model, @PathVariable("id") int id) {
-		Product item = daoProduct.findById(id).get();
-		model.addAttribute("itemDetail", item);
-		return "detail";
+	@RequestMapping("/client/cart")
+	public String cart(Model model) {
+		List<Cart> list = cartService.findAll();
+		model.addAttribute("carts", list);
+		return "cart";
 	}
 
 	@RequestMapping(value = "/client/login/success")
@@ -101,9 +120,4 @@ public class HomeController {
 		return "login";
 	}
 
-	@RequestMapping(value = "/client/social/success")
-	public String loginGG(Model model) {
-
-		return "redirect:/client/index";
-	}
 }

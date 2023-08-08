@@ -2,13 +2,11 @@ package com.example.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class AdminController {
 
-	@RequestMapping("/admin/index")
+    @GetMapping({ "/admin/index" })
     public String GetProducts() {
         return "admin/index";
     }
@@ -23,4 +21,48 @@ public class AdminController {
         return "admin/AddProduct";
     }
 
+    @GetMapping({ "/admin/ManagedAccount" })
+    public String GetAccounts() {
+        return "admin/ManagedAccount";
+    }
+
+     @GetMapping({ "/admin/AddUser" })
+    public String AddAccount() {
+        return "admin/AddUser";
+    }
+
+    @GetMapping({ "/admin/EditAccount/{id}" })
+    public String EditAccounts() {
+        return "admin/AddUser";
+    }
+
+    @GetMapping({ "/admin/ManagedDiscount" })
+    public String GetDiscount() {
+        return "admin/ManagedDiscount";
+    }
+
+     @GetMapping({ "/admin/AddDiscount" })
+    public String AddDiscount() {
+        return "admin/AddDiscount";
+    }
+
+    @GetMapping({ "/admin/EditDiscount/{id}" })
+    public String EditDiscount() {
+        return "admin/AddDiscount";
+    }
+
+    @GetMapping({ "/admin/ManagedCategories" })
+    public String GetCategories() {
+        return "admin/ManagedCategories";
+    }
+
+     @GetMapping({ "/admin/AddCategories" })
+    public String AddCategories() {
+        return "admin/AddCategories";
+    }
+
+    @GetMapping({ "/admin/EditCategories/{id}" })
+    public String EditCategories() {
+        return "admin/AddCategories";
+    }
 }

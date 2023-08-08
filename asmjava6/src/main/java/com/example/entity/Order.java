@@ -10,6 +10,11 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
@@ -23,17 +28,9 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "user_id")
-    private int user_id;
-
-    @Column(name = "adress")
-    private String adress;
-
-    @Column(name = "phoneNumber")
-    private String phoneNumber;
-
-    @Column(name = "country")
-    private String country;
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
+    private Account user;
 
     // Getters and setters, constructors, and other methods
 }

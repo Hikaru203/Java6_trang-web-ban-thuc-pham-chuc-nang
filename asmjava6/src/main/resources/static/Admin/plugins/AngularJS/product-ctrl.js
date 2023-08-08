@@ -1,11 +1,10 @@
 const host = "http://localhost:8080";
-
 var queryString = new URLSearchParams(window.location.search);
 var jsonData = queryString.get('data');
 var form = JSON.parse(decodeURIComponent(jsonData));
 var fileNameLabel = document.querySelector('.custom-file-label');
 
-app.controller("myCtrl", function($scope, $http, $window) {
+app.controller("myCtrl", function ($scope, $http, $window) {
 	$scope.form = {};
 	$scope.items = [];
 	$scope.currentPage = 1;
@@ -14,12 +13,12 @@ app.controller("myCtrl", function($scope, $http, $window) {
 	$scope.isSubediting = true;
 	$scope.formErrors = {}; // Khởi tạo biến lưu trữ các thông báo lỗi
 
-	$scope.reset = function() {
+	$scope.reset = function () {
 		$scope.form = {};
 		$scope.items = [];
 	};
 
-	$scope.load_all = function() {
+	$scope.load_all = function () {
 		$http.get(host + "/ManagedProduct").then(resp => {
 			$scope.items = resp.data;
 
@@ -35,21 +34,21 @@ app.controller("myCtrl", function($scope, $http, $window) {
 		});
 	};
 
-	$scope.totalPages = function() {
+	$scope.totalPages = function () {
 		return Math.ceil($scope.items.length / $scope.itemsPerPage);
 	};
 
-	$scope.setPage = function(page) {
+	$scope.setPage = function (page) {
 		if (page >= 1 && page <= $scope.totalPages()) {
 			$scope.currentPage = page;
 		}
 	};
 
-	$scope.isCurrentPage = function(page) {
+	$scope.isCurrentPage = function (page) {
 		return $scope.currentPage === page;
 	};
 
-	$scope.getCurrentPageItems = function() {
+	$scope.getCurrentPageItems = function () {
 		const startIndex = ($scope.currentPage - 1) * $scope.itemsPerPage;
 		const endIndex = startIndex + $scope.itemsPerPage;
 		const filteredItems = $scope.items.filter(item => {
@@ -61,7 +60,7 @@ app.controller("myCtrl", function($scope, $http, $window) {
 		return filteredItems.slice(startIndex, endIndex);
 	};
 
-	$scope.getPagesRange = function() {
+	$scope.getPagesRange = function () {
 		const totalPages = $scope.totalPages();
 		const range = [];
 		const min = Math.max(1, $scope.currentPage - 2);
@@ -74,7 +73,7 @@ app.controller("myCtrl", function($scope, $http, $window) {
 		return range;
 	};
 
-	$scope.load_all_categories = function() {
+	$scope.load_all_categories = function () {
 		$http.get(host + "/ManagedCategories").then(resp => {
 			$scope.Categories = resp.data;
 		}).catch(error => {
@@ -82,7 +81,7 @@ app.controller("myCtrl", function($scope, $http, $window) {
 		})
 	};
 
-	$scope.edit = function(id) {
+	$scope.edit = function (id) {
 		var url = host + `/ManagedProduct/${id}`;
 		$http.get(url).then(resp => {
 			$scope.form = resp.data;
@@ -93,7 +92,7 @@ app.controller("myCtrl", function($scope, $http, $window) {
 		});
 	};
 
-	$scope.editRemove = function(id) {
+	$scope.editRemove = function (id) {
 		var url = host + `/ManagedProduct/${id}`;
 		$http.get(url).then(resp => {
 			$scope.form = resp.data;
@@ -106,7 +105,7 @@ app.controller("myCtrl", function($scope, $http, $window) {
 	};
 
 	// Hàm create
-	$scope.create = function() {
+	$scope.create = function () {
 		// Kiểm tra và gán thông báo lỗi vào biến formErrors
 		$scope.formErrors = {};
 		var item = angular.copy($scope.form);
@@ -128,7 +127,7 @@ app.controller("myCtrl", function($scope, $http, $window) {
 		});
 	};
 
-	$scope.update = function() {
+	$scope.update = function () {
 		var item = angular.copy($scope.form);
 		var url = host + `/ManagedProduct/${$scope.form.id}`;
 		console.log(url);
@@ -173,7 +172,7 @@ app.controller("myCtrl", function($scope, $http, $window) {
 		return Object.keys($scope.formErrors).length === 0;
 	}
 
-	$scope.uploadedFile = function(files) {
+	$scope.uploadedFile = function (files) {
 		var data = new FormData();
 		data.append('file', files[0]);
 		$http.post(host + '/upload/statis', data, {

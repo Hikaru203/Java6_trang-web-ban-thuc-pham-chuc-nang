@@ -20,24 +20,23 @@ import lombok.Data;
 @Entity
 @Table(name = "Carts")
 public class Cart implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private Account user;
 
-	@ManyToOne
-	@JoinColumn(name = "product_id", nullable = false)
-	private Product product;
+    @ManyToOne
+    @JoinColumn(name = "product_id", nullable = false)
+    private Product product;
 
-	private int quantity;
-	
-	@JoinColumn(name = "is_active", nullable = true)
-	private boolean isActive;
-
+    private int quantity;
+    
+    @JoinColumn(name = "is_acctive")
+    private boolean isActive;
 }
