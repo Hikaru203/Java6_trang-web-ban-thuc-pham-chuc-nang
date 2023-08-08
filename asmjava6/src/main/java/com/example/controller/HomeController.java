@@ -14,46 +14,32 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
 
+import com.example.entity.Cart;
 import com.example.entity.Product;
 import com.example.entity.Account;
 import com.example.jparepository.ProductRepository;
-import com.example.jparepository.AccountRepository;
-import com.fasterxml.jackson.annotation.JsonCreator.Mode;
+import com.example.service.CartService;
+import com.example.service.impl.CartServiceImpl;
 
 @Controller
 public class HomeController {
 	@Autowired
 	ProductRepository daoProduct;
 
-	@RequestMapping("/client/login")
-	public String showLoginFrom(Model model) {
-		model.addAttribute("user", new Account());
-		return "login";
-	}
-	@RequestMapping("/client/denied")
-	public String error(Model model) {
-		System.out.println("chú m k có tuổi");
-		return "redirect:/client/index";
-	}
-
-	@RequestMapping("/client/signin")
-	public String showsinupFrom(Model model) {
-		model.addAttribute("user", new Account());
-		return "dangky";
-	}
-
-	@RequestMapping("/client/index")
-	public String index(Model model, @RequestParam("cid") Optional<Integer> cid) {
-		System.out.println(cid);
-		if (cid.isPresent()) {
-
+	@Autowired
+	CartService cartService;
+	
+	@RequestMapping("/index")
+	public String index(Model model,@RequestParam("cid") Optional<Integer> cid) {
+		
+		if(cid.isPresent()) {
+			
 			List<Product> page = daoProduct.findByCategory(cid.get());
 			model.addAttribute("products", page);
 		} else {
 			List<Product> page = daoProduct.findAll();
 			model.addAttribute("products", page);
 		}
-
 		return "index";
 	}
 

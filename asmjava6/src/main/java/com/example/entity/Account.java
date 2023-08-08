@@ -1,9 +1,13 @@
 package com.example.entity;
+
 import java.io.Serializable;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -12,6 +16,7 @@ import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 
 @Entity
 @Table(name = "Users")
@@ -43,13 +48,16 @@ public class Account implements Serializable {
     @Column(name = "active", nullable = false)
     private boolean isActive;
 
-    @OneToMany(mappedBy = "user")
+ 
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
     private List<Cart> carts;
-
-    @OneToMany(mappedBy = "user")
+    
+   
+    @OneToMany(fetch = FetchType.EAGER,mappedBy = "user")
     private List<Order> orders;
     
-    @OneToMany(mappedBy = "user")
+
+    @OneToMany(fetch = FetchType.EAGER,mappedBy = "user")
     private List<Favorite> favorites;
 
     // Constructors, getters, setters, and other methods as needed.
