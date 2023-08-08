@@ -95,7 +95,7 @@ app.controller("shopping-cart-ctrl", function($scope, $http) {
 			// Kiểm tra nếu có ít nhất một hàng được chọn, hiển thị nút xóa
 			$scope.showDeleteButton = totalChecked > 0;
 		};
-s		$scope.order = {
+		$scope.order = {
 			address: "",
 			account: { username: $("#fullName").text() },
 			get orderDetail() {

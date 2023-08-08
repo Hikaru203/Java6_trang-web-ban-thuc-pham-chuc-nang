@@ -40,7 +40,6 @@ public class AdminAPI {
     @GetMapping({ "/admin/ManagedProduct" })
     public Object getProducts() {
         return productRepository.findAll();
-
     }
 
     @GetMapping({ "/ManagedProduct/{id}" })
