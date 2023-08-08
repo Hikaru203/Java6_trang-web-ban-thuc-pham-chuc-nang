@@ -9,6 +9,7 @@ import com.example.entity.Account;
 import com.example.entity.Cart;
 import com.example.entity.Product;
 
+
 @Repository
 public interface CartRepository extends JpaRepository<Cart, Integer> {
 
