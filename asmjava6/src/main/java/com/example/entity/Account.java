@@ -49,8 +49,8 @@ public class Account implements Serializable {
     @OneToMany(mappedBy = "user")
     private List<Order> orders;
 
-    @OneToMany(mappedBy = "user")
-    private List<Favorite> favorites;
+//    @OneToMany(mappedBy = "user")
+//    private List<Favorite> favorites;
 
     // Constructors, getters, setters, and other methods as needed.
 }

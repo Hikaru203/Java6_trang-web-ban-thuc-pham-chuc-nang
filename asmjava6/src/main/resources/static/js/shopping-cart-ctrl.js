@@ -17,6 +17,21 @@ app.controller("shopping-cart-ctrl", function($scope, $http) {
 				});
 			}
 		},
+		favorite(id){
+			var url = `/rest/products/add-to-favorite/${id}`;
+			alert(url);
+			alert("Yêu thích sản phẩm thành công")
+            $http.post(url)
+                .then(response => {
+                    console.log(response.data);
+                    
+                    
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+	
+		},
 		saveToDatabase() {
 			const json = angular.toJson(this.items);
 			$http.post("/rest/cart", json).then(resp => {
@@ -92,4 +107,5 @@ app.controller("shopping-cart-ctrl", function($scope, $http) {
 			})
 		}
 	}
+	
 });

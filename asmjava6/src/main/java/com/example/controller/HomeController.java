@@ -16,14 +16,18 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import com.example.entity.Product;
 import com.example.entity.Account;
+import com.example.entity.Favorite;
 import com.example.jparepository.ProductRepository;
 import com.example.jparepository.AccountRepository;
+import com.example.jparepository.FavoriteRepository;
 import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 
 @Controller
 public class HomeController {
 	@Autowired
 	ProductRepository daoProduct;
+	@Autowired
+	FavoriteRepository favoriteRepository;
 
 	@RequestMapping("/client/login")
 	public String showLoginFrom(Model model) {
@@ -70,8 +74,15 @@ public class HomeController {
 	  }
 	  @RequestMapping(value = "/client/social/success")
 	   public String loginGG (Model model) {
-		  
+		  System.out.println("logingg");
 		  return "redirect:/client/index";
 	  }
-
+	  @RequestMapping(value = "/client/favorite")
+	   public String favorite (Model model) {
+		  List<Favorite> list = favoriteRepository.findAll();
+		  model.addAttribute("items",list);
+		  return "favoriteProductPage";
+	  }
+	  
+	  
 }

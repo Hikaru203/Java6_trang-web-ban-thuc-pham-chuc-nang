@@ -24,14 +24,14 @@
 <!-- Libraries Stylesheet -->
 <link th:href="@{/lib/owlcarousel/assets/owl.carousel.min.css}"
 	rel="stylesheet">
-
+<script th:src="@{https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js}"></script>
 <!-- Customized Bootstrap Stylesheet -->
 <link th:href="@{/css/style.css}" rel="stylesheet">
 </head>
 
-<body>
+<body ng-app="shopping-cart-app" ng-controller="shopping-cart-ctrl">
     <!-- Topbar Start -->
-    <div class="container-fluid">
+    <div class="container-fluid" >
         <div class="row bg-secondary py-1 px-xl-5">
             <div class="col-lg-6 d-none d-lg-block">
 
@@ -39,8 +39,7 @@
             <div class="col-lg-6 text-center text-lg-right">
                 <div class="d-inline-flex align-items-center">
                     <div class="btn-group">
-                        <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">My
-                            Account</button>
+                        <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">Tài khoản</button>
                         <div class="dropdown-menu dropdown-menu-right">
                             <a href="/client/login" class="dropdown-item">Đăng nhập</a> 
                             <a href="/sinup" class="dropdown-item">Đăng ký</a> 
@@ -135,7 +134,7 @@
                                     <a href="checkout" class="dropdown-item">Thanh toán</a>
                                 </div>
                             </div>
-                            <a href="favoriteProductPage.html" class="nav-item nav-link">Yêu thích</a>
+                            <a href="favorite" class="nav-item nav-link">Yêu thích</a>
                         </div>
                         <div class="navbar-nav ml-auto py-0 d-none d-lg-block">
                             <a href="" class="btn px-0">
@@ -418,9 +417,10 @@
 						<div class="product-action">
 							<a class="btn btn-outline-dark btn-square"
 								th:attr="ng-click=@{|cart.add(${item.id})|}"><i
-								class="fa fa-shopping-cart"></i></a> <a
-								class="btn btn-outline-dark btn-square" href=""><i
-								class="far fa-heart"></i></a> <a
+								class="fa fa-shopping-cart"></i></a> 
+								<a class="btn btn-outline-dark btn-square"
+								th:attr="ng-click=@{|cart.favorite(${item.id})|}"><i
+								class="fa fa-heart"></i></a><a
 								class="btn btn-outline-dark btn-square" href=""><i
 								class="fa fa-sync-alt"></i></a> <a
 								class="btn btn-outline-dark btn-square"
@@ -441,43 +441,6 @@
 	</div>
 	<!-- Products End -->
 	<!-- Products Start -->
-	<div class="container-fluid pt-5 pb-3">
-		<h2
-			class="section-title position-relative text-uppercase mx-xl-5 mb-4">
-			<span class="bg-secondary pr-3">Sản phẩm được yêu thích nhất</span>
-		</h2>
-		<div class="row px-xl-5">
-			<div class="col-lg-3 col-md-4 col-sm-6 pb-1">
-				<div class="product-item bg-light mb-4" style="height: 450px;">
-					<div class="product-img position-relative overflow-hidden">
-						<img class="img-fluid w-100" src="images/sp1.jpg" alt="">
-						<div class="product-action">
-							<a class="btn btn-outline-dark btn-square" href=""><i
-								class="fa fa-shopping-cart"></i></a> <a
-								class="btn btn-outline-dark btn-square" href=""><i
-								class="far fa-heart"></i></a> <a
-								class="btn btn-outline-dark btn-square" href=""><i
-								class="fa fa-sync-alt"></i></a> <a
-								class="btn btn-outline-dark btn-square" href=""><i
-								class="fa fa-search"></i></a>
-						</div>
-					</div>
-					<div class="text-center py-4">
-						<a class="h6 text-decoration-none text-truncate" href=""
-							style="white-space: normal;">Thực phẩm bổ sung Canxi và
-							Vitamin D An Huy Anfa Calcium D (Hộp 30 viên)</a>
-						<div class="d-flex align-items-center justify-content-center mt-2">
-							<h5>185.000đ</h5>
-							<h6 class="text-muted ml-2">
-								<del>200.000đ</del>
-							</h6>
-						</div>
-					</div>
-				</div>
-			</div>
-
-		</div>
-	</div>
 	<!-- Products End -->
 
 
@@ -587,18 +550,19 @@
     <a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
 
 
-    <!-- JavaScript Libraries -->
+    <!-- <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-    <script src="lib/easing/easing.min.js"></script>
-    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="/lib/easing/easing.min.js"></script>
+    <script src="/lib/owlcarousel/owl.carousel.min.js"></script>
 
-    <!-- Contact Javascript File -->
-    <script src="mail/jqBootstrapValidation.min.js"></script>
-    <script src="mail/contact.js"></script>
+    Contact Javascript File
+    <script src="/mail/jqBootstrapValidation.min.js"></script>
+    <script src="/mail/contact.js"></script> -->
 
     <!-- Template Javascript -->
-    <script src="js/main.js"></script>
+    <script src="./js/main.js"></script>
+    <script src="../js/shopping-cart-ctrl.js"></script>
 </body>
 
 </html>
