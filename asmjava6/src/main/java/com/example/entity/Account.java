@@ -49,15 +49,18 @@ public class Account implements Serializable {
     private boolean isActive;
 
  
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
     private List<Cart> carts;
     
    
-    @OneToMany(fetch = FetchType.EAGER,mappedBy = "user")
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
     private List<Order> orders;
     
 
-    @OneToMany(fetch = FetchType.EAGER,mappedBy = "user")
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
     private List<Favorite> favorites;
 
     // Constructors, getters, setters, and other methods as needed.
