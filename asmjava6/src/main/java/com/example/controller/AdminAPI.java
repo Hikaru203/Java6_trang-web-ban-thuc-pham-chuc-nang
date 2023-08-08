@@ -67,7 +67,7 @@ public class AdminAPI {
     }
 
     @GetMapping({ "/ManagedAccount/{id}" })
-    public Account getAccount(@PathVariable("id") int id) {
+    public Optional<Account> getAccount(@PathVariable("id") int id) {
         return userRepository.findById(id);
     }
 

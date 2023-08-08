@@ -74,7 +74,7 @@ public class HomeController {
 		return "index";
 	}
 
-	@RequestMapping("/cart")
+	@RequestMapping("/client/cart")
 	public String cart(Model model) {
 		List<Cart> list = cartService.findAll();
 		model.addAttribute("carts", list);
