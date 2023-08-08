@@ -36,4 +36,7 @@ public class Cart implements Serializable {
     private Product product;
 
     private int quantity;
+    
+    @JoinColumn(name = "is_acctive")
+    private boolean isActive;
 }
