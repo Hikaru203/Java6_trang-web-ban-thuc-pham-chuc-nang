@@ -15,13 +15,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.entity.Account;
 import com.example.entity.Brand;
 import com.example.entity.Cart;
 import com.example.entity.Product;
-import com.example.jparepository.AccountRepository;
+import com.example.entity.User;
 import com.example.jparepository.CartRepository;
 import com.example.jparepository.ProductRepository;
+import com.example.jparepository.UserRepository;
 import com.example.service.CartService;
 import com.example.service.ProductService;
 
@@ -39,7 +39,7 @@ public class CartRestController {
 	ProductService productService;
 
 	@Autowired
-	AccountRepository userRepository;
+	UserRepository userRepository;
 
 	@Autowired
 	CartRepository dao;
@@ -69,7 +69,7 @@ public class CartRestController {
 			@PathVariable("UserId") Integer userId, @PathVariable("quantity") int quantity) {
 
 		Product product = productService.findById(productId);
-		Account user = userRepository.findById(userId).orElse(null);
+		User user = userRepository.findById(userId).orElse(null);
 
 		if (product == null || user == null) {
 			return ResponseEntity.badRequest().body("Product or user not found!");
@@ -87,6 +87,7 @@ public class CartRestController {
 			cart = cartRepository.save(cart);
 		} else {
 			cart.setQuantity(cart.getQuantity() + 1);
+			cart.setActive(true);
 			cart = cartRepository.save(cart);
 		}
 
@@ -109,6 +110,18 @@ public class CartRestController {
 		return ResponseEntity.ok("{\"message\": \"Quantity updated successfully!\"}");
 	}
 
-	
+	@PutMapping("/deleteCart/{id}")
+	public ResponseEntity<String> deleteCart(@PathVariable("id") Integer id) {
+		Cart cart = cartService.findById(id);
+
+		if (cart == null) {
+			return ResponseEntity.notFound().build();
+		}
+
+		cart.setActive(false);
+		cartRepository.save(cart);
+
+		return ResponseEntity.ok("{\"message\": \"Cart marked as inactive!\"}");
+	}
 
 }
