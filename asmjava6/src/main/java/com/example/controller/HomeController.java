@@ -28,12 +28,6 @@ public class HomeController {
 
 	@Autowired
 	CartService cartService;
-	
-	@RequestMapping("/index")
-	public String index(Model model,@RequestParam("cid") Optional<Integer> cid) {
-		
-		return "redirect:/client/index";
-	}
 
 	@RequestMapping("/client/signin")
 	public String showsinupFrom(Model model) {

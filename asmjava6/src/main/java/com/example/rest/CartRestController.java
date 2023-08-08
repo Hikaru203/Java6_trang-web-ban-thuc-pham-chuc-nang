@@ -15,13 +15,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.entity.Account;
 import com.example.entity.Brand;
 import com.example.entity.Cart;
 import com.example.entity.Product;
-import com.example.entity.User;
+import com.example.jparepository.AccountRepository;
 import com.example.jparepository.CartRepository;
 import com.example.jparepository.ProductRepository;
-import com.example.jparepository.UserRepository;
+
 import com.example.service.CartService;
 import com.example.service.ProductService;
 
@@ -39,7 +40,7 @@ public class CartRestController {
 	ProductService productService;
 
 	@Autowired
-	UserRepository userRepository;
+	AccountRepository accountRepository;
 
 	@Autowired
 	CartRepository dao;
@@ -69,14 +70,14 @@ public class CartRestController {
 			@PathVariable("UserId") Integer userId, @PathVariable("quantity") int quantity) {
 
 		Product product = productService.findById(productId);
-		User user = userRepository.findById(userId).orElse(null);
+		Account user = accountRepository.findById(userId).orElse(null);
 
 		if (product == null || user == null) {
 			return ResponseEntity.badRequest().body("Product or user not found!");
 		}
 
 		// Kiểm tra xem người dùng đã có giỏ hàng hay chưa
-		Cart cart = dao.findByUserAndProduct(user, product);
+		Cart cart = dao.findByAccountAndProduct(user, product);
 
 		if (cart == null) {
 			cart = new Cart();
