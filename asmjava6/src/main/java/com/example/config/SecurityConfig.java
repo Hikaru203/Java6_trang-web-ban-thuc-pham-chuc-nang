@@ -70,7 +70,7 @@ public class SecurityConfig {
 				"/login/oauth2/code/google","/oauth2/authorization/facebook","/login/oauth2/code/facebook")   
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(new AntPathRequestMatcher("/admin/**")).hasRole("ADMIN")
-//                        .requestMatchers(new AntPathRequestMatcher("/client/order/**")).hasAnyRole("USER", "ADMIN")
+                        .requestMatchers(new AntPathRequestMatcher("/client/cart/**")).hasAnyRole("USER", "ADMIN")
                         .requestMatchers(
                                 new AntPathRequestMatcher("/client/**"))
                         .permitAll())
