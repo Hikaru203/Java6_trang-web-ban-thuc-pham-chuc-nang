@@ -14,9 +14,8 @@ public interface CartRepository extends JpaRepository<Cart, Integer> {
 
 	List<Cart> findByUserId(Integer id);
     // Các phương thức truy vấn dữ liệu cho Entity Cart
-	Cart findByAccount(Account user);
-	
-	Cart findByAccountAndProduct(Account user, Product product);
+	Cart findByUser(Account user);
+	Cart findByUserAndProduct(Account user, Product product);
 	
 }
 

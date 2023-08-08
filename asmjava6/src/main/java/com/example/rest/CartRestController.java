@@ -22,7 +22,6 @@ import com.example.entity.Product;
 import com.example.jparepository.AccountRepository;
 import com.example.jparepository.CartRepository;
 import com.example.jparepository.ProductRepository;
-
 import com.example.service.CartService;
 import com.example.service.ProductService;
 
@@ -40,7 +39,7 @@ public class CartRestController {
 	ProductService productService;
 
 	@Autowired
-	AccountRepository accountRepository;
+	AccountRepository userRepository;
 
 	@Autowired
 	CartRepository dao;
@@ -70,14 +69,14 @@ public class CartRestController {
 			@PathVariable("UserId") Integer userId, @PathVariable("quantity") int quantity) {
 
 		Product product = productService.findById(productId);
-		Account user = accountRepository.findById(userId).orElse(null);
+		Account user = userRepository.findById(userId).orElse(null);
 
 		if (product == null || user == null) {
 			return ResponseEntity.badRequest().body("Product or user not found!");
 		}
 
 		// Kiểm tra xem người dùng đã có giỏ hàng hay chưa
-		Cart cart = dao.findByAccountAndProduct(user, product);
+		Cart cart = dao.findByUserAndProduct(user, product);
 
 		if (cart == null) {
 			cart = new Cart();
@@ -87,9 +86,17 @@ public class CartRestController {
 			cart.setActive(true);
 			cart = cartRepository.save(cart);
 		} else {
-			cart.setQuantity(cart.getQuantity() + 1);
-			cart.setActive(true);
-			cart = cartRepository.save(cart);
+			if (cart.isActive()) {
+				System.out.println(1);
+				cart.setQuantity(cart.getQuantity() + 1);
+				cart.setActive(true);
+				cart = cartRepository.save(cart);
+			} else {
+				System.out.println(2);
+				cart.setQuantity(1);
+				cart.setActive(true);
+				cart = cartRepository.save(cart);
+			}
 		}
 
 		return ResponseEntity.ok("{\"message\": \"Added to cart successfully!\"}");
