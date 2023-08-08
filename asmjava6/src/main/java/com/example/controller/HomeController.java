@@ -1,6 +1,5 @@
 package com.example.controller;
 
-
 import java.lang.ProcessBuilder.Redirect;
 import java.util.List;
 import java.util.Optional;
@@ -28,12 +27,48 @@ public class HomeController {
 
 	@Autowired
 	CartService cartService;
-	
-	@RequestMapping("/index")
-	public String index(Model model,@RequestParam("cid") Optional<Integer> cid) {
-		
-		if(cid.isPresent()) {
-			
+
+	@RequestMapping(value = "/client/detail/{id}")
+	public String detail(Model model, @PathVariable("id") int id) {
+		Product item = daoProduct.findById(id).get();
+		model.addAttribute("itemDetail", item);
+		return "detail";
+	}
+
+	@RequestMapping(value = "/client/login/success")
+	public String ht(Model model) {
+		return "redirect:/client/index";
+	}
+
+	@RequestMapping(value = "/client/social/success")
+	public String loginGG(Model model) {
+
+		return "redirect:/client/index";
+	}
+
+	@RequestMapping("/client/login")
+	public String showLoginFrom(Model model) {
+		model.addAttribute("user", new Account());
+		return "login";
+	}
+
+	@RequestMapping("/client/denied")
+	public String error(Model model) {
+		System.out.println("chú m k có tuổi");
+		return "redirect:/client/index";
+	}
+
+	@RequestMapping("/client/signin")
+	public String showsinupFrom(Model model) {
+		model.addAttribute("user", new Account());
+		return "dangky";
+	}
+
+	@RequestMapping("/client/index")
+	public String index(Model model, @RequestParam("cid") Optional<Integer> cid) {
+		System.out.println(cid);
+		if (cid.isPresent()) {
+
 			List<Product> page = daoProduct.findByCategory(cid.get());
 			model.addAttribute("products", page);
 		} else {
@@ -42,22 +77,5 @@ public class HomeController {
 		}
 		return "index";
 	}
-
-	@RequestMapping(value = "/client/detail/{id}")
-	public String detail(Model model, @PathVariable("id") int id) {
-		Product item = daoProduct.findById(id).get();
-		model.addAttribute("itemDetail", item);
-		return "detail";
-	}
-	  @RequestMapping(value = "/client/login/success")
-	   public String ht (Model model) {
-		  
-		  return "redirect:/client/index";
-	  }
-	  @RequestMapping(value = "/client/social/success")
-	   public String loginGG (Model model) {
-		  
-		  return "redirect:/client/index";
-	  }
 
 }

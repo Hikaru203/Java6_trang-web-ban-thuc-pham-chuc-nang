@@ -34,15 +34,6 @@ public class Order {
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     private Account user;
 
-    @Column(nullable = false)
-    private String address;
-
-    @Column(nullable = false, length = 20)
-    private String phoneNumber;
-
-    @Column(nullable = false)
-    private String country;
-
     // Getters and setters, constructors, and other methods
 }
 
