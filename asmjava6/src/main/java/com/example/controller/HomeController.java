@@ -16,10 +16,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.example.entity.Account;
 import com.example.entity.Cart;
 import com.example.entity.Product;
+import com.example.jparepository.AccountRepository;
 import com.example.jparepository.ProductRepository;
+import com.example.service.CartService;
+import com.example.service.CookieService;
 
 import jakarta.servlet.http.HttpServletResponse;
-
 
 @Controller
 public class HomeController {
@@ -27,6 +29,10 @@ public class HomeController {
 	ProductRepository daoProduct;
 	@Autowired
 	CartService cartService;
+	@Autowired
+	AccountRepository daoAccount;
+	@Autowired
+	CookieService cookieService;
 
 	@RequestMapping(value = "/client/detail/{id}")
 	public String detail(Model model, @PathVariable("id") int id) {
@@ -35,10 +41,7 @@ public class HomeController {
 		return "detail";
 	}
 
-	@RequestMapping(value = "/client/login/success")
-	public String ht(Model model) {
-		return "redirect:/client/index";
-	}
+	
 
 	@RequestMapping(value = "/client/social/success")
 	public String loginGG(Model model) {
@@ -57,8 +60,6 @@ public class HomeController {
 		System.out.println("chú m k có tuổi");
 		return "redirect:/client/index";
 	}
-	
-	
 
 	@RequestMapping("/client/signin")
 	public String showsinupFrom(Model model) {
@@ -77,8 +78,8 @@ public class HomeController {
 			List<Product> page = daoProduct.findAll();
 			model.addAttribute("products", page);
 		}
-//		List<Cart> cartItem=cartService.findAll();
-//		model.addAttribute("cartItem",cartItem);
+		// List<Cart> cartItem=cartService.findAll();
+		// model.addAttribute("cartItem",cartItem);
 		return "index";
 	}
 
@@ -89,38 +90,34 @@ public class HomeController {
 		return "cart";
 	}
 
-	   @RequestMapping(value = "/client/login/success")
-	    public String success(Model model, HttpServletResponse response) {
-	        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-	        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
-	            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+	@RequestMapping(value = "/client/login/success")
+	public String success(Model model, HttpServletResponse response) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
+			UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
-	            String username = userDetails.getUsername();
+			String username = userDetails.getUsername();
 
-	            Account account = daoAccount.findByUserName(username);
+			Account account = daoAccount.findByUserName(username);
 
-	            if (account != null) {
-                String cleanedUsername = account.getUserName().replaceAll("\\s", "");
-                cookieService.setCookie(response, "username", cleanedUsername, 3600);
-                System.out.println("Đăng nhập thành công");
-	            } else {
-	                System.out.println("Không tìm thấy tài khoản");
-	          }
+			if (account != null) {
+				String cleanedUsername = account.getUserName().replaceAll("\\s", "");
+				cookieService.setCookie(response, "username", cleanedUsername, 3600);
+				System.out.println("Đăng nhập thành công");
+			} else {
+				System.out.println("Không tìm thấy tài khoản");
+			}
 
-           return "redirect:/client/index";
-      } else {
-          return "redirect:/client/index";
-       }
+			return "redirect:/client/index";
+		} else {
+			return "redirect:/client/index";
+		}
 	}
-	  @RequestMapping(value = "/client/signin/error")
-	   public String loi (Model model) {
-		  model.addAttribute("loi", "Sai thông tin đăng nhập, Vui lòng nhập lại");
-		  return "login";
-	  }
-	  
-	  @RequestMapping(value = "/client/social/success")
-	   public String loginGG (Model model) {
-		 
-		  return "redirect:/client/index";
-	  }
+
+	@RequestMapping(value = "/client/signin/error")
+	public String loi(Model model) {
+		model.addAttribute("loi", "Sai thông tin đăng nhập, Vui lòng nhập lại");
+		return "login";
+	}
+
 }

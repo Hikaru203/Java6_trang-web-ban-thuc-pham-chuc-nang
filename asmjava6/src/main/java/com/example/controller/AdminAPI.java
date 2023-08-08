@@ -37,10 +37,9 @@ public class AdminAPI {
     @Autowired
     private CategoryRepository categoryRepository;
 
-    @GetMapping({ "/admin/ManagedProduct" })
+    @GetMapping({ "/ManagedProduct" })
     public Object getProducts() {
         return productRepository.findAll();
-
     }
 
     @GetMapping({ "/ManagedProduct/{id}" })
