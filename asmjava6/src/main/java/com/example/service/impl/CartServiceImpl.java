@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.entity.Cart;
 import com.example.jparepository.CartRepository;
-import com.example.jparepository.UserRepository;
+
 import com.example.service.CartService;
 
 @Service
