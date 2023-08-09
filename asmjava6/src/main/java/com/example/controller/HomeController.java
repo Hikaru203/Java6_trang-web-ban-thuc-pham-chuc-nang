@@ -55,7 +55,7 @@ public class HomeController {
 
 	@RequestMapping("/client/denied")
 	public String error(Model model) {
-		System.out.println("chú m k có tuổi");
+		
 		return "redirect:/client/index";
 	}
 
@@ -105,10 +105,10 @@ public class HomeController {
 			} else {
 				System.out.println("Không tìm thấy tài khoản");
 			}
-			System.out.println(312312314);
+			
 			return "redirect:/client/index";
 		} else {
-			System.out.println(312312314);
+			
 			return "redirect:/client/index";
 		}
 	}

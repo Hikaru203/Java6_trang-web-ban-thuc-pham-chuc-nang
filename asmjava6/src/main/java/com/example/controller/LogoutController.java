@@ -17,7 +17,6 @@ public class LogoutController {
         cookie.setMaxAge(0); // Đặt thời gian hết hạn là 0 để xoá cookie
         cookie.setPath("/"); // Đảm bảo path của cookie khớp với path ban đầu khi tạo cookie
         response.addCookie(cookie);
-        System.out.println(123);
         // Chuyển hướng đến trang đăng xuất hoặc trang khác
         return "redirect:/client/index"; // Thay đổi URL mục tiêu nếu cần
     }

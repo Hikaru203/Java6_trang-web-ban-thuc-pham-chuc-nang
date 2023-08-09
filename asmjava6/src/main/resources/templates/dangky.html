@@ -66,7 +66,25 @@
         }else{
             return false;
         }
-
+        function checkUserNameAvailability() {
+            var userName = document.getElementById("userNameInput").value;
+    
+            // Tại đây, bạn cần gửi yêu cầu AJAX tới máy chủ để kiểm tra xem tên đăng nhập đã tồn tại chưa.
+            // Ví dụ:
+            // Gửi yêu cầu AJAX bằng jQuery
+            $.ajax({
+                type: "POST",
+                url: "/check-username-availability", // Đổi thành URL xử lý kiểm tra tên đăng nhập
+                data: { userName: userName },
+                success: function(response) {
+                    if (response === "exists") {
+                        document.getElementById("userNameError").innerText = "Tên đăng nhập đã tồn tại";
+                    } else {
+                        document.getElementById("userNameError").innerText = "";
+                    }
+                }
+            });
+        }
     } 
     function showSuccessMessage(message) {
         toastr.success(message);
@@ -93,7 +111,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text"> <i class="fa fa-user"></i> </span>
                 </div>
-                <input name="userName" class="form-control" placeholder="Tên Tài khoản" type="text">
+                <input id="userNameInput" name="userName" class="form-control" placeholder="Tên Tài khoản" type="text">
             </div> <!-- form-group// -->
             <div id="emailError" style="color: red;"></div>
             <div class="form-group input-group">
