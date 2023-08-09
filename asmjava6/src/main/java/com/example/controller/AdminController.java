@@ -21,13 +21,23 @@ public class AdminController {
     public String EditProducts() {
         return "admin/AddProduct";
     }
+
     @GetMapping({ "/admin/ManagedBrands" })
     public String ManagedBrands() {
         return "admin/ManagedBrands";
     }
+
     @GetMapping({ "/admin/ManagedDistributors" })
     public String ManagedDistributors() {
         return "admin/ManagedDistributors";
     }
 
+    @GetMapping({ "/admin/ManagedOrders" })
+    public String ManagedOrders() {
+        return "admin/ManagedOrders";
+    }
+    @GetMapping({ "/admin/ReportFavoriteProducts" })
+    public String ReportFavoriteProducts() {
+        return "admin/ReportFavoriteProducts";
+    }
 }
