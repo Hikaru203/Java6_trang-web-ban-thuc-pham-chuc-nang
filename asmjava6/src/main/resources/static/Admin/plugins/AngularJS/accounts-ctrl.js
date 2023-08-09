@@ -13,26 +13,20 @@ app.controller("myCtrl", function ($scope, $http, $window) {
 	$scope.itemsPerPage = 2;
 	$scope.isSubmitting = false;
 	$scope.isSubediting = true;
-	$scope.users = [];
 	$scope.formErrors = {}; // Khởi tạo biến lưu trữ các thông báo lỗi
-	$scope.user = {};
 	$scope.reset = function () {
 		// Đặt giá trị mặc định cho các biến hoặc xóa dữ liệu nếu cần thiết.
 		$scope.form = {};
 		$scope.users = [];
-		$scope.load_all();
-		$(".nav-tabs a:eq(0)").tab('show');
 	};
 
 	$scope.load_all = function () {
 		$http.get(host + "/ManagedAccount").then(resp => {
 			$scope.users = resp.data;
-			if ($scope.user != null) {
-				console.log($scope.user);
-				$scope.users = $scope.users.filter(user => user.id != $scope.user.id);
-				$scope.form = $scope.user;
-				$scope.users = $scope.users.filter(user => user.active == true);
-				console.log($scope.users);
+			if (form != null) {
+				$scope.form = form;
+				$scope.isSubmitting = true;
+				$scope.isSubediting = false;
 			}
 		}).catch(error => {
 			console.log(error);
@@ -95,16 +89,13 @@ app.controller("myCtrl", function ($scope, $http, $window) {
 
 		return range;
 	};
-
 	$scope.edit = function (id) {
-		var url = host + `/ManagedAccount/${id}`;
+		var url = host + `/ManagedAccount/${id}`; // Thay 'ManagedProduct' bằng 'ManagedAccount'
 		$http.get(url).then(resp => {
-			$scope.form = resp.data;
-			if ($scope.form.admin == true) {
-				alert("Không thể sửa tài khoản admin");
-			} else {
-				$(".nav-tabs a:eq(1)").tab('show');
-			}
+			var userToEdit = resp.data; // Lưu thông tin người dùng nhận được từ phản hồi vào biến userToEdit  
+			// Điều hướng đến trang chỉnh sửa với thông tin người dùng
+			$window.location.href = `${host}/admin/EditAccount/${id}?data=${encodeURIComponent(JSON.stringify(userToEdit))}`;
+			$scope.form = form;
 		}).catch(error => {
 			console.log(error);
 		});
@@ -135,9 +126,9 @@ app.controller("myCtrl", function ($scope, $http, $window) {
 	$scope.update = function () {
 		$scope.formErrors = {};
 		var item = angular.copy($scope.form);
-		$(".nav-tabs a:eq(0)").tab('show');
-		var isValid = validateAccount1(item);
 		var url = host + `/ManagedAccount/${$scope.form.id}`;
+		console.log(url);
+		var isValid = validateAccount(item);
 		console.log($scope.form.id);
 		if (!isValid) {
 			console.error("Validation failed");
@@ -147,10 +138,7 @@ app.controller("myCtrl", function ($scope, $http, $window) {
 			var index = $scope.items.findIndex(p => p.id === $scope.form.id);
 			console.log(index);
 			$scope.items[index] = resp.data;
-			$scope.reset();
-			$scope.load_all();
-			$(".nav-tabs a:eq(0)").tab('show');
-
+			$window.location.href = `${host}/admin/ManagedAccount`;
 			console.log("thanh cong", resp);
 		}).catch(error => {
 			console.log(error);
@@ -161,13 +149,9 @@ app.controller("myCtrl", function ($scope, $http, $window) {
 		var url = host + `/ManagedAccount/${id}`;
 		$http.get(url).then(resp => {
 			$scope.form = resp.data;
-			if ($scope.form.admin == true) {
-				alert("Không thể xóa tài khoản admin");
-			} else {
-				$scope.form.active = false;
-				console.log($scope.form);
-				$scope.update();
-			}
+			$scope.form.active = false;
+			console.log($scope.form);
+			$scope.update();
 		}).catch(error => {
 			console.log(error);
 		});
@@ -185,59 +169,6 @@ app.controller("myCtrl", function ($scope, $http, $window) {
 		// Kiểm tra trường email
 		if (!$scope.form.email) {
 			$scope.formErrors.email = "Vui lòng nhập địa chỉ email.";
-		} else if ($scope.users.some(user => user.email === $scope.form.email)) {
-			console.log($scope.form.email);
-
-			// Kiểm tra tên người dùng trong vòng lặp for
-			for (let i = 0; i < $scope.users.length; i++) {
-				if ($scope.users[i].email === $scope.form.email) {
-					console.log($scope.users[i].email + " đã tồn tại.");
-					break; // Thoát khỏi vòng lặp khi tìm thấy tên người dùng trùng
-				}
-			}
-
-			$scope.formErrors.email = "Email đã tồn tại.";
-		}
-
-		// Kiểm tra trường username
-		if (!$scope.form.userName) {
-			$scope.formErrors.userName = "Vui lòng nhập tên người dùng.";
-		} else if ($scope.users.some(user => user.userName === $scope.form.userName)) {
-			console.log($scope.form.userName);
-
-			// Kiểm tra tên người dùng trong vòng lặp for
-			for (let i = 0; i < $scope.users.length; i++) {
-				if ($scope.users[i].userName === $scope.form.userName) {
-					console.log($scope.users[i].userName + " đã tồn tại.");
-					break; // Thoát khỏi vòng lặp khi tìm thấy tên người dùng trùng
-				}
-			}
-
-			$scope.formErrors.userName = "Tên người dùng đã tồn tại.";
-		}
-
-		// Kiểm tra trường password
-		if (!$scope.form.password) {
-			$scope.formErrors.password = "Vui lòng nhập mật khẩu.";
-		}
-
-		// Nếu không có lỗi, trả về true để cho phép submit form
-		return Object.keys($scope.formErrors).length === 0;
-	};
-
-
-	function validateAccount1(Account) {
-		// Đặt lại formErrors để xóa các thông báo lỗi cũ
-		$scope.formErrors = {};
-
-		// Kiểm tra trường họ và tên
-		if (!$scope.form.fullName) {
-			$scope.formErrors.fullName = "Vui lòng nhập họ và tên.";
-		}
-
-		// Kiểm tra trường email
-		if (!$scope.form.email) {
-			$scope.formErrors.email = "Vui lòng nhập địa chỉ email.";
 		}
 
 		// Kiểm tra trường username
@@ -249,6 +180,8 @@ app.controller("myCtrl", function ($scope, $http, $window) {
 		if (!$scope.form.password) {
 			$scope.formErrors.password = "Vui lòng nhập mật khẩu.";
 		}
+
+
 
 		// Nếu không có lỗi, trả về true để cho phép submit form
 		return Object.keys($scope.formErrors).length === 0;
@@ -273,7 +206,7 @@ app.controller("myCtrl", function ($scope, $http, $window) {
 	}
 	$scope.user = function () {
 		$http.get("http://localhost:8080/ManagedAccountByUserName/" + usernameCookie).then(resp => {
-			$scope.user = resp.data;
+			$scope.user = resp.data; // Thay đổi tên biến 'users' thành 'discounts'
 			console.log($scope.user);
 		}).catch(error => {
 			console.log(error);

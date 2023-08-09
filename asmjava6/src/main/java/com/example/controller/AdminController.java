@@ -65,9 +65,4 @@ public class AdminController {
     public String EditCategories() {
         return "admin/AddCategories";
     }
-    @GetMapping({ "/admin/ManagedBrands" })
-    public String GetOrder() {
-        return "admin/ManagedBrands";
-    }
-
 }
