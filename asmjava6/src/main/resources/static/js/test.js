@@ -1,3 +1,4 @@
+
 const app = angular.module("shopping-cart-app", []);
 app.filter("vnCurrency", function() {
 	return function(input) {

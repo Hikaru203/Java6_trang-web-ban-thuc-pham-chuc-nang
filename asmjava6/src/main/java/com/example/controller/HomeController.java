@@ -1,6 +1,8 @@
 package com.example.controller;
 
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,8 +42,6 @@ public class HomeController {
 		model.addAttribute("itemDetail", item);
 		return "detail";
 	}
-
-	
 
 	@RequestMapping(value = "/client/social/success")
 	public String loginGG(Model model) {
@@ -118,6 +118,28 @@ public class HomeController {
 	public String loi(Model model) {
 		model.addAttribute("loi", "Sai thông tin đăng nhập, Vui lòng nhập lại");
 		return "login";
+	}
+
+	@RequestMapping("/client/shop")
+	public String shop(Model model, @RequestParam("cid") Optional<Integer> cid) {
+		System.out.println(cid);
+		if (cid.isPresent()) {
+
+			List<Product> page = daoProduct.findByCategory(cid.get());
+			model.addAttribute("products", page);
+		} else {
+			List<Product> page = daoProduct.findAll();
+			model.addAttribute("products", page);
+		}
+		// List<Cart> cartItem=cartService.findAll();
+		// model.addAttribute("cartItem",cartItem);
+		return "shop";
+	}
+	
+	public static String formatCurrency(double value) {
+		NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
+		return currencyFormat.format(value);
+
 	}
 
 }
