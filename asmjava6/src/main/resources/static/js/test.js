@@ -1,4 +1,4 @@
-const app = angular.module("shopping-cart-apps", []);
+const app = angular.module("shopping-cart-app", []);
 app.filter("vnCurrency", function() {
 	return function(input) {
 		if (isNaN(input)) return input;
@@ -33,7 +33,7 @@ app.controller("shopping-cart-ctrl", function($scope, $http) {
 		items: [],
 		addToCart(ProductId) {
 			var item = this.items.find(item => item.product.id == ProductId);
-
+			
 			if (item) {
 				item.quantity += 1;
 				this.saveToDatabase(ProductId, UserId, item.quantity);

@@ -3,7 +3,7 @@ const app = angular.module("shopping-cart-app", []);
 app.controller("shopping-cart-ctrl", function($scope, $http) {
 	$scope.items = [];
 	$scope.form = {};
-
+	
 	$scope.initialize = function() {
 		// load brands
 		var item = 2
@@ -109,7 +109,7 @@ app.controller("shopping-cart-ctrl", function($scope, $http) {
 			},
 			purchase() {
 				var order = angular.copy(this);
-$http.post("/rest/orders", order).then(resp => {
+				$http.post("/rest/orders", order).then(resp => {
 					alert("Đặt hàng thành công!")
 					$scope.cart.clear();
 					location.href = "/order/detail/" + resp.data.id;

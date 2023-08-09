@@ -168,73 +168,159 @@
 
       <!-- Main content -->
       <section class="content">
-        <div class="card">
-          <!-- /.card-header -->
-          <div class="d-flex">
-            <a th:href="@{/admin/AddProduct}" style="margin-left: 20px; margin-top: 15px;margin-bottom: 15px;"
-              class="btn btn-primary">
-              Thêm sản phẩm
-            </a>
-            <div class="ml-auto" style="margin-top: 15px; padding-right: 15px;">
-              <div class="form-group">
-                <input type="text" class="form-control" ng-model="searchKeyword" placeholder="Tìm kiếm..." />
+        <div class="container mt-4">
+          <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
+                aria-selected="true">Danh sách</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
+                aria-selected="false">Cập nhật</a>
+            </li>
+          </ul>
+
+          <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+              <div class="ml-auto" style="margin-top: 15px; padding-right: 15px">
+                <div class="form-group">
+                  <input type="text" class="form-control" ng-model="searchKeyword" placeholder="Tìm kiếm..." />
+                </div>
+              </div>
+              <table id="example1" class="table table-bordered table-striped">
+                <style>
+                  div.dataTables_wrapper div.dataTables_filter label {
+                    display: none;
+                  }
+
+                  div.dataTables_wrapper div.dataTables_filter input {
+                    display: none;
+                  }
+
+                  .dataTables_empty {
+                    display: none;
+                  }
+                </style>
+                <thead>
+                  <tr>
+                    <th>Tên sản phẩm</th>
+                    <th>Giá</th>
+                    <th>Mô tả</th>
+                    <th>Tùy chỉnh</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="product in getCurrentPageItems()" ng-if="product.active">
+                    <td>{{ product.name }}</td>
+                    <td style="width: 130px">{{ product.price }} VND</td>
+                    <td>{{ product.description }}</td>
+                    <td>
+                      <a class="fas fa-trash-alt" ng-click="editRemove(product.id)"></a>
+                      <a class="fas fa-edit" ng-click="edit(product.id)"></a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="panel-footer text-center">
+                <button ng-click="setPage(1)" class="btn btn-primary">
+                  <i class="fas fa-arrow-circle-up"></i>
+                </button>
+                <button ng-click="setPage(currentPage - 1)" class="btn btn-primary">
+                  <i class="fas fa-arrow-circle-left"></i>
+                </button>
+                <button class="btn btn-success">{{currentPage }} of {{totalPages()}}</button>
+                <button ng-click="setPage(currentPage + 1)" class="btn btn-primary">
+                  <i class="fas fa-arrow-circle-right"></i>
+                </button>
+                <button ng-click="setPage(totalPages())" class="btn btn-primary">
+                  <i class="fas fa-arrow-circle-down"></i>
+                </button>
+              </div>
+
+            </div>
+            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+              <form>
+                <div class="card-body">
+                  <!-- Thông báo lỗi cho tên sản phẩm -->
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Tên sản phẩm</label>
+                    <input ng-model="form.name" type="text" class="form-control" id="exampleInputEmail1"
+                      placeholder="Nhập tên sản phẩm" />
+                    <div class="text-danger" ng-if="formErrors.name">
+                      {{ formErrors.name }}
+                    </div>
+                  </div>
+
+                  <!-- Thông báo lỗi cho giá sản phẩm -->
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Giá</label>
+                    <input ng-model="form.price" type="number" class="form-control" id="exampleInputEmail1"
+                      placeholder="Nhập giá" />
+                    <div class="text-danger" ng-if="formErrors.price">
+                      {{ formErrors.price }}
+                    </div>
+                  </div>
+
+                  <!-- select -->
+                  <div class="form-group">
+                    <label>Loại thuốc</label>
+                    <select class="form-control" ng-model="form.category.id"
+                      ng-options="item.id as item.name for item in Categories">
+                      <option value="">Chọn loại thuốc</option>
+                    </select>
+                    <div class="text-danger" ng-if="formErrors.category">
+                      {{ formErrors.category }}
+                    </div>
+                  </div>
+
+                  <!-- textarea -->
+                  <div class="form-group">
+                    <label>Mô tả</label>
+                    <textarea class="form-control" ng-model="form.description" rows="3"
+                      placeholder="Enter ..."></textarea>
+                  </div>
+
+                  <!-- Thông báo lỗi cho chọn ảnh -->
+                  <div class="form-group">
+                    <label for="exampleInputFile">Chọn ảnh</label>
+                    <div class="input-group">
+                      <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="img" ng-model="form.image"
+                          onchange="angular.element(this).scope().uploadedFile(this.files)" />
+                        <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                      </div>
+                      <div class="input-group-append">
+                        <span class="input-group-text">Upload</span>
+                      </div>
+                    </div>
+                    <div class="text-danger" ng-if="formErrors.image">
+                      {{ formErrors.image }}
+                    </div>
+                  </div>
+                </div>
+                <!-- /.card-body -->
+
+
+              </form>
+              <div class="panel-footer text-center">
+                <button ng-click="create()" class="btn btn-primary">
+                  <i class="fas fa-plus"></i>
+                  lưu
+                </button>
+                <button ng-click="update()" class="btn btn-success">
+                  <i class="fas fa-save"></i>
+                  cập nhật
+                </button>
+
+                <button ng-click="reset()" class="btn btn-info">
+                  <i class="fas fa-redo-alt"></i>
+                  làm mới
+                </button>
               </div>
             </div>
           </div>
-
-
-          <div class="card-body">
-            <table id="example1" class="table table-bordered table-striped">
-              <style>
-                label {
-                  display: none;
-                }
-
-                .dataTables_empty {
-                  display: none;
-                }
-              </style>
-              <thead>
-                <tr>
-                  <th>Tên sản phẩm</th>
-                  <th>Giá</th>
-                  <th>Mô tả</th>
-                  <th>Tùy chỉnh</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr ng-repeat="product in getCurrentPageItems()" ng-if="product.active">
-                  <td>{{ product.name }}</td>
-                  <td style="width: 130px">{{ product.price }} VND</td>
-                  <td>{{ product.description }}</td>
-                  <td>
-                    <a class="fas fa-trash-alt" ng-click="editRemove(product.id)"></a>
-                    <a class="fas fa-edit" ng-click="edit(product.id)"></a>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            <br />
-            <ul class="pagination justify-content-end">
-              <li class="page-item" ng-class="{ disabled: currentPage === 1 }">
-                <a class="page-link" href="#" ng-click="setPage(1)">&laquo;</a>
-              </li>
-              <li class="page-item" ng-class="{ disabled: currentPage === 1 }">
-                <a class="page-link" href="#" ng-click="setPage(currentPage - 1)">&lt;</a>
-              </li>
-              <li class="page-item" ng-repeat="page in getPagesRange()" ng-class="{ active: isCurrentPage(page) }">
-                <a class="page-link" href="#" ng-click="setPage(page)">{{ page }}</a>
-              </li>
-              <li class="page-item" ng-class="{ disabled: currentPage === totalPages() }">
-                <a class="page-link" href="#" ng-click="setPage(currentPage + 1)">&gt;</a>
-              </li>
-              <li class="page-item" ng-class="{ disabled: currentPage === totalPages() }">
-                <a class="page-link" href="#" ng-click="setPage(totalPages())">&raquo;</a>
-              </li>
-            </ul>
-          </div>
-          <!-- /.card-body -->
         </div>
+        <!-- /.card-body -->
       </section>
       <!-- /.content -->
     </div>

@@ -50,6 +50,11 @@ public class HomeController {
 	
 
 	
+	@RequestMapping(value = "/client/social/success")
+	public String loginGG(Model model) {
+
+		return "redirect:/client/index";
+	}
 
 	@RequestMapping("/client/login")
 	public String showLoginFrom(Model model) {
