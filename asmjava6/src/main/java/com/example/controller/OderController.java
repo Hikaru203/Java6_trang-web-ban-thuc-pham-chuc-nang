@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class OderController {
 
-	@RequestMapping("/checkout")
+	@RequestMapping("/client/checkout")
 	public String checkOut() {
 		return "checkout";
 	}

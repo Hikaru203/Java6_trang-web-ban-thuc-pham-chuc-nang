@@ -17,9 +17,9 @@
 	rel="stylesheet">
 <!-- jQuery Library -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
 <script
-	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.1/dist/sweetalert2.min.js"></script>
+	src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.1/dist/sweetalert2.min.js"></script>
 <!-- Font Awesome -->
 <link
 	th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css}"
@@ -31,7 +31,8 @@
 
 <!-- Customized Bootstrap Stylesheet -->
 <link th:href="@{/css/style.css}" rel="stylesheet">
-
+<!-- Tải script của ngCookies -->
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-cookies.min.js"></script>
 </head>
 
 <body ng-app="shopping-cart-app" ng-controller="shopping-cart-ctrl">
@@ -45,10 +46,10 @@
 						<button type="button" class="btn btn-sm btn-light dropdown-toggle"
 							data-toggle="dropdown">My Account</button>
 						<div class="dropdown-menu dropdown-menu-right">
-							<a href="/client/login" class="dropdown-item">Đăng nhập</a> 
-                            <a href="/sinup" class="dropdown-item">Đăng ký</a> 
-                             <a href="/admin/index" class="dropdown-item">admin</a> 
-                            <a href="/client/logout" class="dropdown-item">Đăng xuất</a> 
+							<a href="/client/login" class="dropdown-item">Đăng nhập</a> <a
+								href="/sinup" class="dropdown-item">Đăng ký</a> <a
+								href="/admin/index" class="dropdown-item">admin</a> <a
+								href="/client/logout" class="dropdown-item">Đăng xuất</a>
 						</div>
 					</div>
 
@@ -77,7 +78,7 @@
 		<div
 			class="row align-items-center bg-light py-3 px-xl-5 d-none d-lg-flex">
 			<div class="col-lg-4">
-<a href="" class="text-decoration-none"> <span
+				<a href="" class="text-decoration-none"> <span
 					class="h3 text-uppercase text-primary bg-dark px-2">Orihiro
 						Official</span> <span
 					class="h3 text-uppercase text-dark bg-primary px-2 ml-n1">
@@ -154,7 +155,7 @@
 							<a href="contact" class="nav-item nav-link">Yêu thích</a>
 						</div>
 						<div class="navbar-nav ml-auto py-0 d-none d-lg-block">
-<a href="" class="btn px-0"> <i
+							<a href="" class="btn px-0"> <i
 								class="fas fa-heart text-primary"></i> <span
 								class="badge text-secondary border border-secondary rounded-circle"
 								style="padding-bottom: 2px;">0</span>
@@ -189,7 +190,7 @@
 						<div class="carousel-item position-relative active"
 							style="height: 430px;">
 							<img class="position-absolute w-100 h-100"
-								src="images/slide1.jpg" style="object-fit: cover;">
+								src="../images/slide1.jpg" style="object-fit: cover;">
 							<div
 								class="carousel-caption d-flex flex-column align-items-center justify-content-center">
 								<div class="p-3" style="max-width: 700px;">
@@ -207,7 +208,7 @@
 						<div class="carousel-item position-relative"
 							style="height: 430px;">
 							<img class="position-absolute w-100 h-100"
-								src="images/slide2.jpg" style="object-fit: cover;">
+								src="../images/slide2.jpg" style="object-fit: cover;">
 							<div
 								class="carousel-caption d-flex flex-column align-items-center justify-content-center">
 								<div class="p-3" style="max-width: 700px;">
@@ -225,9 +226,9 @@
 						<div class="carousel-item position-relative"
 							style="height: 430px;">
 							<img class="position-absolute w-100 h-100"
-								src="images/slide3.jpg" style="object-fit: cover;">
+								src="../images/slide3.jpg" style="object-fit: cover;">
 							<div
-class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+								class="carousel-caption d-flex flex-column align-items-center justify-content-center">
 								<div class="p-3" style="max-width: 700px;">
 									<h1
 										class="display-4 text-white mb-3 animate__animated animate__fadeInDown">Thực
@@ -305,7 +306,7 @@ class="carousel-caption d-flex flex-column align-items-center justify-content-ce
 								class="far fa-heart"></i></a> <a
 								class="btn btn-outline-dark btn-square" href=""><i
 								class="fa fa-sync-alt"></i></a> <a
-class="btn btn-outline-dark btn-square"
+								class="btn btn-outline-dark btn-square"
 								th:href="@{|/detail/${item.id}|}"><i class="fa fa-search"></i></a>
 						</div>
 
@@ -370,25 +371,25 @@ class="btn btn-outline-dark btn-square"
 			<div class="col">
 				<div class="owl-carousel vendor-carousel">
 					<div class="bg-light p-4">
-						<img src="images/hang1.jpg" alt="">
+						<img src="../images/hang1.jpg" alt="">
 					</div>
 					<div class="bg-light p-4">
-						<img src="images/hang2.jpg" alt="">
+						<img src="../images/hang2.jpg" alt="">
 					</div>
 					<div class="bg-light p-4">
-						<img src="images/hang3.png" alt="">
+						<img src="../images/hang3.png" alt="">
 					</div>
 					<div class="bg-light p-4">
-						<img src="images/hang4.jpg" alt="">
+						<img src="../images/hang4.jpg" alt="">
 					</div>
 					<div class="bg-light p-4">
-						<img src="images/hang5.webp" alt="">
+						<img src="../images/hang5.webp" alt="">
 					</div>
 					<div class="bg-light p-4">
-						<img src="images/hang6.jpg" alt="">
+						<img src="../images/hang6.jpg" alt="">
 					</div>
 					<div class="bg-light p-4">
-						<img src="images/hang7.png" alt="">
+						<img src="../images/hang7.png" alt="">
 					</div>
 
 				</div>
@@ -402,7 +403,7 @@ class="btn btn-outline-dark btn-square"
 	<div class="container-fluid bg-dark text-secondary mt-5 pt-5">
 		<div class="row px-xl-5 pt-5">
 			<div class="col-lg-4 col-md-12 mb-5 pr-3 pr-xl-5">
-<h5 class="text-secondary text-uppercase mb-4">Orihiro Official</h5>
+				<h5 class="text-secondary text-uppercase mb-4">Orihiro Official</h5>
 				<p class="mb-4">Lan tỏa giá trị của Orihiro Nhật Bản tại Việt
 					Nam; nâng cao chất lượng cuộc sống của người dân Việt.</p>
 				<p class="mb-2">
@@ -466,7 +467,7 @@ class="btn btn-outline-dark btn-square"
 							</div>
 						</form>
 						<h6 class="text-secondary text-uppercase mt-4 mb-3">Theo dõi
-chúng tôi</h6>
+							chúng tôi</h6>
 						<div class="d-flex">
 							<a class="btn btn-primary btn-square mr-2" href="#"><i
 								class="fab fa-twitter"></i></a> <a

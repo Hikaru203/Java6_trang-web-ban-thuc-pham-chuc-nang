@@ -87,12 +87,12 @@ public class CartRestController {
 			cart = cartRepository.save(cart);
 		} else {
 			if (cart.isActive()) {
-				System.out.println(1);
+				
 				cart.setQuantity(cart.getQuantity() + 1);
 				cart.setActive(true);
 				cart = cartRepository.save(cart);
 			} else {
-				System.out.println(2);
+				
 				cart.setQuantity(1);
 				cart.setActive(true);
 				cart = cartRepository.save(cart);

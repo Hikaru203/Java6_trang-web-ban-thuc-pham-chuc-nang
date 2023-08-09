@@ -24,7 +24,8 @@
 
 	<!-- Customized Bootstrap Stylesheet -->
 	<link href="../css/style.css" rel="stylesheet">
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-cookies.min.js"></script>
 </head>
 
 <body ng-app="shopping-cart-app" ng-controller="shopping-cart-ctrl">
@@ -189,7 +190,7 @@
 					</thead>
 					<tbody class="align-middle">
 						<tr ng-repeat="item in items">
-							<td class=""><img src="images/{{item.product.image}}" alt=""
+							<td class=""><img src="../images/{{item.product.image}}" alt=""
 									style="width: 50px;">{{item.product.name}}</td>
 							<td class="align-middle">{{item.product.price| vnCurrency }}
 							</td>
@@ -282,7 +283,7 @@
 							<h5>{{ getTotalPrice() | vnCurrency }}</h5>
 						</div>
 						<a type="button" class="btn btn-block btn-primary font-weight-bold my-3 py-3"
-							href="/checkout">Thanh toán</a>
+							href="/client/checkout">Thanh toán</a>
 					</div>
 				</div>
 
