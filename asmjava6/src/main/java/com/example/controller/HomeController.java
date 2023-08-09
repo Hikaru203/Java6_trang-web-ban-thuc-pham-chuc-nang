@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.entity.Account;
 import com.example.entity.Cart;
+import com.example.entity.Favorite;
 import com.example.entity.Product;
 import com.example.jparepository.AccountRepository;
+import com.example.jparepository.FavoriteRepository;
 import com.example.jparepository.ProductRepository;
 import com.example.service.CartService;
 import com.example.service.CookieService;
@@ -33,6 +35,8 @@ public class HomeController {
 	AccountRepository daoAccount;
 	@Autowired
 	CookieService cookieService;
+	@Autowired
+	FavoriteRepository favoriteRepository;
 
 	@RequestMapping(value = "/client/detail/{id}")
 	public String detail(Model model, @PathVariable("id") int id) {
@@ -43,11 +47,7 @@ public class HomeController {
 
 	
 
-	@RequestMapping(value = "/client/social/success")
-	public String loginGG(Model model) {
-
-		return "redirect:/client/index";
-	}
+	
 
 	@RequestMapping("/client/login")
 	public String showLoginFrom(Model model) {
@@ -116,14 +116,10 @@ public class HomeController {
 
 	@RequestMapping(value = "/client/signin/error")
 	public String loi(Model model) {
-		model.addAttribute("loi", "Sai thông tin đăng nhập, Vui lòng nhập lại");
+		model.addAttribute("lỗi", "Sai thông tin đăng nhập, Vui lòng nhập lại");
 		return "login";
 	}
-	  @RequestMapping(value = "/client/login/success")
-	   public String ht (Model model) {
-		  
-		  return "redirect:/client/index";
-	  }
+	  
 	  @RequestMapping(value = "/client/social/success")
 	   public String loginGG (Model model) {
 		  System.out.println("logingg");

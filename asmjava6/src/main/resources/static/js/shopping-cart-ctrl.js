@@ -1,4 +1,3 @@
-const app = angular.module("shopping-cart-app", []);
 
 app.controller("shopping-cart-ctrl", function($scope, $http) {
 	// Khởi tạo $scope.cart là một đối tượng rỗng
@@ -19,7 +18,6 @@ app.controller("shopping-cart-ctrl", function($scope, $http) {
 		},
 		favorite(id){
 			var url = `/rest/products/add-to-favorite/${id}`;
-			alert(url);
 			alert("Yêu thích sản phẩm thành công")
             $http.post(url)
                 .then(response => {
@@ -81,9 +79,7 @@ app.controller("shopping-cart-ctrl", function($scope, $http) {
 		var totalChecked = $scope.cart.items.filter(item => item.checked).length;
 
 	}
-	// Khởi đầu
-	$scope.initialize();
-	// Thêm  mới 
+	
 
 	$scope.create = function(productId) {// Thay thế bằng cách lấy accountId từ người dùng sau khi đăng nhập
 		var url = `/rest/carts/addCart/${id}`;

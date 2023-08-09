@@ -18,4 +18,10 @@ public List<Product> findAll() {
 	
 	return daoProduct.findAll();
 }
+
+@Override
+public Product findById(Integer id) {
+	// TODO Auto-generated method stub
+	return null;
+}
 }
