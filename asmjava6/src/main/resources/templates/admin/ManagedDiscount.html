@@ -170,69 +170,134 @@
 
       <!-- Main content -->
       <section class="content">
-        <div class="card">
-          <!-- /.card-header -->
+        <div class="container mt-4">
+          <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
+                aria-selected="true">Danh sách</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
+                aria-selected="false">Cập nhật</a>
+            </li>
+          </ul>
 
-          <div class="d-flex">
-            <a th:href="@{/admin/AddDiscount}" style="margin-left: 20px; margin-top: 15px;margin-bottom: 15px;"
-              class="btn btn-primary">
-              Thêm khuyến mãi
-            </a>
-            <div class="ml-auto" style="margin-top: 15px; padding-right: 15px;">
-              <div class="form-group">
-                <input type="text" class="form-control" ng-model="searchKeyword" placeholder="Tìm kiếm..." />
+          <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+              <div class="ml-auto" style="margin-top: 15px; padding-right: 15px">
+                <div class="form-group">
+                  <input type="text" class="form-control" ng-model="searchKeyword" placeholder="Tìm kiếm..." />
+                </div>
+              </div>
+              <table id="example1" class="table table-bordered table-striped">
+                <style>
+                  div.dataTables_wrapper div.dataTables_filter label {
+                    display: none;
+                  }
+
+                  div.dataTables_wrapper div.dataTables_filter input {
+                    display: none;
+                  }
+
+                  .dataTables_empty {
+                    display: none;
+                  }
+                </style>
+                <thead>
+                  <tr>
+                    <th>Sản phẩm khuyến mãi</th>
+                    <th>Giá khuyến mãi</th>
+                    <th>Ngày bắt đầu</th>
+                    <th>Ngày kết thúc</th>
+                    <th>Tùy chỉnh</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="discount in getCurrentPageDiscounts()">
+                    <td>{{discount.product.name}}</td>
+                    <td>{{discount.discountAmount}}</td>
+                    <!-- Định dạng ngày bắt đầu discount -->
+                    <td>{{ discount.startDate | date : 'dd/MM/yyyy' }}</td>
+
+                    <!-- Định dạng ngày kết thúc discount -->
+                    <td>{{ discount.endDate | date : 'dd/MM/yyyy' }}</td>
+
+                    <td>
+                      <a class="fas fa-trash-alt" ng-click="delete(discount.id)"></a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="panel-footer text-center">
+                <button ng-click="setPage(1)" class="btn btn-primary">
+                  <i class="fas fa-arrow-circle-up"></i>
+                </button>
+                <button ng-click="setPage(currentPage - 1)" class="btn btn-primary">
+                  <i class="fas fa-arrow-circle-left"></i>
+                </button>
+                <button class="btn btn-success">{{currentPage }} of {{totalPages()}}</button>
+                <button ng-click="setPage(currentPage + 1)" class="btn btn-primary">
+                  <i class="fas fa-arrow-circle-right"></i>
+                </button>
+                <button ng-click="setPage(totalPages())" class="btn btn-primary">
+                  <i class="fas fa-arrow-circle-down"></i>
+                </button>
+              </div>
+
+            </div>
+            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+              <form>
+                <div class="card-body">
+
+                  <!-- select -->
+                  <div class="form-group">
+                    <label>Loại thuốc</label>
+                    <select class="form-control" ng-model="form.product.id"
+                      ng-options="item.id as item.name for item in items | filter:{active: true}">
+                      <option value="">Chọn sản phẩm</option>
+                    </select>
+                    </select>
+
+                  </div>
+                  <div class="form-group"> <label for="exampleInputEmail1">Giá giảm</label>
+                    <input type="number" class="form-control" ng-model="form.discountAmount" id="exampleInputEmail1"
+                      placeholder="Nhập giá giảm">
+                  </div>
+                  <!-- Date and time range -->
+                  <div class="form-group">
+                    <label>Ngày và giờ:</label>
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="far fa-clock"></i></span>
+                      </div>
+                      <input type="text" class="form-control float-right" id="reservationtime" ng-model="form.dateRange"
+                        ng-change="updateDateRange(form.dateRange)">
+                    </div>
+                    <!-- /.input group -->
+                  </div>
+
+                  <!-- Input ẩn để lưu giữ ngày bắt đầu -->
+                  <input type="hidden" ng-model="form.startDate" />
+
+                  <!-- Input ẩn để lưu giữ ngày kết thúc -->
+                  <input type="hidden" ng-model="form.endDate" />
+
+                  <!-- /.form group -->
+              </form>
+              <div class="panel-footer text-center">
+                <button ng-click="create()" class="btn btn-primary">
+                  <i class="fas fa-plus"></i>
+                  lưu
+                </button>
+                <button ng-click="reset()" class="btn btn-info">
+                  <i class="fas fa-redo-alt"></i>
+                  làm mới
+                </button>
               </div>
             </div>
           </div>
-          <div class="card-body">
-            <table id="example1" class="table table-bordered table-striped">
-
-              <thead>
-                <tr>
-                  <th>Sản phẩm khuyến mãi</th>
-                  <th>Giá khuyến mãi</th>
-                  <th>Ngày bắt đầu</th>
-                  <th>Ngày kết thúc</th>
-                  <th>Tùy chỉnh</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr ng-repeat="discount in getCurrentPageDiscounts()">
-                  <td>{{discount.product.name}}</td>
-                  <td>{{discount.discountAmount}}</td>
-                  <!-- Định dạng ngày bắt đầu discount -->
-                  <td>{{ discount.startDate | date : 'dd/MM/yyyy' }}</td>
-
-                  <!-- Định dạng ngày kết thúc discount -->
-                  <td>{{ discount.endDate | date : 'dd/MM/yyyy' }}</td>
-
-                  <td>
-                    <a class="fas fa-trash-alt" ng-click="delete(discount.id)"></a>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            <br />
-            <ul class="pagination justify-content-end">
-              <li class="page-item" ng-class="{ disabled: currentPage === 1 }">
-                <a class="page-link" href="#" ng-click="setPage(1)">&laquo;</a>
-              </li>
-              <li class="page-item" ng-class="{ disabled: currentPage === 1 }">
-                <a class="page-link" href="#" ng-click="setPage(currentPage - 1)">&lt;</a>
-              </li>
-              <li class="page-item" ng-repeat="page in getPagesRange()" ng-class="{ active: isCurrentPage(page) }">
-                <a class="page-link" href="#" ng-click="setPage(page)">{{ page }}</a>
-              </li>
-              <li class="page-item" ng-class="{ disabled: currentPage === totalPages() }">
-                <a class="page-link" href="#" ng-click="setPage(currentPage + 1)">&gt;</a>
-              </li>
-              <li class="page-item" ng-class="{ disabled: currentPage === totalPages() }">
-                <a class="page-link" href="#" ng-click="setPage(totalPages())">&raquo;</a>
-              </li>
-            </ul>
-          </div>
-          <!-- /.card-body -->
         </div>
+        <!-- /.card-body -->
       </section>
       <!-- /.content -->
     </div>
@@ -272,6 +337,69 @@
         .container()
         .appendTo("#example1_wrapper .col-md-6:eq(0)");
     });
+  </script>
+  <script>
+    $(function () {
+      //Initialize Select2 Elements
+      $('.select2').select2()
+
+      //Initialize Select2 Elements
+      $('.select2bs4').select2({
+        theme: 'bootstrap4'
+      })
+
+      //Datemask dd/mm/yyyy
+      $('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
+      //Datemask2 mm/dd/yyyy
+      $('#datemask2').inputmask('mm/dd/yyyy', { 'placeholder': 'mm/dd/yyyy' })
+      //Money Euro
+      $('[data-mask]').inputmask()
+
+      //Date picker
+      $('#reservationdate').datetimepicker({
+        format: 'L'
+      });
+
+      //Date and time picker
+      $('#reservationdatetime').datetimepicker({ icons: { time: 'far fa-clock' } });
+
+      //Date range picker
+      $('#reservation').daterangepicker()
+      //Date range picker with time picker
+      $('#reservationtime').daterangepicker({
+        timePicker: true,
+        timePickerIncrement: 30,
+        locale: {
+          format: 'MM/DD/YYYY hh:mm A'
+        }
+      })
+      //Date range as a button
+      $('#daterange-btn').daterangepicker(
+        {
+          ranges: {
+            'Today': [moment(), moment()],
+            'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+            'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+            'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+            'This Month': [moment().startOf('month'), moment().endOf('month')],
+            'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+          },
+          startDate: moment().subtract(29, 'days'),
+          endDate: moment()
+        },
+        function (start, end) {
+          $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
+        }
+      )
+
+      //Timepicker
+      $('#timepicker').datetimepicker({
+        format: 'LT'
+      })
+    });
+
+
+        // DropzoneJS Demo Code End
   </script>
   <script th:src="@{/Admin/plugins/AngularJS/discounts-ctrl.js}"></script>
 </body>

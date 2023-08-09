@@ -8,7 +8,7 @@ app.controller("myCtrl", function ($scope, $http, $window) {
 	$scope.form = {};
 	$scope.items = [];
 	$scope.currentPage = 1;
-	$scope.itemsPerPage = 10;
+	$scope.itemsPerPage = 2;
 	$scope.isSubmitting = false;
 	$scope.isSubediting = true;
 	$scope.formErrors = {}; // Khởi tạo biến lưu trữ các thông báo lỗi
@@ -16,6 +16,9 @@ app.controller("myCtrl", function ($scope, $http, $window) {
 	$scope.reset = function () {
 		$scope.form = {};
 		$scope.items = [];
+		$scope.load_all();
+		$(".nav-tabs a:eq(0)").tab('show');
+
 	};
 
 	$scope.load_all = function () {
@@ -25,8 +28,11 @@ app.controller("myCtrl", function ($scope, $http, $window) {
 			if (form != null) {
 				$scope.form = form;
 				fileNameLabel.innerText = $scope.form.image;
-				$scope.isSubmitting = true;
-				$scope.isSubediting = false;
+
+			}
+			if ($scope.items != null) {
+				$scope.items = $scope.items.filter(user => user.active == true);
+				console.log($scope.items);
 			}
 
 		}).catch(error => {
@@ -85,8 +91,7 @@ app.controller("myCtrl", function ($scope, $http, $window) {
 		var url = host + `/ManagedProduct/${id}`;
 		$http.get(url).then(resp => {
 			$scope.form = resp.data;
-			$window.location.href = `${host}/admin/EditProduct/${id}?data=${encodeURIComponent(JSON.stringify($scope.form))}`;
-			$scope.form = form;
+			$(".nav-tabs a:eq(1)").tab('show');
 		}).catch(error => {
 			console.log(error);
 		});
@@ -139,7 +144,9 @@ app.controller("myCtrl", function ($scope, $http, $window) {
 			var index = $scope.items.findIndex(p => p.id === $scope.form.id);
 			console.log(index);
 			$scope.items[index] = resp.data;
-			$window.location.href = `${host}/admin/index`;
+			$(".nav-tabs a:eq(0)").tab('show');
+			$scope.reset();
+			$scope.load_all();
 			console.log("thanh cong", resp);
 		}).catch(error => {
 			console.log(error);
