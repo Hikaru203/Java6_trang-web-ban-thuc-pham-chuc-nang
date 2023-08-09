@@ -10,4 +10,6 @@ import java.util.List;
 @Repository
 public interface AccountRepository extends JpaRepository<Account, Integer> {
     Account findByUserName(String userName);
+
+    Account findByEmail(String email);
 }
