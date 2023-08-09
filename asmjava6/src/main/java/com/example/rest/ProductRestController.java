@@ -1,8 +1,6 @@
 package com.example.rest;
 
-import java.text.NumberFormat;
 import java.util.List;
-import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,11 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.entity.Account;
-import com.example.entity.Favorite;
 import com.example.entity.Product;
-import com.example.jparepository.AccountRepository;
-import com.example.jparepository.FavoriteRepository;
 import com.example.jparepository.ProductRepository;
 
 @CrossOrigin("*")
@@ -30,12 +24,6 @@ import com.example.jparepository.ProductRepository;
 public class ProductRestController {
 	@Autowired
 	ProductRepository daoProduct;
-	
-	@Autowired
-	AccountRepository accountRepository;
-	
-	@Autowired
-	FavoriteRepository favoriteRepository;
 
 	@GetMapping
 	public List<Product> getAllProducts() {
@@ -80,37 +68,5 @@ public class ProductRestController {
 		} else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-	}
-
-	public static String formatCurrency(double value) {
-		NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
-		return currencyFormat.format(value);
-	}
-
-	@PostMapping("/add-to-favorite/{id}")
-	public ResponseEntity<String> addToFavorite(@PathVariable("id") Integer itemId) {
-		
-		Account account = accountRepository.findById(1);
-		
-		if (account == null) {
-			return ResponseEntity.badRequest().body("Không tìm thấy thông tin!");
-		}
-
-		// Thêm yêu thích mới
-		Product product = daoProduct.findById(itemId).get();
-		Favorite favorite = favoriteRepository.findByAccountAndProduct(account,product);
-		if (favorite == null) {
-			System.out.println("Sản phẩm yêu thích chưa tồn tại !");
-            Favorite favorite2 = new Favorite();
-            favorite2.setProduct(product);
-            favorite2.setAccount(account);
-            favoriteRepository.save(favorite2);
-			return ResponseEntity.ok("{\"message\": \"Đã thêm sản phẩm vào trang yêu thích!\"}");
-		}else {
-			System.out.println("Sản phẩm đã được thích");
-			return ResponseEntity.ok("{\"message\": \"Đã thêm sản phẩm vào trang yêu thích 2!\"}");
-		}
-
-		
 	}
 }

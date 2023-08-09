@@ -19,7 +19,7 @@ app.controller("myCtrl", function ($scope, $http, $window) {
 		$scope.form = {};
 		$scope.discounts = []; // Thay đổi tên biến 'users' thành 'discounts'
 		$scope.items = [];
-
+		$scope.load_all();
 	};
 
 	$scope.load_all = function () {

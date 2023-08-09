@@ -21,9 +21,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "Orders")
-@Data
-@Getter
-@Setter
+
 public class Order {
 
     @Id

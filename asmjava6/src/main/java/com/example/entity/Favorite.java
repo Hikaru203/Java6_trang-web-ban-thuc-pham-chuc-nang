@@ -11,9 +11,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import lombok.Data;
 
-@Data
 @Entity
 @Table(name = "Favorites")
 public class Favorite implements Serializable {
@@ -26,7 +24,7 @@ public class Favorite implements Serializable {
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private Account account;
+    private Account user;
 
     @ManyToOne
     @JoinColumn(name = "product_id", nullable = false)
