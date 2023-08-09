@@ -1,6 +1,8 @@
 package com.example.controller;
 
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -132,6 +134,8 @@ public class HomeController {
 		  return "favoriteProductPage";
 	  }
 	  
-	  
-
-}
+	  public static String formatCurrency(double value) {
+	        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
+	        return currencyFormat.format(value);
+	    }
+	}

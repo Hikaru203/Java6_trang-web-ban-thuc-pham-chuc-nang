@@ -48,19 +48,7 @@ public class Account implements Serializable {
     @Column(name = "active", nullable = false)
     private boolean isActive;
 
- 
-    @OneToMany(mappedBy = "user")
-    @JsonIgnore
-    private List<Cart> carts;
     
-   
-    @OneToMany(mappedBy = "user")
-    @JsonIgnore
-    private List<Order> orders;
-    
-    @JsonIgnore
-    @OneToMany(mappedBy = "account")
-    private List<Favorite> favorites;
 
     // Constructors, getters, setters, and other methods as needed.
 }

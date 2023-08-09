@@ -30,10 +30,10 @@ import com.example.jparepository.ProductRepository;
 public class ProductRestController {
 	@Autowired
 	ProductRepository daoProduct;
-	
+
 	@Autowired
 	AccountRepository accountRepository;
-	
+
 	@Autowired
 	FavoriteRepository favoriteRepository;
 
@@ -81,30 +81,39 @@ public class ProductRestController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
-	@PostMapping("/add-to-favorite/{id}")
-	public ResponseEntity<String> addToFavorite(@PathVariable("id") Integer itemId) {
-		
-		Account account = accountRepository.findById(1);
-		
+
+	@PostMapping("/add-to-favorite/{id}/{userName}")
+	public ResponseEntity<String> addToFavorite(@PathVariable("id") Integer itemId,
+			@PathVariable("userName") int userId) {
+
+		Account account = accountRepository.findById(userId);
+
 		if (account == null) {
 			return ResponseEntity.badRequest().body("Không tìm thấy thông tin!");
 		}
 
 		// Thêm yêu thích mới
 		Product product = daoProduct.findById(itemId).get();
-		Favorite favorite = favoriteRepository.findByAccountAndProduct(account,product);
-		if (favorite == null) {
+		Favorite favorite = favoriteRepository.findByAccountAndProduct(account, product);
+		if (favorite == null || account.getId() == favorite.getAccount().getId()) {
 			System.out.println("Sản phẩm yêu thích chưa tồn tại !");
-            Favorite favorite2 = new Favorite();
-            favorite2.setProduct(product);
-            favorite2.setAccount(account);
-            favoriteRepository.save(favorite2);
+			Favorite favorite2 = new Favorite();
+			favorite2.setProduct(product);
+			favorite2.setAccount(account);
+			favoriteRepository.save(favorite2);
 			return ResponseEntity.ok("{\"message\": \"Đã thêm sản phẩm vào trang yêu thích!\"}");
-		}else {
+		} else {
 			System.out.println("Sản phẩm đã được thích");
 			return ResponseEntity.ok("{\"message\": \"Đã thêm sản phẩm vào trang yêu thích 2!\"}");
 		}
 
-		
+	}
+
+	@GetMapping("/rest/products/favorites/{accountId}")
+	public List<Favorite> getFavoriteProductsByAccountId(@PathVariable Integer accountId) {
+		Account account = new Account();
+		account.setId(accountId);
+
+		return favoriteRepository.findByAccount(account);
 	}
 }
