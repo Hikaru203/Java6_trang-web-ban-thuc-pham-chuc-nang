@@ -4,7 +4,7 @@ var jsonData = queryString.get('data');
 var form = JSON.parse(decodeURIComponent(jsonData));
 var fileNameLabel = document.querySelector('.custom-file-label');
 
-app.controller("myCtrl", function($scope, $http, $window) {
+app.controller("myCtrl", function ($scope, $http, $window) {
 
 
 	$scope.form = {};
@@ -14,13 +14,13 @@ app.controller("myCtrl", function($scope, $http, $window) {
 	$scope.isSubmitting = false;
 	$scope.isSubediting = true;
 	$scope.formErrors = {}; // Khởi tạo biến lưu trữ các thông báo lỗi
-	$scope.reset = function() {
+	$scope.reset = function () {
 		// Đặt giá trị mặc định cho các biến hoặc xóa dữ liệu nếu cần thiết.
 		$scope.form = {};
 		$scope.users = [];
 	};
 
-	$scope.load_all = function() {
+	$scope.load_all = function () {
 		$http.get(host + "/ManagedAccount").then(resp => {
 			$scope.users = resp.data;
 			if (form != null) {
@@ -28,14 +28,12 @@ app.controller("myCtrl", function($scope, $http, $window) {
 				$scope.isSubmitting = true;
 				$scope.isSubediting = false;
 			}
-			var storedUsername = sessionStorage.getItem("username");
-			console.log(storedUsername);
 		}).catch(error => {
 			console.log(error);
 		});
 	};
 
-	$scope.totalPages = function() {
+	$scope.totalPages = function () {
 		if (!$scope.users || !Array.isArray($scope.users)) {
 			// Handle the case when $scope.users is not defined or not an array
 			return 0;
@@ -45,17 +43,17 @@ app.controller("myCtrl", function($scope, $http, $window) {
 	};
 
 
-	$scope.setPage = function(page) {
+	$scope.setPage = function (page) {
 		if (page >= 1 && page <= $scope.totalPages()) {
 			$scope.currentPage = page;
 		}
 	};
 
-	$scope.isCurrentPage = function(page) {
+	$scope.isCurrentPage = function (page) {
 		return $scope.currentPage === page;
 	};
 
-	$scope.getCurrentPageUsers = function() {
+	$scope.getCurrentPageUsers = function () {
 		if (!$scope.users || !Array.isArray($scope.users)) {
 			// Handle the case when $scope.users is not defined or not an array
 			return [];
@@ -79,7 +77,7 @@ app.controller("myCtrl", function($scope, $http, $window) {
 
 
 
-	$scope.getPagesRange = function() {
+	$scope.getPagesRange = function () {
 		const totalPages = $scope.totalPages();
 		const range = [];
 		const min = Math.max(1, $scope.currentPage - 2);
@@ -91,7 +89,7 @@ app.controller("myCtrl", function($scope, $http, $window) {
 
 		return range;
 	};
-	$scope.edit = function(id) {
+	$scope.edit = function (id) {
 		var url = host + `/ManagedAccount/${id}`; // Thay 'ManagedProduct' bằng 'ManagedAccount'
 		$http.get(url).then(resp => {
 			var userToEdit = resp.data; // Lưu thông tin người dùng nhận được từ phản hồi vào biến userToEdit  
@@ -103,7 +101,7 @@ app.controller("myCtrl", function($scope, $http, $window) {
 		});
 	};
 
-	$scope.create = function() {
+	$scope.create = function () {
 		// Kiểm tra và gán thông báo lỗi vào biến formErrors
 		$scope.formErrors = {};
 		var item = angular.copy($scope.form);
@@ -125,7 +123,7 @@ app.controller("myCtrl", function($scope, $http, $window) {
 		});
 	};
 
-	$scope.update = function() {
+	$scope.update = function () {
 		$scope.formErrors = {};
 		var item = angular.copy($scope.form);
 		var url = host + `/ManagedAccount/${$scope.form.id}`;
@@ -147,7 +145,7 @@ app.controller("myCtrl", function($scope, $http, $window) {
 		});
 	};
 
-	$scope.editRemove = function(id) {
+	$scope.editRemove = function (id) {
 		var url = host + `/ManagedAccount/${id}`;
 		$http.get(url).then(resp => {
 			$scope.form = resp.data;
@@ -206,7 +204,14 @@ app.controller("myCtrl", function($scope, $http, $window) {
 	} else {
 		console.log('Cookie username không tồn tại.');
 	}
-
-	// Load users data on controller initialization
+	$scope.user = function () {
+		$http.get("http://localhost:8080/ManagedAccountByUserName/" + usernameCookie).then(resp => {
+			$scope.user = resp.data; // Thay đổi tên biến 'users' thành 'discounts'
+			console.log($scope.user);
+		}).catch(error => {
+			console.log(error);
+		});
+	};
+	$scope.user();
 	$scope.load_all();
 });

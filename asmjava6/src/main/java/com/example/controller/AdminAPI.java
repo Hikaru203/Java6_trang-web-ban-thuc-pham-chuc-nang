@@ -21,6 +21,7 @@ import com.example.jparepository.AccountRepository;
 import com.example.jparepository.CategoryRepository;
 import com.example.jparepository.DiscountRepository;
 import com.example.jparepository.ProductRepository;
+import com.example.service.CookieService;
 
 @CrossOrigin({ "*" })
 @RestController
@@ -36,6 +37,9 @@ public class AdminAPI {
 
     @Autowired
     private CategoryRepository categoryRepository;
+
+    @Autowired
+    CookieService cookieService;
 
     @GetMapping({ "/ManagedProduct" })
     public Object getProducts() {
@@ -68,6 +72,11 @@ public class AdminAPI {
     @GetMapping({ "/ManagedAccount/{id}" })
     public Optional<Account> getAccount(@PathVariable("id") int id) {
         return userRepository.findById(id);
+    }
+
+    @GetMapping({ "/ManagedAccountByUserName/{id}" })
+    public Account getAccountByUserName(@PathVariable("id") String id) {
+        return userRepository.findByUserName(id);
     }
 
     @PostMapping({ "/ManagedAccount" })
@@ -131,7 +140,5 @@ public class AdminAPI {
         this.categoryRepository.save(category);
         return category;
     }
-
-
 
 }
