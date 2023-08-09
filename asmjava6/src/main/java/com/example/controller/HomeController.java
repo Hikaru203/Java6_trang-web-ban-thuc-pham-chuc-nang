@@ -105,9 +105,10 @@ public class HomeController {
 			} else {
 				System.out.println("Không tìm thấy tài khoản");
 			}
-
+			System.out.println(312312314);
 			return "redirect:/client/index";
 		} else {
+			System.out.println(312312314);
 			return "redirect:/client/index";
 		}
 	}
