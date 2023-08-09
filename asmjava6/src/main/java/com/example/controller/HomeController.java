@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.entity.Account;
 import com.example.entity.Cart;
+import com.example.entity.Favorite;
 import com.example.entity.Product;
 import com.example.jparepository.AccountRepository;
+import com.example.jparepository.FavoriteRepository;
 import com.example.jparepository.ProductRepository;
 import com.example.service.CartService;
 import com.example.service.CookieService;
@@ -33,18 +35,14 @@ public class HomeController {
 	AccountRepository daoAccount;
 	@Autowired
 	CookieService cookieService;
+	@Autowired
+	FavoriteRepository favoriteRepository;
 
 	@RequestMapping(value = "/client/detail/{id}")
 	public String detail(Model model, @PathVariable("id") int id) {
 		Product item = daoProduct.findById(id).get();
 		model.addAttribute("itemDetail", item);
 		return "detail";
-	}
-
-	@RequestMapping(value = "/client/social/success")
-	public String loginGG(Model model) {
-
-		return "redirect:/client/index";
 	}
 
 	@RequestMapping("/client/login")
@@ -114,8 +112,21 @@ public class HomeController {
 
 	@RequestMapping(value = "/client/signin/error")
 	public String loi(Model model) {
-		model.addAttribute("loi", "Sai thông tin đăng nhập, Vui lòng nhập lại");
+		model.addAttribute("lỗi", "Sai thông tin đăng nhập, Vui lòng nhập lại");
 		return "login";
+	}
+
+	@RequestMapping(value = "/client/social/success")
+	public String loginGG(Model model) {
+		System.out.println("logingg");
+		return "redirect:/client/index";
+	}
+
+	@RequestMapping(value = "/client/favorite")
+	public String favorite(Model model) {
+		List<Favorite> list = favoriteRepository.findAll();
+		model.addAttribute("items", list);
+		return "favoriteProductPage";
 	}
 
 }
