@@ -41,8 +41,6 @@ public class HomeController {
 		return "detail";
 	}
 
-	
-
 	@RequestMapping(value = "/client/social/success")
 	public String loginGG(Model model) {
 
