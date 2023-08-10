@@ -70,4 +70,28 @@ public class AdminController {
         return "admin/ManagedBrands";
     }
 
+
+    @GetMapping({ "/admin/ManagedDistributors" })
+    public String ManagedDistributors() {
+        return "admin/ManagedDistributors";
+    }
+
+    @GetMapping({ "/admin/ManagedOrders" })
+    public String ManagedOrders() {
+        return "admin/ManagedOrders";
+    }
+    @GetMapping({ "/admin/ReportFavoriteProducts" })
+    public String ReportFavoriteProducts() {
+        return "admin/ReportFavoriteProducts";
+    }
+    
+    @GetMapping({ "/admin/ReportRevenue" })
+    public String ReportRevenue() {
+        return "admin/ReportRevenue";
+    }
+    
+    @GetMapping({ "/admin/ReportProduct" })
+    public String ReportProduct() {
+        return "admin/ReportProduct";
+    }
 }

@@ -1,19 +1,12 @@
 package com.example.entity;
-
 import java.io.Serializable;
-import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -48,26 +41,7 @@ public class Account implements Serializable {
     @Column(name = "active", nullable = false)
     private boolean isActive;
 
-    @OneToMany(mappedBy = "user")
-    @JsonIgnore
-    private List<Cart> carts;
-
-    @OneToMany(mappedBy = "user")
-    @JsonIgnore
-    private List<Order> orders;
-
-    @OneToMany(mappedBy = "user")
-    @JsonIgnore
-    private List<Favorite> favorites;
+    
 
     // Constructors, getters, setters, and other methods as needed.
-    @ManyToOne
-    @JoinColumn(name = "addresscity_id")
-    @JsonIgnore
-    private AddressCity addressCity;
-
-    @ManyToOne
-    @JoinColumn(name = "addressdistrict_id")
-    @JsonIgnore
-    private AddressDistrict addressDistrict;
 }

@@ -7,7 +7,7 @@
   <title>ORIHIRO OFFICIAL STORE | ADMIN</title>
 
   <!-- Google Font: Source Sans Pro -->
-  <th:block th:include="admin/layout :: css"></th:block>
+  <th:block th:insert="~{admin/layout :: css}"></th:block>
 
 </head>
 
@@ -21,7 +21,8 @@
     </div>
 
     <!-- Navbar -->
-    <th:block th:include="admin/layout :: nav"></th:block>
+    <th:block th:insert="~{admin/layout :: nav}"></th:block>
+
 
     <!-- /.navbar -->
 
@@ -37,8 +38,14 @@
       <!-- Sidebar -->
       <div class="sidebar">
         <!-- Sidebar user panel (optional) -->
-        <div th:insert="~{admin/layout :: menu}"></div>
-
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+          <div class="image">
+            <img th:src="@{/Admin/dist/img/user2-160x160.jpg}" class="img-circle elevation-2" alt="User Image">
+          </div>
+          <div class="info">
+            <a href="#" class="d-block">Alexander Pierce</a>
+          </div>
+        </div>
 
         <!-- SidebarSearch Form -->
         <div class="form-inline">
@@ -186,18 +193,19 @@
                   div.dataTables_wrapper div.dataTables_filter label {
                     display: none;
                   }
-
                   div.dataTables_wrapper div.dataTables_filter input {
                     display: none;
                   }
-
                   .pagination {
                     display: none;
                   }
 
                   .dataTables_empty {
                     display: none;
-                  }
+                  }      
+                  /* Hiển thị các thẻ div khi có lỗi */
+
+
                 </style>
                 <thead>
                   <tr>
@@ -237,50 +245,56 @@
               </div>
             </div>
             <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-              <form>
-                <div class="card-body">
-                  <div class="form-group">
+              <form name="myForm">
+                <div class="error-message ">
+                  {{ myForm.name.$valid | json }}
+              </div>          
+              <div class="card-body">
+                <div class="form-group">
                     <label for="exampleInputEmail1">ID</label>
-                    <input type="text" ng-model="form.id" readonly class="form-control" id="exampleInputEmail1"
-                      placeholder="ID" />
-                  </div>
-                  <div class="form-group">
-                    <label for="exampleInputEmail1">Tên nhãn hàng</label>
-                    <input type="text" ng-model="form.name" class="form-control" id="exampleInputEmail1"
-                      placeholder="tên nhà phân phối" />
-                  </div>
-
-                  <div class="form-group">
-                    <label for="exampleInputEmail1">Người chịu trách nhiệm</label>
-                    <input type="text" ng-model="form.responsibleName" class="form-control" id="exampleInputEmail1"
-                      placeholder="Người chịu trách nhiệm" />
-                  </div>
-                  <div class="form-group">
-                    <label for="exampleInputEmail1">Nguồn gốc</label>
-                    <input type="text" ng-model="form.origin" class="form-control" id="exampleInputEmail1"
-                      placeholder="Nguồn gốc" />
-                  </div>
+                    <input type="text" ng-model="form.id" readonly class="form-control" id="exampleInputEmail1" placeholder="ID" />
+                    <div ng-show="myForm.id.$error.required && myForm.id.$touched">ID is required</div>
                 </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Tên nhãn hàng</label>
+                    <input type="text" ng-model="form.name" class="form-control" id="exampleInputEmail1" placeholder="tên nhà phân phối"/>
+                    <div ng-show="hassError" style="color: red;">{{message1}}</div>
+                </div>
+        
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Người chịu trách nhiệm</label>
+                    <input type="text" ng-model="form.responsibleName" class="form-control" id="exampleInputEmail1" placeholder="Người chịu trách nhiệm"/>
+                    <div ng-show="hassError" style="color: red;">{{message2}}</div>
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Nguồn gốc</label>
+                    <input type="text" ng-model="form.origin" class="form-control" id="exampleInputEmail1" placeholder="Nguồn gốc" />
+                    <div ng-show="hassError" style="color: red;">{{message3}}</div>
+                </div>
+            </div>
+            <!-- /.card-body -->
                 <!-- /.card-body -->
+                <div class="panel-footer text-center">
+                  <button ng-click="create()" class="btn btn-primary">
+                    <i class="fas fa-plus"></i>
+                    lưu
+                  </button>
+                  <button ng-click="update()" class="btn btn-success">
+                    <i class="fas fa-save"></i>
+                    cập nhật
+                  </button>
+                  <button ng-click="delete(form)" class="btn btn-danger">
+                    <i class="fas fa-trash"></i>
+                    xóa
+                  </button>
+                  <button ng-click="reset()" class="btn btn-info">
+                    <i class="fas fa-redo-alt"></i>
+                    làm mới
+                  </button>
+                </div>
               </form>
-              <div class="panel-footer text-center">
-                <button ng-click="create()" class="btn btn-primary">
-                  <i class="fas fa-plus"></i>
-                  lưu
-                </button>
-                <button ng-click="update()" class="btn btn-success">
-                  <i class="fas fa-save"></i>
-                  cập nhật
-                </button>
-                <button ng-click="delete(form)" class="btn btn-danger">
-                  <i class="fas fa-trash"></i>
-                  xóa
-                </button>
-                <button ng-click="reset()" class="btn btn-info">
-                  <i class="fas fa-redo-alt"></i>
-                  làm mới
-                </button>
-              </div>
+              
+              
             </div>
           </div>
 
@@ -289,8 +303,8 @@
 
         </div>
         <!-- /.card-body -->
-      </section>
     </div>
+    </section>
 
     <!-- /.content -->
   </div>
@@ -317,7 +331,8 @@
   <!-- ./wrapper -->
 
   <!-- REQUIRED SCRIPTS -->
-  <th:block th:include="admin/layout :: js"></th:block>
+  <th:block th:insert="~{admin/layout :: js}"></th:block>
+
 
   <script>
     $(function () {

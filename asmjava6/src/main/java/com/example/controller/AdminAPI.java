@@ -17,9 +17,7 @@ import com.example.entity.Account;
 import com.example.entity.Category;
 import com.example.entity.Discount;
 import com.example.entity.Product;
-import com.example.jparepository.AccountRepository;
 import com.example.jparepository.CategoryRepository;
-import com.example.jparepository.DiscountRepository;
 import com.example.jparepository.ProductRepository;
 import com.example.service.CookieService;
 
@@ -29,11 +27,6 @@ public class AdminAPI {
     @Autowired
     private ProductRepository productRepository;
 
-    @Autowired
-    private AccountRepository userRepository;
-
-    @Autowired
-    private DiscountRepository discountRepository;
 
     @Autowired
     private CategoryRepository categoryRepository;
