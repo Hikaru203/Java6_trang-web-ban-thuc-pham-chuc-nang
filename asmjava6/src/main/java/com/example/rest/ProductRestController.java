@@ -1,10 +1,14 @@
 package com.example.rest;
 
+import java.util.Date;
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,7 +19,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.entity.Account;
+import com.example.entity.Favorite;
 import com.example.entity.Product;
+import com.example.jparepository.AccountRepository;
+import com.example.jparepository.FavoriteRepository;
 import com.example.jparepository.ProductRepository;
 
 @CrossOrigin("*")
@@ -24,6 +32,12 @@ import com.example.jparepository.ProductRepository;
 public class ProductRestController {
 	@Autowired
 	ProductRepository daoProduct;
+
+	@Autowired
+	AccountRepository accountRepository;
+
+	@Autowired
+	FavoriteRepository favoriteRepository;
 
 	@GetMapping
 	public List<Product> getAllProducts() {
@@ -69,4 +83,48 @@ public class ProductRestController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
+
+	@PostMapping("/add-to-favorite/{id}/{userName}")
+	public ResponseEntity<String> addToFavorite(@PathVariable("id") Integer itemId,
+			@PathVariable("userName") int userId) {
+
+		Account account = accountRepository.findById(userId);
+
+		if (account == null) {
+			return ResponseEntity.badRequest().body("Không tìm thấy thông tin!");
+		}
+
+		// Thêm yêu thích mới
+		Product product = daoProduct.findById(itemId).get();
+		Favorite favorite = favoriteRepository.findByAccountAndProduct(account, product);
+		if (favorite == null || account.getId() == favorite.getAccount().getId()) {
+			System.out.println("Sản phẩm yêu thích chưa tồn tại !");
+			Favorite favorite2 = new Favorite();
+			favorite2.setProduct(product);
+			favorite2.setAccount(account);
+			favoriteRepository.save(favorite2);
+			return ResponseEntity.ok("{\"message\": \"Đã thêm sản phẩm vào trang yêu thích!\"}");
+		} else {
+			System.out.println("Sản phẩm đã được thích");
+			return ResponseEntity.ok("{\"message\": \"Đã thêm sản phẩm vào trang yêu thích 2!\"}");
+		}
+
+	}
+
+	@GetMapping("/rest/products/favorites/{accountId}")
+	public List<Favorite> getFavoriteProductsByAccountId(@PathVariable Integer accountId) {
+		Account account = new Account();
+		account.setId(accountId);
+
+		return favoriteRepository.findByAccount(account);
+	}
+	@DeleteMapping("/remove/favorite-product/{productId}/{accountId}")
+    public ResponseEntity<Favorite> removeFromFavorite(
+            @PathVariable Integer productId,
+            @PathVariable Integer accountId) {
+		
+		Favorite Favorite = favoriteRepository.findByAccountAndProduct(accountRepository.findById(accountId).get(), daoProduct.findById(productId).get());
+		favoriteRepository.delete(Favorite);
+        return ResponseEntity.ok(Favorite);
+    }
 }
