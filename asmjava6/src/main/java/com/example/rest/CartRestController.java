@@ -99,7 +99,7 @@ public class CartRestController {
 			}
 		}
 
-		return ResponseEntity.ok("{\"message\": \"Added to cart successfully!\"}");
+		return ResponseEntity.ok("{\"message\": \"Thêm Thành Công\"}");
 	}
 
 	@PutMapping("/update-quantity/{id}/{quantity}")

@@ -9,10 +9,13 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.config.VNPayService;
 import com.example.entity.Account;
 import com.example.entity.Cart;
 import com.example.entity.Product;
@@ -21,6 +24,7 @@ import com.example.jparepository.ProductRepository;
 import com.example.service.CartService;
 import com.example.service.CookieService;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
@@ -97,7 +101,6 @@ public class HomeController {
 			String username = userDetails.getUsername();
 
 			Account account = daoAccount.findByUserName(username);
-
 			String id = String.valueOf(account.getId());
 			String fullName = account.getFullName();
 
@@ -124,4 +127,5 @@ public class HomeController {
 		return "login";
 	}
 
+	
 }

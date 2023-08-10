@@ -17,7 +17,8 @@
 	rel="stylesheet">
 <!-- jQuery Library -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
 <script
 	src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.1/dist/sweetalert2.min.js"></script>
 <!-- Font Awesome -->
@@ -32,7 +33,12 @@
 <!-- Customized Bootstrap Stylesheet -->
 <link th:href="@{/css/style.css}" rel="stylesheet">
 <!-- Tải script của ngCookies -->
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-cookies.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-cookies.min.js"></script>
+<link rel="stylesheet" type="text/css"
+	href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+<script type="text/javascript"
+	src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 </head>
 
 <body ng-app="shopping-cart-app" ng-controller="shopping-cart-ctrl">
@@ -162,7 +168,7 @@
 							</a> <a th:href="@{/client/cart}" class="btn px-0 ml-3"> <i
 								class="fas fa-shopping-cart text-primary"></i> <span
 								class="badge text-secondary border border-secondary rounded-circle"
-								style="padding-bottom: 2px;">{{cart.count}}</span>
+								style="padding-bottom: 2px;"></span>
 							</a>
 						</div>
 					</div>
@@ -307,21 +313,25 @@
 								class="btn btn-outline-dark btn-square" href=""><i
 								class="fa fa-sync-alt"></i></a> <a
 								class="btn btn-outline-dark btn-square"
-								th:href="@{|/detail/${item.id}|}"><i class="fa fa-search"></i></a>
+								th:href="@{|/client/detail/${item.id}|}"><i
+								class="fa fa-search"></i></a>
 						</div>
-
 					</div>
 					<div class="text-center py-4">
 						<div class="d-flex align-items-center justify-content-center mt-2">
 							<h5 th:text="${item.name}"></h5>
 							<h6 class="text-muted ml-2">
-								<del th:text="${item.price}"></del>
+								<del>
+									<span
+										th:utext="${'&#x20AB;' + #numbers.formatDecimal(item.price, 0, 'COMMA', 0, 'POINT')}"></span>
+								</del>
 							</h6>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+
 	</div>
 	<!-- Products End -->
 	<!-- Products Start -->

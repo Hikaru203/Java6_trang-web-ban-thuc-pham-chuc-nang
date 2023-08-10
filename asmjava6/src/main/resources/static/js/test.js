@@ -37,7 +37,7 @@ app.controller("shopping-cart-ctrl", ['$scope', '$http', '$cookies', function($s
 
 	// Khởi đầu
 	$scope.initialize();
-
+	
 	// Thêm  mới 
 	$scope.cart = {
 		items: [],
@@ -60,10 +60,11 @@ app.controller("shopping-cart-ctrl", ['$scope', '$http', '$cookies', function($s
 			var url = `/rest/carts/add-to-cart/${ProductId}/${username}/${quantity}`;
 
 			$http.post(url, {}).then(response => {
-				if (response.data && response.data.message === "Added to cart successfully!") {
-					alert("Added to cart successfully!");
+				if (response.data && response.data.message === "Thêm Thành Công") {
+					$scope.alertSuccess("Thêm Thành Công");
 					this.loadCartItems(username); // Load lại danh sách sản phẩm trong giỏ hàng sau khi cập nhật
 				} else {
+					$scope.alertSuccess("Thêm Thất Bại");
 					// Xử lý phản hồi thất bại (nếu cần)
 				}
 			}).catch(error => {
@@ -80,6 +81,7 @@ app.controller("shopping-cart-ctrl", ['$scope', '$http', '$cookies', function($s
 				console.error(error);
 			});
 		},
+
 	};
 
 
@@ -134,6 +136,81 @@ app.controller("shopping-cart-ctrl", ['$scope', '$http', '$cookies', function($s
 				console.error(error);
 			});
 	};
+	$scope.alertSuccess = function(message) {
+		Toastify({
+			text: message,
+			duration: 1000,
+			newWindow: true,
+			gravity: "top",
+			position: "right",
+			stopOnFocus: true,
+			style: {
+				background: "#34c240",
+				color: "white",
+			},
+			onClick: function() { }
+		}).showToast();
+	};
 
+	$scope.shipfee = function() {
+		var ship;
+		var header = {
+			"token": "d6f64767-329b-11ee-af43-6ead57e9219a",
+			"shop_id": "4421897"
+		};
+		var insurance_value = $scope.getTotalPrice();
+		var body = {
+			"service_id": 53320,
+			"insurance_value": insurance_value,
+			"coupon": null,
+			"from_district_id": 1572,
+			"to_district_id": 1574,
+			"to_ward_code": null,
+			"height": 15,
+			"length": 15,
+			"weight": 1000,
+			"width": 15
+		};
+		$http.post('https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee', body, { headers: header })
+			.then(response => {
+				this.ship = response.data;
+			})
+			.catch(error => {
+				console.error(error);
+			});
+	};
+	/*	$http.get('/api/cities')
+			.then(response => {
+				$scope.cities = response.data;
+			})
+			.catch(error => {
+				console.error(error);
+			});
+	
+		// Lấy danh sách huyện
+		$http.get('/api/districts')
+			.then(response => {
+				$scope.districts = response.data;
+			})
+			.catch(error => {
+				console.error(error);
+			});*/
+	$scope.submidOrder = function(total, fullName) {
+		var requestData = {
+			amount: total,
+			orderInfo: fullName
+		};
+		console.log(requestData)
+		$http.post('/rest/orders/client/submitOrder', requestData)
+			.then(response => {
+				// Xử lý phản hồi từ server (nếu cần)
+			})
+			.catch(error => {
+				// Xử lý lỗi (nếu cần)
+				console.error(error);
+			});
+	};
+	
+	$scope.shipfee()
 	$scope.cart.loadCartItems(username);
 }]);
