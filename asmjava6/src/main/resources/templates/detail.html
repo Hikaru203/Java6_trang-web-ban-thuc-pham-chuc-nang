@@ -169,7 +169,8 @@
 				<div id="product-carousel" class="carousel slide" data-ride="carousel">
 					<div class="carousel-inner bg-light">
 						<div class="carousel-item active">
-							<img class="w-100 h-100" th:src="@{|/images/*{image}|}" alt="Image">
+							<img class="w-100 h-100" th:src="@{|/images/*{image}|}"
+								alt="Image">
 						</div>
 					</div>
 				</div>
@@ -184,13 +185,13 @@
 					<div class="d-flex align-items-center mb-4 pt-2">
 						<div class="input-group quantity mr-3" style="width: 130px;">
 							<div class="input-group-btn">
-								<button class="btn btn-primary btn-minus">
+								<button class="btn btn-primary btn-minus" ng-click="decreaseQty(item)">
 									<i class="fa fa-minus"></i>
 								</button>
 							</div>
 							<input type="text" class="form-control bg-secondary border-0 text-center" value="1">
 							<div class="input-group-btn">
-								<button class="btn btn-primary btn-plus">
+								<button class="btn btn-primary btn-plus" ng-click="increaseQty(item)">
 									<i class="fa fa-plus"></i>
 								</button>
 							</div>
@@ -199,9 +200,9 @@
 							<i class="fa fa-shopping-cart mr-1"></i> Thêm giỏ hàng
 						</button>
 					</div>
-
 				</div>
 			</div>
+
 		</div>
 		<div class="row px-xl-5">
 			<div class="col">
