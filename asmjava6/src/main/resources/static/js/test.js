@@ -37,7 +37,7 @@ app.controller("shopping-cart-ctrl", ['$scope', '$http', '$cookies', function($s
 
 	// Khởi đầu
 	$scope.initialize();
-	
+
 	// Thêm  mới 
 	$scope.cart = {
 		items: [],
@@ -188,7 +188,7 @@ app.controller("shopping-cart-ctrl", ['$scope', '$http', '$cookies', function($s
 			});
 	
 		// Lấy danh sách huyện
-		$http.get('/api/districts')
+		$http.get('/api/distric	ts')
 			.then(response => {
 				$scope.districts = response.data;
 			})
@@ -210,7 +210,30 @@ app.controller("shopping-cart-ctrl", ['$scope', '$http', '$cookies', function($s
 				console.error(error);
 			});
 	};
-	
+	$scope.test = function(total, fullName) {
+		var requestData = {
+			amount: total,
+			orderInfo: fullName
+		};
+		console.log(requestData)
+		$http.post('/rest/orders/client/submitOrder', requestData)
+			.then(response => {
+				// Xử lý phản hồi từ server (nếu cần)
+			})
+			.catch(error => {
+				// Xử lý lỗi (nếu cần)
+				console.error(error);
+			});
+	};
+	$http.get('/rest/orders')
+		.then(response => {
+			$scope.districts = response.data;
+		})
+		.catch(error => {
+			console.error("API Error:", error);
+		});
+
+	$scope.selectedDate = new Date();
 	$scope.shipfee()
 	$scope.cart.loadCartItems(username);
 }]);

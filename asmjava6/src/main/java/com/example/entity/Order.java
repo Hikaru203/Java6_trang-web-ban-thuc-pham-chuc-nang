@@ -33,8 +33,26 @@ public class Order {
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     private Account user;
-
+    
+    @JoinColumn(name = "adress", nullable = false)
+    private String adress;
     // Getters and setters, constructors, and other methods
+    @JoinColumn(name = "phone_number", nullable = false)
+    private String phoneNumber;
+    
+    @JoinColumn(name = "country", nullable = false)
+    private String country;
+    
+    @Column(name = "date_order")
+    private Date orderDate;
+    
+    @Column(name = "total_price")
+    private int totalPrice;
+    
+    @JoinColumn(name = "is_acctive")
+    private boolean isActive;
+
+	
 }
 
 

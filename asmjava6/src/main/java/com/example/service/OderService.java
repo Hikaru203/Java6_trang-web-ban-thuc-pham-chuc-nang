@@ -7,4 +7,6 @@ public interface OderService {
 
 	Order create(JsonNode orderData);
 
+	void save(Order order);
+
 }
