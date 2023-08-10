@@ -113,3 +113,5 @@ priceElements.forEach(function (element) {
     var formattedPrice = currencyFormatter.format(parseFloat(rawPrice));
     element.textContent = formattedPrice;
 });
+
+

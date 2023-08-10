@@ -140,7 +140,7 @@ public class HomeController {
 	public static String formatCurrency(double value) {
 		NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
 		return currencyFormat.format(value);
-
 	}
+	
 
 }
