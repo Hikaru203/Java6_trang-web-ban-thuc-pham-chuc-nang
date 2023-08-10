@@ -17,6 +17,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
 @Entity
 @Table(name = "Users")
 @Data
@@ -47,13 +48,16 @@ public class Account implements Serializable {
     @Column(name = "active", nullable = false)
     private boolean isActive;
 
+ 
     @OneToMany(mappedBy = "user")
     @JsonIgnore
     private List<Cart> carts;
-
+    
+   
     @OneToMany(mappedBy = "user")
     @JsonIgnore
     private List<Order> orders;
+    
 
     @OneToMany(mappedBy = "user")
     @JsonIgnore
