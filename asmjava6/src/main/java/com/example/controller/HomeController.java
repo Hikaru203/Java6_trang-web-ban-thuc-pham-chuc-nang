@@ -107,7 +107,6 @@ public class HomeController {
 
 			if (account != null) {
 				cookieService.setCookie(response, "id", id, 3600);
-				cookieService.setCookie(response, "fullName", sanitizedFullName, 3600); // Đã sửa tên cookie ở đây
 				cookieService.setCookie(response, "username", username, 3600);
 
 				System.out.println("Đăng nhập thành công");
