@@ -56,7 +56,7 @@
               >
                 <a href="/client/login" class="dropdown-item">Đăng nhập</a>
                 <a href="/dangky" class="dropdown-item">Đăng ký</a>
-				<a href="/admin/updateprofile" class="dropdown-item">Cập nhật tài khoản</a>
+				<a href="/capnhat" class="dropdown-item">Cập nhật tài khoản</a>
                 <a href="/admin/index" class="dropdown-item">admin</a>
                 <a href="/client/logout" class="dropdown-item">Đăng xuất</a>
               </div>
@@ -672,14 +672,14 @@
 			if (isLoggedIn) {
 				accountDropdown.querySelector('.dropdown-item[href="/client/login"]').style.display = 'none';
 				accountDropdown.querySelector('.dropdown-item[href="/dangky"]').style.display = 'none';
-				accountDropdown.querySelector('.dropdown-item[href="/admin/updateprofile"]').style.display = 'block';
+				accountDropdown.querySelector('.dropdown-item[href="/capnhat"]').style.display = 'block';
 
 				accountDropdown.querySelector('.dropdown-item[href="/admin/index"]').style.display = 'block';
 				accountDropdown.querySelector('.dropdown-item[href="/client/logout"]').style.display = 'block';
 			} else {
 				accountDropdown.querySelector('.dropdown-item[href="/client/login"]').style.display = 'block';
 				accountDropdown.querySelector('.dropdown-item[href="/dangky"]').style.display = 'block';
-				accountDropdown.querySelector('.dropdown-item[href="/admin/updateprofile"]').style.display = 'none';
+				accountDropdown.querySelector('.dropdown-item[href="/capnhat"]').style.display = 'none';
 
 				accountDropdown.querySelector('.dropdown-item[href="/admin/index"]').style.display = 'none';
 				accountDropdown.querySelector('.dropdown-item[href="/client/logout"]').style.display = 'none';

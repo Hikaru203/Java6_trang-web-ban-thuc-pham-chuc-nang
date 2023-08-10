@@ -55,7 +55,7 @@ public class HomeController {
 
 	@RequestMapping("/client/denied")
 	public String error(Model model) {
-		
+
 		return "redirect:/client/index";
 	}
 
@@ -105,10 +105,10 @@ public class HomeController {
 			} else {
 				System.out.println("Không tìm thấy tài khoản");
 			}
-			
+
 			return "redirect:/client/index";
 		} else {
-			
+
 			return "redirect:/client/index";
 		}
 	}
@@ -117,6 +117,12 @@ public class HomeController {
 	public String loi(Model model) {
 		model.addAttribute("loi", "Sai thông tin đăng nhập, Vui lòng nhập lại");
 		return "login";
+	}
+
+	@RequestMapping(value = "/capnhat")
+	public String capnhat(Model model) {
+		model.addAttribute("loi", "Sai thông tin đăng nhập, Vui lòng nhập lại");
+		return "/capnhat";
 	}
 
 }
