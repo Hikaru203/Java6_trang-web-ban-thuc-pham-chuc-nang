@@ -47,11 +47,6 @@ public class HomeController {
 		return "detail";
 	}
 
-	
-
-	
-	
-
 	@RequestMapping("/client/login")
 	public String showLoginFrom(Model model) {
 		model.addAttribute("user", new Account());
@@ -122,21 +117,24 @@ public class HomeController {
 		model.addAttribute("lỗi", "Sai thông tin đăng nhập, Vui lòng nhập lại");
 		return "login";
 	}
-	  
-	  @RequestMapping(value = "/client/social/success")
-	   public String loginGG (Model model) {
-		  System.out.println("logingg");
-		  return "redirect:/client/index";
-	  } 
-	  @RequestMapping(value = "/client/favorite")
-	   public String favorite (Model model) {
-		  List<Favorite> list = repository.findAll();
-		  model.addAttribute("items",list);
-		  return "favoriteProductPage";
-	  }
-	  
-	  public static String formatCurrency(double value) {
-	        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
-	        return currencyFormat.format(value);
-	    }
+
+	@RequestMapping(value = "/client/social/success")
+	public String loginGG(Model model) {
+		System.out.println("logingg");
+		return "redirect:/client/index";
 	}
+
+	@RequestMapping(value = "/client/favorite")
+	public String favorite(Model model) {
+		List<Favorite> list = repository.findAll();
+		model.addAttribute("items", list);
+		List<Product> page = daoProduct.findAll();
+		model.addAttribute("products", page);
+		return "favoriteProductPage";
+	}
+
+	public static String formatCurrency(double value) {
+		NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
+		return currencyFormat.format(value);
+	}
+}

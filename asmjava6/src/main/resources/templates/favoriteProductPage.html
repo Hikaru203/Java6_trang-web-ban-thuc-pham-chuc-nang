@@ -263,9 +263,10 @@
 											<img class="img-fluid w-100"
 												ng-src="/images/{{ p.product.image }}" alt="" height="600px"
 												width="95%">
+
 											<div class="product-action">
 												<a class="btn btn-outline-dark btn-square"
-													ng-href="addToCart(p.product.id)"><i
+													ng-click="addToCart(p.product.id)"><i
 													class="fa fa-shopping-cart"></i></a> <a
 													class="btn btn-outline-dark btn-square"
 													ng-click="removeFromFavorites(p.product.id)"><i
@@ -291,9 +292,49 @@
 							</div>
 						</div>
 					</div>
-
 				</div>
 				<!-- Shop Product End -->
+				<!-- Products Start -->
+				<div class="container-fluid pt-5 pb-3">
+					<h2
+						class="section-title position-relative text-uppercase mx-xl-5 mb-4">
+						<span class="bg-secondary pr-3">Sản phẩm nổi bật</span>
+					</h2>
+					<div class="row">
+						<div class="col-lg-3 col-md-4 col-sm-6 pb-1"
+							th:each="item, itemStat : ${products}"
+							th:if="${itemStat.index < 4}">
+							<div class="product-item bg-light mb-4" style="height: 450px;">
+								<div class="product-img position-relative overflow-hidden">
+									<img class="img-fluid w-100"
+										th:src="@{|/images/${item.image}|}" alt="" height="200px"
+										width="95%">
+									<div class="product-action">
+										<a class="btn btn-outline-dark btn-square"
+											th:attr="ng-click=@{|cart.addToCart(${item.id})|}"><i
+											class="fa fa-shopping-cart"></i></a> <a
+											class="btn btn-outline-dark btn-square"
+											th:attr="ng-click=@{|cart.favorite(${item.id})|}"><i
+											class="fa fa-heart"></i></a> <a
+											class="btn btn-outline-dark btn-square"
+											th:href="@{|/client/detail/${item.id}|}"><i
+											class="fa fa-search"></i></a>
+									</div>
+								</div>
+								<div class="text-center py-4">
+									<div
+										class="d-flex align-items-center justify-content-center mt-2">
+										<h5 class="product-name" th:text="${item.name}"></h5>
+									</div>
+									<h6 class="text-muted ml-2">
+										<div id="product-price" th:text="${item.price}"></div>
+									</h6>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- Products End -->
 			</div>
 		</div>
 		<!-- Shop End -->
@@ -387,7 +428,7 @@
 				style="border-color: rgba(256, 256, 256, .1) !important;">
 				<div class="col-md-6 px-xl-0"></div>
 				<div class="col-md-6 px-xl-0 text-center text-md-right">
-					<img class="img-fluid" src="img/payments.png" alt="">
+					<img class="img-fluid" src="/img/payments.png" alt="">
 				</div>
 			</div>
 		</div>
@@ -409,10 +450,9 @@
 		<!-- Contact Javascript File -->
 		<script src="/mail/jqBootstrapValidation.min.js"></script>
 		<script src="/mail/contact.js"></script>
-		<script type="text/javascript">
-			var app = angular.module("shopping-cart-app", []);
-		</script>
 		<!-- Template Javascript -->
 		<script src="../js/main.js"></script>
+		<script src="../js/test.js"></script>
+
 		<script src="../js/shopping-favorite-app.js"></script>
 </body>

@@ -39,6 +39,7 @@ app.controller("shopping-cart-ctrl", function($scope, $http) {
 
 		return null;
 	}
+
 	$scope.removeFromFavorites = function(productId) {
 		const userCookie = getCookie("username");
 
@@ -47,8 +48,8 @@ app.controller("shopping-cart-ctrl", function($scope, $http) {
 			$http.get(`http://localhost:8080/rest/accounts/${userCookie}`)
 				.then(accountResponse => {
 					const accountId = accountResponse.data.id;
-              		const url = `http://localhost:8080/rest/products/remove/favorite-product/${productId}/${accountId}`;
-					
+					const url = `http://localhost:8080/rest/products/remove/favorite-product/${productId}/${accountId}`;
+
 					$http.delete(url)
 						.then(response => {
 							alert("Xoá thành công")
@@ -69,34 +70,47 @@ app.controller("shopping-cart-ctrl", function($scope, $http) {
 	};
 	$scope.cart = {
 		items: [],
-		favorite(id) {
+		async favorite(id) {
 			const userCookie = getCookie("username");
 			console.log(userCookie);
 
 			if (userCookie) {
-				// Gọi API để tìm accountId dựa trên username
-				$http.get(`http://localhost:8080/rest/accounts/${userCookie}`)
-					.then(accountResponse => {
-						accountId = accountResponse.data.id;
-						const url = `http://localhost:8080/rest/products/add-to-favorite/${id}/${accountId}`;
-						alert("Thêm sản phẩm yêu thích thành công!");
-						$http.post(url)
-							.then(response => {
-								console.log(response.data);
+				try {
+					const accountResponse = await $http.get(`http://localhost:8080/rest/accounts/${userCookie}`);
+					const accountData = accountResponse.data;
 
-							})
-							.catch(error => {
-								console.error(error);
-							});
-					})
-					.catch(error => {
-						console.error(error);
-					});
+					if (!Array.isArray(accountData)) {
+						if (accountData.id) {
+							accountId = accountData.id;
+							const url = `http://localhost:8080/rest/products/add-to-favorite/${id}/${accountId}`;
+							$scope.existingFavorite = $scope.favoriteProducts.filter(product => product.product.id === id);
+							console.log($scope.existingFavorite);
+							if ($scope.existingFavorite.length === 1) {
+								alert("Sản phẩm đã có trong danh sách yêu thích!");
+							}
+							else {
+								alert("Thêm sản phẩm yêu thích thành công!");
+								const response = await $http.post(url);
+								console.log(response.data);
+								load_all();
+							}
+
+						} else {
+							console.error("Không tìm thấy tài khoản hoặc tìm thấy nhiều tài khoản khớp.");
+						}
+					} else {
+						console.error("Tìm thấy nhiều tài khoản khớp.");
+					}
+				} catch (error) {
+					console.error(error);
+				}
 			} else {
 				console.log("Không tìm thấy cookie username.");
 			}
 		},
 	};
+
+
 	load_all();
 	// Load danh sách sản phẩm yêu thích ban đầu
 });
