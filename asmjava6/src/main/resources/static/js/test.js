@@ -9,7 +9,7 @@ app.controller("shopping-cart-ctrl", ['$scope', '$http', '$cookies', function($s
 	// Định nghĩa biến username và gán giá trị cho nó
 	$scope.items = [];
 	$scope.form = {};
-	var username = $cookies.get('username');
+	var username = $cookies.get('id');
 	$scope.fullName = $cookies.get('fullName').replaceAll("_", " ");
 
 

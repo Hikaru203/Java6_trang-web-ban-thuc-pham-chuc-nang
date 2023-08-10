@@ -57,7 +57,7 @@ public class HomeController {
 
 	@RequestMapping("/client/denied")
 	public String error(Model model) {
-		
+
 		return "redirect:/client/index";
 	}
 
@@ -106,8 +106,10 @@ public class HomeController {
 			String sanitizedFullName = fullName.replaceAll(" ", "_");
 
 			if (account != null) {
-				cookieService.setCookie(response, "username", id, 3600);
-				cookieService.setCookie(response, "fullName", sanitizedFullName, 3600);
+				cookieService.setCookie(response, "id", id, 3600);
+				cookieService.setCookie(response, "fullName", sanitizedFullName, 3600); // Đã sửa tên cookie ở đây
+				cookieService.setCookie(response, "username", username, 3600);
+
 				System.out.println("Đăng nhập thành công");
 			} else {
 				System.out.println("Không tìm thấy tài khoản");
@@ -140,11 +142,10 @@ public class HomeController {
 		// model.addAttribute("cartItem",cartItem);
 		return "shop";
 	}
-	
+
 	public static String formatCurrency(double value) {
 		NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
 		return currencyFormat.format(value);
 	}
-	
 
 }
