@@ -2,7 +2,6 @@ package com.example.entity;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 
 import lombok.Data;
 

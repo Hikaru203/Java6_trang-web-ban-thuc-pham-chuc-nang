@@ -9,9 +9,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import com.example.service.BrandService;
 import com.example.service.DistributorService;
 import com.example.service.OrderService;
+import com.example.service.ReportService;
 import com.example.service.impl.BrandServiceImpl;
 import com.example.service.impl.DistributorServiceImpl;
 import com.example.service.impl.OrderServiceImpl;
+import com.example.service.impl.ReportServiceImpl;
 
 
 
@@ -40,5 +42,9 @@ public class InterceptorConfig implements WebMvcConfigurer {
     @Bean
     public OrderService orderService() {
         return new OrderServiceImpl();
+    }
+	@Bean
+    public ReportService reportService() {
+        return new ReportServiceImpl();
     }
 }

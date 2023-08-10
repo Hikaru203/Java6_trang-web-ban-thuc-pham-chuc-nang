@@ -21,4 +21,22 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetail, Intege
     "JOIN Products p ON p.id = c.product_id " +
     "GROUP BY o.id, o.adress, o.phone_number, u.fullname,o.order_date")
 List<Object[]> getComplexOrders();
+
+@Query(nativeQuery = true, value = "SELECT YEAR(o.order_date) AS year, MONTH(o.order_date) AS month, SUM(p.price) AS total_revenue " +
+                                       "FROM Order_Details od " +
+                                       "JOIN Orders o ON o.id = od.order_id " +
+                                       "JOIN Users u ON u.id = o.user_id " +
+                                       "JOIN Carts c ON c.id = od.cart_id " +
+                                       "JOIN Products p ON p.id = c.product_id " +
+                                       "GROUP BY YEAR(o.order_date), MONTH(o.order_date) " +
+                                       "ORDER BY year, month")
+    List<Object[]> fetchRevenueData();
+    @Query(nativeQuery = true, value = "SELECT p.name, SUM(p.price) AS total_price " +
+    "FROM Order_Details od " +
+    "JOIN Orders o ON o.id = od.order_id " +
+    "JOIN Users u ON u.id = o.user_id " +
+    "JOIN Carts c ON c.id = od.cart_id " +
+    "JOIN Products p ON p.id = c.product_id " +
+    "GROUP BY p.name ORDER BY total_price DESC")
+List<Object[]> fetchTotalPriceByProduct();
 }

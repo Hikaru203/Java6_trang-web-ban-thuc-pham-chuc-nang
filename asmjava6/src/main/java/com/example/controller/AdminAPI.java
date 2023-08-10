@@ -12,9 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.entity.Product;
-import com.example.jparepository.AccountRepository;
 import com.example.jparepository.CategoryRepository;
-import com.example.jparepository.DiscountRepository;
 import com.example.jparepository.ProductRepository;
 
 @CrossOrigin({ "*" })
@@ -23,11 +21,6 @@ public class AdminAPI {
     @Autowired
     private ProductRepository productRepository;
 
-    @Autowired
-    private AccountRepository userRepository;
-
-    @Autowired
-    private DiscountRepository discountRepository;
 
     @Autowired
     private CategoryRepository categoryRepository;
