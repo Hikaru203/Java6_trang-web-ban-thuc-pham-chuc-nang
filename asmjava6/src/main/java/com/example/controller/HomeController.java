@@ -38,7 +38,7 @@ public class HomeController {
 	@Autowired
 	CookieService cookieService;
 	@Autowired
-	FavoriteRepository favoriteRepository;
+	FavoriteRepository repository;
 
 	@RequestMapping(value = "/client/detail/{id}")
 	public String detail(Model model, @PathVariable("id") int id) {
@@ -50,11 +50,7 @@ public class HomeController {
 	
 
 	
-	@RequestMapping(value = "/client/social/success")
-	public String loginGG(Model model) {
-
-		return "redirect:/client/index";
-	}
+	
 
 	@RequestMapping("/client/login")
 	public String showLoginFrom(Model model) {
@@ -131,10 +127,10 @@ public class HomeController {
 	   public String loginGG (Model model) {
 		  System.out.println("logingg");
 		  return "redirect:/client/index";
-	  }
+	  } 
 	  @RequestMapping(value = "/client/favorite")
 	   public String favorite (Model model) {
-		  List<Favorite> list = favoriteRepository.findAll();
+		  List<Favorite> list = repository.findAll();
 		  model.addAttribute("items",list);
 		  return "favoriteProductPage";
 	  }

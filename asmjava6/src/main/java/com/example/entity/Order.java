@@ -8,33 +8,44 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
-import java.util.Date;
-import java.util.List;
+
+import java.time.LocalDateTime;
+
+
+
 
 @Entity
 @Table(name = "Orders")
 @Data
-@Getter
-@Setter
-public class Order {
+@NoArgsConstructor
+@AllArgsConstructor
+public class Order implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "user_id", nullable = false)
     private Account user;
 
-    // Getters and setters, constructors, and other methods
+    @Column(name = "adress",nullable = false)
+    private String adress;
+
+    @Column(name = "phone_number",nullable = false)
+    private String phoneNumber;
+
+    @Column(name = "country",nullable = false)
+    private String country;
+
+    @Column(name = "order_date", nullable = false)
+    private LocalDateTime orderdate;
+
+    // Constructors, getters, setters, and other methods as needed.
 }
-
-

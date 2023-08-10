@@ -13,6 +13,8 @@ import com.example.entity.Product;
 @Repository
 public interface FavoriteRepository extends JpaRepository<Favorite, Integer> {
     // Các phương thức truy vấn dữ liệu cho Entity Favorite
-    Favorite findByAccountAndProduct(Account account,Product product);
+	Favorite findByAccountAndProduct(Account account,Product product);
     List<Favorite> findByAccount(Account account);
+    
 }
+ 

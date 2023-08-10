@@ -19,54 +19,38 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 @Entity
 @Table(name = "Users")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Account implements Serializable {
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
 
-    @Column(name = "fullname", nullable = false)
-    private String fullName;
+	@Column(name = "fullname", nullable = false)
+	private String fullName;
 
-    @Column(name = "username", nullable = false)
-    private String userName;
+	@Column(name = "username", nullable = false)
+	private String userName;
 
-    @Column(name = "password", nullable = false)
-    private String password;
+	@Column(name = "password", nullable = false)
+	private String password;
 
-    @Column(name = "email", nullable = false)
-    private String email;
+	@Column(name = "email", nullable = false)
+	private String email;
 
-    @Column(name = "admin", nullable = false)
-    private boolean isAdmin;
+	@Column(name = "admin", nullable = false)
+	private boolean isAdmin;
 
-    @Column(name = "active", nullable = false)
-    private boolean isActive;
+	@Column(name = "active", nullable = false)
+	private boolean isActive;
 
- 
-    @OneToMany(mappedBy = "user")
-    @JsonIgnore
-    private List<Cart> carts;
-    
-   
-    @OneToMany(mappedBy = "user")
-    @JsonIgnore
-    private List<Order> orders;
-    
-
-    @OneToMany(mappedBy = "user")
-    @JsonIgnore
-    private List<Favorite> favorites;
-
-    // Constructors, getters, setters, and other methods as needed.
-    @ManyToOne
+	// Constructors, getters, setters, and other methods as needed.
+	@ManyToOne
 	@JoinColumn(name = "addresscity_id")
 	private AddressCity addressCity;
 

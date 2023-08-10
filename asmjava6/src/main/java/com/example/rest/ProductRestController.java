@@ -118,4 +118,13 @@ public class ProductRestController {
 
 		return favoriteRepository.findByAccount(account);
 	}
+	@DeleteMapping("/remove/favorite-product/{productId}/{accountId}")
+    public ResponseEntity<Favorite> removeFromFavorite(
+            @PathVariable Integer productId,
+            @PathVariable Integer accountId) {
+		
+		Favorite Favorite = favoriteRepository.findByAccountAndProduct(accountRepository.findById(accountId).get(), daoProduct.findById(productId).get());
+		favoriteRepository.delete(Favorite);
+        return ResponseEntity.ok(Favorite);
+    }
 }
