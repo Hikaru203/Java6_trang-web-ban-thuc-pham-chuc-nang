@@ -57,7 +57,7 @@ public class HomeController {
 
 	@RequestMapping("/client/denied")
 	public String error(Model model) {
-		
+
 		return "redirect:/client/index";
 	}
 
@@ -99,18 +99,24 @@ public class HomeController {
 			String username = userDetails.getUsername();
 
 			Account account = daoAccount.findByUserName(username);
+			String id = String.valueOf(account.getId());
+			String fullName = account.getFullName();
+
+			// Thay thế dấu cách trong fullName bằng gạch dưới
+			String sanitizedFullName = fullName.replaceAll(" ", "_");
+			String cleanedUsername = account.getUserName().replaceAll("\\s", "");
 
 			if (account != null) {
-				String cleanedUsername = account.getUserName().replaceAll("\\s", "");
 				cookieService.setCookie(response, "username", cleanedUsername, 3600);
+				cookieService.setCookie(response, "id", id, 3600);
+				cookieService.setCookie(response, "fullName", sanitizedFullName, 3600);
 				System.out.println("Đăng nhập thành công");
 			} else {
 				System.out.println("Không tìm thấy tài khoản");
 			}
-			
+
 			return "redirect:/client/index";
 		} else {
-			
 			return "redirect:/client/index";
 		}
 	}
@@ -122,6 +128,7 @@ public class HomeController {
 	}
 
 	@RequestMapping("/client/shop")
+
 	public String shop(Model model, @RequestParam("cid") Optional<Integer> cid) {
 		System.out.println(cid);
 		if (cid.isPresent()) {
@@ -136,7 +143,7 @@ public class HomeController {
 		// model.addAttribute("cartItem",cartItem);
 		return "shop";
 	}
-	
+
 	public static String formatCurrency(double value) {
 		NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
 		return currencyFormat.format(value);

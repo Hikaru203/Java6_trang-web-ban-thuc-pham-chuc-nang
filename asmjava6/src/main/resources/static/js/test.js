@@ -1,19 +1,27 @@
-
-const app = angular.module("shopping-cart-app", []);
+const app = angular.module("shopping-cart-app", ['ngCookies']);
 app.filter("vnCurrency", function() {
 	return function(input) {
 		if (isNaN(input)) return input;
 		return currency(input, { symbol: "₫", separator: ",", precision: 0 }).format();
 	};
 });
-app.controller("shopping-cart-ctrl", function($scope, $http) {
-	// Định nghĩa biến UserId và gán giá trị cho nó
-	var UserId = 9; // Giả sử UserId là 123 (đây là một giá trị tạm thời)
+app.controller("shopping-cart-ctrl", ['$scope', '$http', '$cookies', function($scope, $http, $cookies) {
+	// Định nghĩa biến username và gán giá trị cho nó
 	$scope.items = [];
 	$scope.form = {};
+	var username = $cookies.get('id');
+	$scope.fullName = $cookies.get('fullName').replaceAll("_", " ");
 
+
+	if ($scope.fullName) {
+		console.log("Họ và tên đã có trong cookie:", $scope.fullName);
+	} else {
+		console.log("Họ và tên không có trong cookie.");
+	}
+
+	console.log(username);
 	$scope.initialize = function() {
-		$http.get(`/rest/carts/userCart/${UserId}`).then(resp => {
+		$http.get(`/rest/carts/userCart/${username}`).then(resp => {
 			console.log('Dữ liệu từ API:', resp.data);
 			const activeItems = resp.data.filter(item => item.active);
 			console.log('Sản phẩm có isActive = true:', activeItems);
@@ -26,6 +34,7 @@ app.controller("shopping-cart-ctrl", function($scope, $http) {
 		});
 	};
 
+
 	// Khởi đầu
 	$scope.initialize();
 
@@ -34,27 +43,28 @@ app.controller("shopping-cart-ctrl", function($scope, $http) {
 		items: [],
 		addToCart(ProductId) {
 			var item = this.items.find(item => item.product.id == ProductId);
-			
+
 			if (item) {
 				item.quantity += 1;
-				this.saveToDatabase(ProductId, UserId, item.quantity);
+				this.saveToDatabase(ProductId, username, item.quantity);
 			} else {
 				$http.get(`/rest/carts/product/${ProductId}`).then(resp => { // Thay đổi tham số thành ProductId
-
 					this.items.push(resp.data);
-					this.saveToDatabase(ProductId, UserId, 1);
+					this.saveToDatabase(ProductId, username, 1);
+
 				});
 			}
 		},
-		saveToDatabase(ProductId, UserId, quantity) {
-			// Thay thế bằng cách lấy UserId từ người dùng sau khi đăng nhập
-			var url = `/rest/carts/add-to-cart/${ProductId}/${UserId}/${quantity}`;
+		saveToDatabase(ProductId, username, quantity) {
+			// Thay thế bằng cách lấy username từ người dùng sau khi đăng nhập
+			var url = `/rest/carts/add-to-cart/${ProductId}/${username}/${quantity}`;
 
 			$http.post(url, {}).then(response => {
-				if (response.data && response.data.message === "Added to cart successfully!") {
-					alert("Added to cart successfully!");
-					this.loadCartItems(UserId); // Load lại danh sách sản phẩm trong giỏ hàng sau khi cập nhật
+				if (response.data && response.data.message === "Thêm Thành Công") {
+					$scope.alertSuccess("Thêm Thành Công");
+					this.loadCartItems(username); // Load lại danh sách sản phẩm trong giỏ hàng sau khi cập nhật
 				} else {
+					$scope.alertSuccess("Thêm Thất Bại");
 					// Xử lý phản hồi thất bại (nếu cần)
 				}
 			}).catch(error => {
@@ -62,8 +72,8 @@ app.controller("shopping-cart-ctrl", function($scope, $http) {
 				console.error(error);
 			});
 		},
-		loadCartItems(UserId) {
-			var url = `/rest/carts/userCart/${UserId}`;
+		loadCartItems(username) {
+			var url = `/rest/carts/userCart/${username}`;
 			$http.get(url).then(response => {
 				this.items = response.data;
 			}).catch(error => {
@@ -71,6 +81,7 @@ app.controller("shopping-cart-ctrl", function($scope, $http) {
 				console.error(error);
 			});
 		},
+
 	};
 
 
@@ -81,7 +92,7 @@ app.controller("shopping-cart-ctrl", function($scope, $http) {
 			.then(response => {
 				console.log(response.data);
 				// Load lại danh sách sản phẩm trong giỏ hàng sau khi cập nhật
-				$scope.cart.loadCartItems(UserId);
+				$scope.cart.loadCartItems(username);
 			})
 			.catch(error => {
 				console.error(error);
@@ -125,6 +136,104 @@ app.controller("shopping-cart-ctrl", function($scope, $http) {
 				console.error(error);
 			});
 	};
+	$scope.alertSuccess = function(message) {
+		Toastify({
+			text: message,
+			duration: 1000,
+			newWindow: true,
+			gravity: "top",
+			position: "right",
+			stopOnFocus: true,
+			style: {
+				background: "#34c240",
+				color: "white",
+			},
+			onClick: function() { }
+		}).showToast();
+	};
 
-	$scope.cart.loadCartItems(UserId);
-});
+	$scope.shipfee = function() {
+		var ship;
+		var header = {
+			"token": "d6f64767-329b-11ee-af43-6ead57e9219a",
+			"shop_id": "4421897"
+		};
+		var insurance_value = $scope.getTotalPrice();
+		var body = {
+			"service_id": 53320,
+			"insurance_value": insurance_value,
+			"coupon": null,
+			"from_district_id": 1572,
+			"to_district_id": 1574,
+			"to_ward_code": null,
+			"height": 15,
+			"length": 15,
+			"weight": 1000,
+			"width": 15
+		};
+		$http.post('https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee', body, { headers: header })
+			.then(response => {
+				this.ship = response.data;
+			})
+			.catch(error => {
+				console.error(error);
+			});
+	};
+	/*	$http.get('/api/cities')
+			.then(response => {
+				$scope.cities = response.data;
+			})
+			.catch(error => {
+				console.error(error);
+			});
+	
+		// Lấy danh sách huyện
+		$http.get('/api/distric	ts')
+			.then(response => {
+				$scope.districts = response.data;
+			})
+			.catch(error => {
+				console.error(error);
+			});*/
+	$scope.submidOrder = function(total, fullName) {
+		var requestData = {
+			amount: total,
+			orderInfo: fullName
+		};
+		console.log(requestData)
+		$http.post('/rest/orders/client/submitOrder', requestData)
+			.then(response => {
+				// Xử lý phản hồi từ server (nếu cần)
+			})
+			.catch(error => {
+				// Xử lý lỗi (nếu cần)
+				console.error(error);
+			});
+	};
+	$scope.test = function(total, fullName) {
+		var requestData = {
+			amount: total,
+			orderInfo: fullName
+		};
+		console.log(requestData)
+		$http.post('/rest/orders/client/submitOrder', requestData)
+			.then(response => {
+				// Xử lý phản hồi từ server (nếu cần)
+			})
+			.catch(error => {
+				// Xử lý lỗi (nếu cần)
+				console.error(error);
+			});
+	};
+	$http.get('/rest/orders')
+		.then(response => {
+			$scope.districts = response.data;
+		})
+		.catch(error => {
+			console.error("API Error:", error);
+		});
+
+	$scope.selectedDate = new Date();
+	$scope.shipfee()
+	$scope.cart.loadCartItems(username);
+}]);
