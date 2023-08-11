@@ -1,5 +1,8 @@
 package com.example.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.text.NumberFormat;
 import java.util.List;
 import java.util.Locale;
@@ -91,35 +94,46 @@ public class HomeController {
 	}
 
 	@RequestMapping(value = "/client/login/success")
-	public String success(Model model, HttpServletResponse response) {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
-			UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+public String success(Model model, HttpServletResponse response) {
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        String username = userDetails.getUsername();
 
-			String username = userDetails.getUsername();
+        Account account = daoAccount.findByUserName(username);
+        if (account != null) {
+            String id = String.valueOf(account.getId());
+            String fullName = account.getFullName();
 
-			Account account = daoAccount.findByUserName(username);
-			String id = String.valueOf(account.getId());
-			String fullName = account.getFullName();
+            // Sanitize values and encode them properly
+            String sanitizedFullName = fullName.replaceAll(" ", "_");
+            String cleanedUsername = account.getUserName().replaceAll("\\s", "");
 
-			// Thay thế dấu cách trong fullName bằng gạch dưới
-			String sanitizedFullName = fullName.replaceAll(" ", "_");
-			String cleanedUsername = account.getUserName().replaceAll("\\s", "");
+            try {
+                cleanedUsername = URLEncoder.encode(cleanedUsername, StandardCharsets.UTF_8.toString());
+                sanitizedFullName = URLEncoder.encode(sanitizedFullName, StandardCharsets.UTF_8.toString());
+                id = URLEncoder.encode(id, StandardCharsets.UTF_8.toString());
 
-			if (account != null) {
-				cookieService.setCookie(response, "username", cleanedUsername, 3600);
-				cookieService.setCookie(response, "id", id, 3600);
-				cookieService.setCookie(response, "fullName", sanitizedFullName, 3600);
-				System.out.println("Đăng nhập thành công");
-			} else {
-				System.out.println("Không tìm thấy tài khoản");
-			}
+                // Set cookies with sanitized and encoded values
+                cookieService.setCookie(response, "username", cleanedUsername, 3600);
+                cookieService.setCookie(response, "id", id, 3600);
+                cookieService.setCookie(response, "fullName", sanitizedFullName, 3600);
 
-			return "redirect:/client/index";
-		} else {
-			return "redirect:/client/index";
-		}
-	}
+                System.out.println("Đăng nhập thành công");
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+                System.out.println("Lỗi encoding cookie values");
+            }
+        } else {
+            System.out.println("Không tìm thấy tài khoản");
+        }
+
+        return "redirect:/client/index";
+    } else {
+        return "redirect:/client/index";
+    }
+}
+
 
 	@RequestMapping(value = "/client/signin/error")
 	public String loi(Model model) {
