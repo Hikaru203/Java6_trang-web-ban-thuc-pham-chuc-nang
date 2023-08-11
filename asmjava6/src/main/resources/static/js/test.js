@@ -1,5 +1,4 @@
-const app =angular.module('shopping-cart-app', ['ngCookies']);
-
+const app = angular.module("shopping-cart-app", ['ngCookies']);
 app.filter("vnCurrency", function() {
 	return function(input) {
 		if (isNaN(input)) return input;
