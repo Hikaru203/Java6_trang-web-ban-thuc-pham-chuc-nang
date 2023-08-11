@@ -20,19 +20,23 @@ app.controller("myCtrl", function ($scope, $http, $window) {
 		// Đặt giá trị mặc định cho các biến hoặc xóa dữ liệu nếu cần thiết.
 		$scope.form = {};
 		$scope.users = [];
+		$scope.usersBlock = [];
 		$scope.load_all();
 		$(".nav-tabs a:eq(0)").tab('show');
 	};
 
 	$scope.load_all = function () {
 		$http.get(host + "/ManagedAccount").then(resp => {
-			$scope.users = resp.data;
+			$scope.form = resp.data;
 			if ($scope.user != null) {
 				console.log($scope.user);
-				$scope.users = $scope.users.filter(user => user.id != $scope.user.id);
-				$scope.form = $scope.user;
-				$scope.users = $scope.users.filter(user => user.active == true);
+				$scope.users = $scope.form.filter(user => user.id != $scope.user.id);
+				$scope.users = $scope.form.filter(user => user.active == true);
 				console.log($scope.users);
+
+
+				$scope.usersBlock = $scope.form.filter(user => user.active == false);
+				console.log($scope.usersBlock);
 			}
 		}).catch(error => {
 			console.log(error);
@@ -79,6 +83,25 @@ app.controller("myCtrl", function ($scope, $http, $window) {
 		});
 
 		return filteredUsers.slice(startIndex, endIndex);
+	};
+
+	$scope.getCurrentPageUsersBlock = function () {
+		if (!$scope.usersBlock || !Array.isArray($scope.usersBlock)) {
+			// Handle the case when $scope.users is not defined or not an array
+			return [];
+		}
+
+		// Check if a search keyword is provided
+		const searchKeyword = $scope.searchKeyword ? $scope.searchKeyword.toLowerCase() : '';
+
+		const filteredUsers = $scope.usersBlock.filter(user => {
+			const fullName = user.fullName ? user.fullName.toLowerCase() : '';
+			const userName = user.userName ? user.userName.toLowerCase() : '';
+			const email = user.email ? user.email.toLowerCase() : '';
+			return fullName.includes(searchKeyword) || userName.includes(searchKeyword) || email.includes(searchKeyword);
+		});
+
+		return filteredUsers;
 	};
 
 
@@ -157,6 +180,47 @@ app.controller("myCtrl", function ($scope, $http, $window) {
 		});
 	};
 
+	$scope.updateInLog = function () {
+		$scope.formErrors = {};
+		var item = angular.copy($scope.userLogin);
+		$(".nav-tabs a:eq(0)").tab('show');
+		alert("Cập nhật thành công");
+		var url = host + `/ManagedAccount/${$scope.userLogin.id}`;
+		console.log($scope.userLogin.id);
+		$http.put(url, item).then(resp => {
+			var index = $scope.items.findIndex(p => p.id === $scope.userLogin.id);
+
+			// Kiểm tra và sử dụng dữ liệu cũ nếu password và fullName là rỗng
+			if (!$scope.userLogin.password) {
+				if ($scope.items[index] && $scope.items[index].password) {
+					resp.data.password = $scope.items[index].password;
+					alert(resp.data.password);
+				}
+			}
+
+			if (!$scope.userLogin.fullName) {
+				if ($scope.items[index] && $scope.items[index].fullName) {
+					resp.data.fullName = $scope.items[index].fullName;
+					alert(resp.data.fullName);
+				}
+			}
+			alert(resp.data.password);
+			console.log(resp.data.password);
+			$scope.items[index] = resp.data;
+			console.log($scope.items[index]);
+			$scope.reset();
+			$scope.load_all();
+			$(".nav-tabs a:eq(0)").tab('show');
+
+			console.log("thanh cong", resp);
+		}).catch(error => {
+			console.log(error);
+		});
+	};
+
+
+
+
 	$scope.editRemove = function (id) {
 		var url = host + `/ManagedAccount/${id}`;
 		$http.get(url).then(resp => {
@@ -164,7 +228,11 @@ app.controller("myCtrl", function ($scope, $http, $window) {
 			if ($scope.form.admin == true) {
 				alert("Không thể xóa tài khoản admin");
 			} else {
-				$scope.form.active = false;
+				if ($scope.form.active == false) {
+					$scope.form.active = true;
+				} else if ($scope.form.active == true) {
+					$scope.form.active = false;
+				}
 				console.log($scope.form);
 				$scope.update();
 			}
@@ -273,8 +341,8 @@ app.controller("myCtrl", function ($scope, $http, $window) {
 	}
 	$scope.user = function () {
 		$http.get("http://localhost:8080/ManagedAccountByUserName/" + usernameCookie).then(resp => {
-			$scope.user = resp.data;
-			console.log($scope.user);
+			$scope.userLogin = resp.data;
+			console.log($scope.userLogin);
 		}).catch(error => {
 			console.log(error);
 		});

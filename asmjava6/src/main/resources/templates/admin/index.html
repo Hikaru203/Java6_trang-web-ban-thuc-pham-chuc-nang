@@ -178,6 +178,10 @@
               <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
                 aria-selected="false">Cập nhật</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" id="blocked-tab" data-toggle="tab" href="#blocked" role="tab" aria-controls="blocked"
+                aria-selected="false">Sản phẩm bị khóa</a>
+            </li>
           </ul>
 
           <div class="tab-content" id="myTabContent">
@@ -215,7 +219,7 @@
                     <td style="width: 130px">{{ product.price }} VND</td>
                     <td>{{ product.description }}</td>
                     <td>
-                      <a class="fas fa-trash-alt" ng-click="editRemove(product.id)"></a>
+                      <a class="fa fa-lock" ng-click="editRemove(product.id)"></a>
                       <a class="fas fa-edit" ng-click="edit(product.id)"></a>
                     </td>
                   </tr>
@@ -236,8 +240,8 @@
                   <i class="fas fa-arrow-circle-down"></i>
                 </button>
               </div>
-
             </div>
+
             <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
               <form>
                 <div class="card-body">
@@ -318,9 +322,52 @@
                 </button>
               </div>
             </div>
+
+            <div class="tab-pane fade" id="blocked" role="tabpanel" aria-labelledby="blocked-tab">
+              <div class="ml-auto" style="margin-top: 15px; padding-right: 15px">
+                <div class="form-group">
+                  <input type="text" class="form-control" ng-model="searchBlockedKeyword"
+                    placeholder="Tìm kiếm sản phẩm bị khóa..." />
+                </div>
+              </div>
+              <table id="blockedProductsTable" class="table table-bordered table-striped">
+                <style>
+                  div.dataTables_wrapper div.dataTables_filter label {
+                    display: none;
+                  }
+
+                  div.dataTables_wrapper div.dataTables_filter input {
+                    display: none;
+                  }
+
+                  .dataTables_empty {
+                    display: none;
+                  }
+                </style>
+                <thead>
+                  <tr>
+                    <th>Tên sản phẩm</th>
+                    <th>Giá</th>
+                    <th>Mô tả</th>
+                    <th>Tùy chỉnh</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="product in getCurrentPageItemsBlock()" >
+                    <td>{{ product.name }}</td>
+                    <td style="width: 130px">{{ product.price }} VND</td>
+                    <td>{{ product.description }}</td>
+                    <td>
+                      <a class="fa fa-unlock" ng-click="editRemove(product.id)"></a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <div>{{mgsBlock}}</div>
+
+            </div>
           </div>
         </div>
-        <!-- /.card-body -->
       </section>
       <!-- /.content -->
     </div>

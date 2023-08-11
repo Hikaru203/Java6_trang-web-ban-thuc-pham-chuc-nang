@@ -183,6 +183,10 @@
                 aria-selected="true">Danh sách</a>
             </li>
             <li class="nav-item">
+              <a class="nav-link" id="homeBlock-tab" data-toggle="tab" href="#homeBlock" role="tab"
+                aria-controls="homeBlock" aria-selected="false">Danh sách khóa</a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
                 aria-selected="false">Cập nhật</a>
             </li>
@@ -225,7 +229,7 @@
                     <td>{{ user.email }}</td>
                     <td>{{ user.admin ? 'Admin' : 'User' }}</td>
                     <td>
-                      <a class="fas fa-trash-alt" ng-click="editRemove(user.id)"></a>
+                      <a class="fa fa-lock" ng-click="editRemove(user.id)"></a>
                       <a class="fas fa-edit" ng-click="edit(user.id)"></a>
                     </td>
                   </tr>
@@ -251,23 +255,119 @@
                   <div class="form-group">
                     <label for="exampleInputEmail1">Họ và tên</label>
                     <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Nhập họ tên"
-                      ng-model="form.fullName" />
+                      ng-model="userLogin.fullName" />
                     <div ng-show="formErrors.fullName" class="error-message">{{ formErrors.fullName }}</div>
                   </div>
 
                   <div class="form-group">
                     <label for="exampleInputEmail1">Email</label>
                     <input type="email" class="form-control" readonly id="exampleInputEmail1" placeholder="Nhập email"
-                      ng-model="form.email" />
+                      ng-model="userLogin.email" />
                     <div ng-show="formErrors.email" class="error-message">{{ formErrors.email }}</div>
                   </div>
 
                   <div class="form-group">
                     <label for="exampleInputEmail1">Username</label>
                     <input type="text" class="form-control" readonly id="exampleInputEmail1" placeholder="Nhập username"
+                      ng-model="userLogin.userName" />
+                    <div ng-show="formErrors.userName" class="error-message">{{ formErrors.userName }}</div>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Password</label>
+                    <div class="input-group">
+                      <input ng-if="!showPassword" type="password" class="form-control" id="exampleInputPassword1"
+                        placeholder="Password" ng-model="userLogin.password" />
+                      <input ng-if="showPassword" type="text" class="form-control" id="exampleInputPassword1"
+                        placeholder="Password" ng-model="userLogin.password" />
+                      <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button" ng-click="showPassword = !showPassword">
+                          <i class="fa" ng-class="{'fa-eye': !showPassword, 'fa-eye-slash': showPassword}"></i>
+                        </button>
+                      </div>
+                    </div>
+                    <div ng-show="formErrors.password" class="error-message">{{ formErrors.password }}</div>
+                  </div>
+                  <div class="form-group">
+                    <input type="hidden" class="form-control" id="exampleInputPassword1" placeholder="Password"
+                      ng-model="form.admin" />
+                  </div>
+                </div>
+              </form>
+              <div class="panel-footer text-center">
+                <button ng-click="updateInLog()" class="btn btn-success">
+                  <i class="fas fa-save"></i>
+                  cập nhật
+                </button>
+              </div>
+            </div>
+
+            <div class="tab-pane fade" id="homeBlock" role="tabpanel" aria-labelledby="homeBlock-tab">
+              <div class="ml-auto" style="margin-top: 15px; padding-right: 15px">
+                <div class="form-group">
+                  <input type="text" class="form-control" ng-model="searchKeyword" placeholder="Tìm kiếm..." />
+                </div>
+              </div>
+              <table id="example1" class="table table-bordered table-striped">
+                <style>
+                  div.dataTables_wrapper div.dataTables_filter label {
+                    display: none;
+                  }
+
+                  div.dataTables_wrapper div.dataTables_filter input {
+                    display: none;
+                  }
+
+                  .dataTables_empty {
+                    display: none;
+                  }
+                </style>
+                <thead>
+                  <tr>
+                    <th>Họ tên</th>
+                    <th>Tài khoản</th>
+                    <th>Email</th>
+                    <th>Chức vụ</th>
+                    <th>Tùy chỉnh</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="user in getCurrentPageUsersBlock()">
+                    <td>{{ user.fullName }}</td>
+                    <td>{{ user.userName }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.admin ? 'Admin' : 'User' }}</td>
+                    <td>
+                      <a class="fa fa-unlock" ng-click="editRemove(user.id)"></a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+              <form>
+                <div class="card-body">
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Họ và tên</label>
+                    <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Nhập họ tên"
+                      ng-model="form.fullName" />
+                    <div ng-show="formErrors.fullName" class="error-message">{{ formErrors.fullName }}</div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Email</label>
+                    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Nhập email"
+                      ng-model="form.email" />
+                    <div ng-show="formErrors.email" class="error-message">{{ formErrors.email }}</div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Username</label>
+                    <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Nhập username"
                       ng-model="form.userName" />
                     <div ng-show="formErrors.userName" class="error-message">{{ formErrors.userName }}</div>
                   </div>
+
                   <div class="form-group">
                     <label for="exampleInputPassword1">Password</label>
                     <div class="input-group">
@@ -284,109 +384,47 @@
                     <div ng-show="formErrors.password" class="error-message">{{ formErrors.password }}</div>
                   </div>
 
-
                   <div class="form-group">
-                    <input type="hidden" class="form-control" id="exampleInputPassword1" placeholder="Password"
-                      ng-model="form.admin" />
+                    <div class="custom-control custom-radio">
+                      <input class="custom-control-input" type="radio" id="customRadio1" name="customRadio"
+                        ng-model="form.admin" ng-value="true" />
+                      <label for="customRadio1" class="custom-control-label">Admin</label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                      <input class="custom-control-input" type="radio" id="customRadio2" name="customRadio"
+                        ng-model="form.admin" ng-value="false" />
+                      <label for="customRadio2" class="custom-control-label">User</label>
+                    </div>
                   </div>
-                  <!-- /.card-body -->
+                </div>
               </form>
               <div class="panel-footer text-center">
-
-                <button ng-click="update()" class="btn btn-success">
-                  <i class="fas fa-save"></i>
-                  cập nhật
+                <button ng-click="create()" class="btn btn-primary">
+                  <i class="fas fa-plus"></i> lưu
                 </button>
-
-
+                <button ng-click="update()" class="btn btn-success">
+                  <i class="fas fa-save"></i> cập nhật
+                </button>
+                <button ng-click="reset()" class="btn btn-info">
+                  <i class="fas fa-redo-alt"></i> làm mới
+                </button>
               </div>
             </div>
           </div>
-          <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-            <form>
-              <div class="card-body">
-                <div class="form-group">
-                  <label for="exampleInputEmail1">Họ và tên</label>
-                  <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Nhập họ tên"
-                    ng-model="form.fullName" />
-                  <div ng-show="formErrors.fullName" class="error-message">{{ formErrors.fullName }}</div>
-                </div>
-
-                <div class="form-group">
-                  <label for="exampleInputEmail1">Email</label>
-                  <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Nhập email"
-                    ng-model="form.email" />
-                  <div ng-show="formErrors.email" class="error-message">{{ formErrors.email }}</div>
-                </div>
-
-                <div class="form-group">
-                  <label for="exampleInputEmail1">Username</label>
-                  <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Nhập username"
-                    ng-model="form.userName" />
-                  <div ng-show="formErrors.userName" class="error-message">{{ formErrors.userName }}</div>
-                </div>
-
-                <div class="form-group">
-                  <label for="exampleInputPassword1">Password</label>
-                  <div class="input-group">
-                    <input ng-if="!showPassword" type="password" class="form-control" id="exampleInputPassword1"
-                      placeholder="Password" ng-model="form.password" />
-                    <input ng-if="showPassword" type="text" class="form-control" id="exampleInputPassword1"
-                      placeholder="Password" ng-model="form.password" />
-                    <div class="input-group-append">
-                      <button class="btn btn-outline-secondary" type="button" ng-click="showPassword = !showPassword">
-                        <i class="fa" ng-class="{'fa-eye': !showPassword, 'fa-eye-slash': showPassword}"></i>
-                      </button>
-                    </div>
-                  </div>
-                  <div ng-show="formErrors.password" class="error-message">{{ formErrors.password }}</div>
-                </div>
-
-                <div class="form-group">
-                  <div class="custom-control custom-radio">
-                    <input class="custom-control-input" type="radio" id="customRadio1" name="customRadio"
-                      ng-model="form.admin" ng-value="true" />
-                    <label for="customRadio1" class="custom-control-label">Admin</label>
-                  </div>
-                  <div class="custom-control custom-radio">
-                    <input class="custom-control-input" type="radio" id="customRadio2" name="customRadio"
-                      ng-model="form.admin" ng-value="false" />
-                    <label for="customRadio2" class="custom-control-label">User</label>
-                  </div>
-                </div>
-                <!-- /.card-body -->
-            </form>
-            <div class="panel-footer text-center">
-              <button ng-click="create()" class="btn btn-primary">
-                <i class="fas fa-plus"></i>
-                lưu
-              </button>
-              <button ng-click="update()" class="btn btn-success">
-                <i class="fas fa-save"></i>
-                cập nhật
-              </button>
-
-              <button ng-click="reset()" class="btn btn-info">
-                <i class="fas fa-redo-alt"></i>
-                làm mới
-              </button>
-            </div>
-          </div>
         </div>
+      </section>
+
+      <!-- /.content -->
     </div>
-    <!-- /.card-body -->
-    </section>
-    <!-- /.content -->
-  </div>
-  <!-- /.content-wrapper -->
+    <!-- /.content-wrapper -->
 
-  <!-- Control Sidebar -->
-  <aside class="control-sidebar control-sidebar-dark">
-    <!-- Control sidebar content goes here -->
-  </aside>
-  <!-- /.control-sidebar -->
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+      <!-- Control sidebar content goes here -->
+    </aside>
+    <!-- /.control-sidebar -->
 
-  <!-- Main Footer -->
+    <!-- Main Footer -->
   </div>
   <!-- ./wrapper -->
 
