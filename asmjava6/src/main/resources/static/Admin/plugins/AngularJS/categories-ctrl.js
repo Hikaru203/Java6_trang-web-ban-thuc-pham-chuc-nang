@@ -157,7 +157,7 @@ app.controller("myCtrl", function ($scope, $http) {
 		return null;
 	}
 
-	const usernameCookie = getCookieValue('username');
+	const usernameCookie = getCookieValue('id');
 	if (usernameCookie !== null) {
 		console.log('Giá trị của cookie username là:', usernameCookie);
 	} else {

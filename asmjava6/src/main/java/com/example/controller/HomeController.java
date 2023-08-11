@@ -115,8 +115,8 @@ public String success(Model model, HttpServletResponse response) {
                 id = URLEncoder.encode(id, StandardCharsets.UTF_8.toString());
 
                 // Set cookies with sanitized and encoded values
-                cookieService.setCookie(response, "username", cleanedUsername, 3600);
-                cookieService.setCookie(response, "id", id, 3600);
+                cookieService.setCookie(response, "id", cleanedUsername, 3600);
+                cookieService.setCookie(response, "username", id, 3600);
                 cookieService.setCookie(response, "fullName", sanitizedFullName, 3600);
 
                 System.out.println("Đăng nhập thành công");
