@@ -7,5 +7,6 @@ import lombok.Data;
 @Data
 public class ProductTotalPriceData {
     private String productName;
+    private int count;
     private BigDecimal totalPrice;
 }

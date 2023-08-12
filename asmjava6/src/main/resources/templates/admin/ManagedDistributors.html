@@ -274,15 +274,14 @@
                       <!-- /.card-body -->
                     </form>
                     <div class="panel-footer text-center">
-                      <button ng-click="create()" class="btn btn-primary">
-                        <i class="fas fa-plus"></i>
-                        lưu
-                      </button>
-                      <button ng-click="update()" class="btn btn-success">
+                      <button ng-click="create()" class="btn btn-primary" ng-disabled="lockbtnAdd">
+                        <i class="fas fa-plus"></i> Lưu
+                    </button>                    
+                      <button ng-click="update()" class="btn btn-success" ng-disabled="lockbtnUpdate">
                         <i class="fas fa-save"></i>
                         cập nhật
                       </button>
-                      <button ng-click="delete(form)" class="btn btn-danger">
+                      <button ng-click="delete(form)" class="btn btn-danger" ng-disabled="lockbtnDelete">
                         <i class="fas fa-trash"></i>
                         xóa
                       </button>

@@ -2,6 +2,9 @@ const app = angular.module('myApp', []);
 app.controller("brand-ctrl", function ($scope, $http, $window) {
     $scope.items = [];
     $scope.form = {};
+    $scope.lockbtnAdd=false;
+    $scope.lockbtnDelete=true;
+    $scope.lockbtnUpdate=true;
     $scope.initialize = function () {
         // load brands
         $http.get("/rest/brands").then(resp => {
@@ -15,12 +18,18 @@ app.controller("brand-ctrl", function ($scope, $http, $window) {
     // Xóa form
     $scope.reset = function () {
         $scope.form = {};
+        $scope.lockbtnAdd=false;
+        $scope.lockbtnDelete=true;
+        $scope.lockbtnUpdate=true;
     }
 
     // Hiển thị lên form
     $scope.edit = function (item) {
         $scope.form = angular.copy(item);
         $(".nav-tabs a:eq(1)").tab('show');
+        $scope.lockbtnAdd=true;
+        $scope.lockbtnDelete=false;
+        $scope.lockbtnUpdate=false;
     }
    
 
@@ -120,7 +129,7 @@ app.controller("brand-ctrl", function ($scope, $http, $window) {
         if ($scope.form.name === undefined) {
             $scope.hassError = true;
             $scope.message1 = $scope.brandMessages.nameNull;
-            $scope.checkV=true;
+            $scope.checkV = true;
         }
         if (!isNaN($scope.form.name)) {
             $scope.hassError = true;

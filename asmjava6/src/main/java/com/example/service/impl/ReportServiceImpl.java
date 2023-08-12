@@ -39,7 +39,8 @@ public class ReportServiceImpl implements ReportService {
         for (Object[] row : result) {
             ProductTotalPriceData productTotalPriceData = new ProductTotalPriceData();
             productTotalPriceData.setProductName((String) row[0]);
-            productTotalPriceData.setTotalPrice( (BigDecimal) row[1]);
+            productTotalPriceData.setCount((int) row[1]);
+            productTotalPriceData.setTotalPrice( (BigDecimal) row[2]);
 
             productTotalPriceDataList.add(productTotalPriceData);
         }

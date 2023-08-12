@@ -1,6 +1,9 @@
 app.controller("order-ctrl", function ($scope, $http, $window) {
     $scope.items = [];
     $scope.form = {};
+    $scope.formatTotalPrice = function(totalPrice) {
+        return totalPrice.toFixed(2).replace(/\.?0+$/, '') + ' VND';
+    }
     $scope.initialize = function () {
         // load brands
         $http.get("/rest/orders").then(resp => {

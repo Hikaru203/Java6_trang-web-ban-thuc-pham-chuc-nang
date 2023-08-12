@@ -1,7 +1,9 @@
 app.controller("distributor-ctrl", function ($scope, $http, $window) {
     $scope.items = [];
     $scope.form = {};
-
+    $scope.lockbtnAdd=false;
+    $scope.lockbtnDelete=true;
+    $scope.lockbtnUpdate=true;
     $scope.initialize = function () {
         // load brands
         $http.get("/rest/distributors").then(resp => {
@@ -16,12 +18,18 @@ app.controller("distributor-ctrl", function ($scope, $http, $window) {
     // Xóa form
     $scope.reset = function () {
         $scope.form = {};
+        $scope.lockbtnAdd=false;
+        $scope.lockbtnDelete=true;
+        $scope.lockbtnUpdate=true;
     }
 
     // Hiển thị lên form
     $scope.edit = function (item) {
         $scope.form = angular.copy(item);
         $(".nav-tabs a:eq(1)").tab('show');
+        $scope.lockbtnAdd=true;
+        $scope.lockbtnDelete=false;
+        $scope.lockbtnUpdate=false;
     }
 
     // Thêm  mới 
