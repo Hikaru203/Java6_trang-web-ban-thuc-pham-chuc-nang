@@ -198,36 +198,37 @@
         <!-- /.content-header -->
 
         <!-- Main content -->
-        <section class="content">
-          <div class="card">
-            <!-- /.card-header -->
-            <div class="card-body">
-              <table id="example1" class="table table-bordered table-striped">
-                <style>
-                  label {
-                    display: none;
-                  }
+        <section class="content" ng-app="myApp" ng-controller="reportFavorite-ctrl">
+          <table id="example1" class="table table-bordered table-striped">
+            <style>
+              div.dataTables_wrapper div.dataTables_filter label {
+                display: none;
+              }
+              div.dataTables_wrapper div.dataTables_filter input {
+                display: none;
+              }
+              .pagination {
+                display: none;
+              }
 
-                  .pagination {
-                    display: none;
-                  }
-                </style>
-                <thead>
-                  <tr>
-                    <th>Tên sản phẩm</th>
-                    <th>Số lượng yêu thích</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>Trident</td>
-                    <td>4</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <!-- /.card-body -->
-          </div>
+              .dataTables_empty {
+                display: none;
+              }      
+              /* Hiển thị các thẻ div khi có lỗi */
+            </style>
+            <thead>
+              <tr>
+                <th>Tên thuốc</th>
+                <th>Lượt thích</th>    
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="item in items">
+                <td>{{ item.productName }}</td>
+                <td>{{ item.likeCount}}</td>
+              </tr>
+            </tbody>
+          </table>
         </section>
         <!-- /.content -->
       </div>

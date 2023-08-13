@@ -13,35 +13,36 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.entity.Brand;
-import com.example.service.BrandService;
+import com.example.entity.Supplier;
+import com.example.service.DistributorService;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/rest/brands")
-public class BrandRestController {
+@RequestMapping("/rest/distributors")
+public class DistributorRestController {
     @Autowired
-    BrandService brandService;
+    DistributorService distributorService;
 
-    @GetMapping()
-    public List<Brand> getAll() {
-        return brandService.findAll();
+     @GetMapping()
+    public List<Supplier> getAll() {
+        return distributorService.findAll();
     }
 
     @GetMapping("{id}")
-    public Brand getOne(@PathVariable("id") Integer id) {
-        return brandService.findById(id);
+    public Supplier getOne(@PathVariable("id") Integer id) {
+        return distributorService.findById(id);
     }
     @PostMapping()
-    public Brand create(@RequestBody Brand brand) {
-        return brandService.create(brand);
+    public Supplier create(@RequestBody Supplier supplier) {
+        return distributorService.create(supplier);
     }
     @PutMapping("{id}")
-    public Brand update(@PathVariable("id") Integer id, @RequestBody Brand brand) {
-        return brandService.update(brand);
+    public Supplier update(@PathVariable("id") Integer id, @RequestBody Supplier supplier) {
+        return distributorService.update(supplier);
     }
     @DeleteMapping("{id}")
     public void delete(@PathVariable("id") Integer id) {
-        brandService.deleteById(id);
+        distributorService.deleteById(id);
     }
 }
+

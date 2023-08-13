@@ -181,16 +181,11 @@
         <div class="content-header">
           <div class="container-fluid">
             <div class="row mb-2">
-              <div class="col-sm-6">
-                <h1 class="m-0">Sản phẩm</h1>
+              <div class="col-sm-8">
+                <h1 class="m-0">Thống kê tổng doanh thu của các sản phẩm đã bán</h1>
               </div>
               <!-- /.col -->
-              <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                  
-                  <li class="breadcrumb-item active">Sản phẩm</li>
-                </ol>
-              </div>
+              
               <!-- /.col -->
             </div>
             <!-- /.row -->
@@ -200,42 +195,41 @@
         <!-- /.content-header -->
 
         <!-- Main content -->
-        <section class="content">
-          <div class="card">
-            <!-- /.card-header -->
-            <div class="card-body">
-              <table id="example1" class="table table-bordered table-striped">
-                <style>
-                  label {
-                    display: none;
-                  }
+        <section class="content" ng-app="myApp" ng-controller="reportProduct-ctrl">
+          <table id="example1" class="table table-bordered table-striped">
+            <style>
+              div.dataTables_wrapper div.dataTables_filter label {
+                display: none;
+              }
+              div.dataTables_wrapper div.dataTables_filter input {
+                display: none;
+              }
+              .pagination {
+                display: none;
+              }
 
-                  .pagination {
-                    display: none;
-                  }
-                </style>
-                <thead>
-                  <tr>
-                    <th>Tên sản phẩm</th>
-                    <th>Số lượng bán</th>
-                    <th>Giá bán</th>
-                    <th>Số lượng còn lại</th>
-                    <th>Giá nhập</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>Trident</td>
-                    <td>Internet Explorer 4.0</td>
-                    <td>Win 95+</td>
-                    <td>Win 95+</td>
-                    <td>4</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <!-- /.card-body -->
-          </div>
+              .dataTables_empty {
+                display: none;
+              }      
+              /* Hiển thị các thẻ div khi có lỗi */
+
+
+            </style>
+            <thead>
+              <tr>
+                <th>Tên thuốc</th>
+                <th>Số lượng</th>
+                <th>Tổng giá</th>    
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="item in items">
+                <td>{{ item.productName }}</td>
+                <td>{{ item.count }}</td>
+                <td>{{ item.totalPrice | number:0  }} VND  </td>
+              </tr>
+            </tbody>
+          </table>
         </section>
         <!-- /.content -->
       </div>

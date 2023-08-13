@@ -210,40 +210,29 @@
         <!-- /.content-header -->
 
         <!-- Main content -->
-        <section class="content">
-          <div class="card">
-            <!-- /.card-header -->
-            <div class="card-body">
-              <table id="example1" class="table table-bordered table-striped">
-                <style>
-                  label {
-                    display: none;
-                  }
+        <section class="content" ng-app="myApp" ng-controller="revenue-ctrl">
+          <!-- /.col-md-6 -->
+          <div class="col-lg-12">
+            <div class="card">
+              <div class="card-header border-0">
+               
+              </div>
+              <div class="card-body">
+                <div class="d-flex">
+                  <p class="d-flex flex-column">
+                    <span class="text-bold text-lg">{{ totalRevenue | currency:' ' }} VND</span>
+                    <span>Tổng doanh thu</span>
+                  </p>
+                  
+                </div>
+                <!-- /.d-flex -->
 
-                  .pagination {
-                    display: none;
-                  }
-                </style>
-                <thead>
-                  <tr>
-                    <th>Tháng</th>
-                    <th>Chi Phí bán</th>
-                    <th>Chi Phí nhập</th>
-                    <th>Tổng số lãi</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>Trident</td>
-                    <td>Internet Explorer 4.0</td>
-                    <td>Win 95+</td>
-                    <td>4</td>
-                  </tr>
-                </tbody>
-              </table>
+                <div class="position-relative mb-4">
+                  <canvas id="revenue-chart" height="100" ></canvas>
+                </div>
+              </div>
             </div>
-            <!-- /.card-body -->
-          </div>
+            <!-- /.card -->
         </section>
         <!-- /.content -->
       </div>

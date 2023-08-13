@@ -2,13 +2,14 @@ const app = angular.module('myApp', []);
 app.controller("brand-ctrl", function ($scope, $http, $window) {
     $scope.items = [];
     $scope.form = {};
-
+    $scope.lockbtnAdd=false;
+    $scope.lockbtnDelete=true;
+    $scope.lockbtnUpdate=true;
     $scope.initialize = function () {
         // load brands
         $http.get("/rest/brands").then(resp => {
             $scope.items = resp.data;
         });
-
     }
 
     // Khởi đầu
@@ -17,16 +18,26 @@ app.controller("brand-ctrl", function ($scope, $http, $window) {
     // Xóa form
     $scope.reset = function () {
         $scope.form = {};
+        $scope.lockbtnAdd=false;
+        $scope.lockbtnDelete=true;
+        $scope.lockbtnUpdate=true;
     }
 
     // Hiển thị lên form
     $scope.edit = function (item) {
         $scope.form = angular.copy(item);
         $(".nav-tabs a:eq(1)").tab('show');
+        $scope.lockbtnAdd=true;
+        $scope.lockbtnDelete=false;
+        $scope.lockbtnUpdate=false;
     }
+   
 
     // Thêm  mới 
     $scope.create = function () {
+        $scope.hassError = false;
+        if ($scope.validate()) {
+        $scope.hassError = false;
         var item = angular.copy($scope.form);
         $http.post('/rest/brands', item).then(resp => {
             $scope.items.push(resp.data);
@@ -36,11 +47,12 @@ app.controller("brand-ctrl", function ($scope, $http, $window) {
             alert("Lỗi thêm mới sản phẩm!");
             console.log("Error", error)
         })
+        }
     }
 
     // Cập nhật 
     $scope.update = function () {
-
+        if ($scope.validate()) {
         var item = angular.copy($scope.form);
         $http.put(`/rest/brands/${item.id}`, item).then(resp => {
             var index = $scope.items.findIndex(
@@ -52,6 +64,7 @@ app.controller("brand-ctrl", function ($scope, $http, $window) {
                 alert("Lỗi cập nhật sản phẩm!");
                 console.log("Error", error)
             })
+        }
     }
     // Xóa 
     $scope.delete = function (item) {
@@ -64,7 +77,6 @@ app.controller("brand-ctrl", function ($scope, $http, $window) {
         })
             .catch(error => {
                 alert("Lỗi xóa sản phẩm!");
-                console.log("Error", error)
             })
     }
     $scope.pager = {
@@ -97,4 +109,49 @@ app.controller("brand-ctrl", function ($scope, $http, $window) {
         last() {
             this.page = this.count-1;
         }
-    }})
+    }
+
+    //validate
+    $scope.brandMessages = {
+        id: "ID is required",
+        nameNull: "Tên nhãn hàng không được rỗng",
+        nameNumber: "Tên nhãn hàng không được điền số",
+        originNull: "Nguồn gốc không được rỗng",
+        responsibleNameNull: "Tên người chịu trách nhiệm không được rỗng",
+        // ...
+    };
+    
+    $scope.validate = function () {
+        $scope.message1="";
+        $scope.message2="";
+        $scope.message3="";
+        $scope.checkV=false;
+        if ($scope.form.name === undefined) {
+            $scope.hassError = true;
+            $scope.message1 = $scope.brandMessages.nameNull;
+            $scope.checkV = true;
+        }
+        if (!isNaN($scope.form.name)) {
+            $scope.hassError = true;
+            $scope.message1 = $scope.brandMessages.nameNumber;
+            $scope.checkV=true;
+        }
+        if ($scope.form.responsibleName === undefined) {
+            $scope.hassError = true;
+            $scope.message2 = $scope.brandMessages.responsibleNameNull;
+            $scope.checkV=true;
+        }
+        if ($scope.form.origin === undefined) {
+            $scope.hassError = true;
+            $scope.message3 = $scope.brandMessages.originNull;
+            $scope.checkV=true;
+        }
+        if($scope.checkV===true){
+            return false;
+        }else{
+            return true;
+        }
+        
+    }
+   
+})
