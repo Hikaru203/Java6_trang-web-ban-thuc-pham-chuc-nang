@@ -16,7 +16,7 @@ import com.example.config.VNPayService;
 import com.example.entity.Account;
 import com.example.entity.Order;
 import com.example.jparepository.AccountRepository;
-import com.example.service.OderService;
+import com.example.service.OrderService;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -24,7 +24,7 @@ import jakarta.servlet.http.HttpServletRequest;
 @Controller
 public class OderController {
 	@Autowired
-	OderService OderService;
+	OrderService  OderService;
 	@Autowired
 	AccountRepository accountService;
 	

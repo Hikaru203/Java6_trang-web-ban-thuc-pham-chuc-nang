@@ -241,6 +241,19 @@ app.controller("myCtrl", function ($scope, $http, $window) {
 			console.log(error);
 		});
 	};
+	$scope.limitDescription = function (description, limit) {
+		if (description.length <= limit) {
+			return description;
+		} else {
+			var truncatedDescription = description.substring(0, limit);
+			var lastSpaceIndex = truncatedDescription.lastIndexOf(' ');
+			if (lastSpaceIndex !== -1) {
+				truncatedDescription = truncatedDescription.substring(0, lastSpaceIndex);
+			}
+			return truncatedDescription + '...';
+		}
+	};
+
 	$scope.user();
 	$scope.load_all();
 	$scope.load_all_categories();

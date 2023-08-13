@@ -48,16 +48,25 @@
             </div>
           </div>
         </div>
+        <div style="padding-top: 10px; text-align: center;">
+          <a href="?lang=vi">
+            <button type="submit" name="lang" class="btn btn-primary" value="vi"
+              th:text="#{menu.transactions.vn}"></button>
+          </a>
+          <a href="?lang=en">
+            <button type="submit" name="lang" class="btn btn-primary" value="en"
+              th:text="#{menu.transactions.en}"></button>
+          </a>
+        </div>
 
         <!-- Sidebar Menu -->
         <nav class="mt-2">
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-            <!-- Add icons to the links using the .nav-icon class with font-awesome or any other icon font library -->
             <li class="nav-item menu-open">
               <a href="#" class="nav-link active">
                 <i class="nav-icon fas fa-tachometer-alt"></i>
                 <p>
-                  Quản lý
+                  <span th:text="#{menu.dashboard}"></span>
                   <i class="right fas fa-angle-left"></i>
                 </p>
               </a>
@@ -65,43 +74,43 @@
                 <li class="nav-item">
                   <a th:href="@{/admin/index}" class="nav-link active">
                     <i class="far fa-circle nav-icon"></i>
-                    <p>Sản phẩm</p>
+                    <p><span th:text="#{menu.products}"></span></p>
                   </a>
                 </li>
                 <li class="nav-item">
                   <a th:href="@{/admin/ManagedAccount}" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
-                    <p>Tài khoản</p>
+                    <p><span th:text="#{menu.accounts}"></span></p>
                   </a>
                 </li>
                 <li class="nav-item">
                   <a th:href="@{/admin/ManagedDiscount}" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
-                    <p>Khuyến mãi</p>
+                    <p><span th:text="#{menu.discounts}"></span></p>
                   </a>
                 </li>
                 <li class="nav-item">
                   <a th:href="@{/admin/ManagedCategories}" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
-                    <p>Loại sản phẩm</p>
+                    <p><span th:text="#{menu.product_categories}"></span></p>
                   </a>
                 </li>
                 <li class="nav-item">
                   <a th:href="@{/admin/ManagedDistributors}" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
-                    <p>Nhà phân phối</p>
+                    <p><span th:text="#{menu.distributors}"></span></p>
                   </a>
                 </li>
                 <li class="nav-item">
                   <a th:href="@{/admin/ManagedBrands}" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
-                    <p>Nhãn hàng</p>
+                    <p><span th:text="#{menu.brands}"></span></p>
                   </a>
                 </li>
                 <li class="nav-item">
                   <a th:href="@{/admin/ManagedOrders}" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
-                    <p>Đơn hàng</p>
+                    <p><span th:text="#{menu.orders}"></span></p>
                   </a>
                 </li>
               </ul>
@@ -111,7 +120,7 @@
               <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-copy"></i>
                 <p>
-                  Thống kê-Báo cáo
+                  <span th:text="#{menu.reports}"></span>
                   <i class="fas fa-angle-left right"></i>
                 </p>
               </a>
@@ -119,25 +128,28 @@
                 <li class="nav-item">
                   <a th:href="@{/admin/ReportRevenue}" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
-                    <p>Doanh thu</p>
+                    <p><span th:text="#{menu.revenue}"></span></p>
                   </a>
                 </li>
                 <li class="nav-item">
                   <a th:href="@{/admin/ReportProduct}" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
-                    <p>Sản phẩm</p>
+                    <p><span th:text="#{menu.products_report}"></span></p>
                   </a>
                 </li>
                 <li class="nav-item">
                   <a th:href="@{/admin/ReportFavoriteProducts}" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
-                    <p>Sản phẩm theo yêu thích</p>
+                    <p><span th:text="#{menu.favorite_products_report}"></span></p>
                   </a>
                 </li>
               </ul>
             </li>
           </ul>
         </nav>
+
+
+
         <!-- /.sidebar-menu -->
       </div>
       <!-- /.sidebar -->
@@ -217,7 +229,8 @@
                   <tr ng-repeat="product in getCurrentPageItems()" ng-if="product.active">
                     <td>{{ product.name }}</td>
                     <td style="width: 130px">{{ product.price }} VND</td>
-                    <td>{{ product.description }}</td>
+                    <td>{{ limitDescription(product.description, 70) }}</td>
+
                     <td>
                       <a class="fa fa-lock" ng-click="editRemove(product.id)"></a>
                       <a class="fas fa-edit" ng-click="edit(product.id)"></a>
@@ -280,8 +293,8 @@
                   <!-- textarea -->
                   <div class="form-group">
                     <label>Mô tả</label>
-                    <textarea class="form-control" ng-model="form.description" rows="3"
-                      placeholder="Enter ..."></textarea>
+                    <textarea class="form-control" ng-model="form.description" rows="5"
+                      placeholder="Nhập mô tả"></textarea>
                   </div>
 
                   <!-- Thông báo lỗi cho chọn ảnh -->
@@ -353,7 +366,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr ng-repeat="product in getCurrentPageItemsBlock()" >
+                  <tr ng-repeat="product in getCurrentPageItemsBlock()">
                     <td>{{ product.name }}</td>
                     <td style="width: 130px">{{ product.price }} VND</td>
                     <td>{{ product.description }}</td>

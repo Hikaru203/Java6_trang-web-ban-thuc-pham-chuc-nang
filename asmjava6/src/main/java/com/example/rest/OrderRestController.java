@@ -35,7 +35,7 @@ public class OrderRestController {
 	@Autowired
      OrderService orderService;
 
-    @GetMapping()
+    @GetMapping("/complex")
     public List<OrderDTO> getOrderDetailsWithProductNames() {
         
         return orderService.getComplexOrders();
