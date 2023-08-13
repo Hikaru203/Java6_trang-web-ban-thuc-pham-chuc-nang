@@ -19,4 +19,4 @@ public class Asmjava6Application {
 	}
 
 }
-		
+			

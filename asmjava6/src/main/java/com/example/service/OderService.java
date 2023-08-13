@@ -9,4 +9,10 @@ public interface OderService {
 
 	void save(Order order);
 
+	void setActiveForOrder(int orderId);
+
+	Order findById(Integer orderId);
+
+	
+
 }

@@ -25,6 +25,9 @@ import com.example.jparepository.ProductRepository;
 import com.example.service.CartService;
 import com.example.service.ProductService;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
+
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/rest/carts")
@@ -66,7 +69,7 @@ public class CartRestController {
 
 	@PostMapping("/add-to-cart/{ProductId}/{UserId}/{quantity}")
 	public ResponseEntity<String> addToCart(@PathVariable("ProductId") Integer productId,
-			@PathVariable("UserId") Integer userId, @PathVariable("quantity") int quantity) {
+			@PathVariable("UserId") Integer userId, @PathVariable("quantity") int quantity,HttpServletRequest request,HttpSession session) {
 
 		Product product = productService.findById(productId);
 		Account user = userRepository.findById(userId).orElse(null);
@@ -77,7 +80,7 @@ public class CartRestController {
 
 		// Kiểm tra xem người dùng đã có giỏ hàng hay chưa
 		Cart cart = dao.findByUserAndProduct(user, product);
-
+		
 		if (cart == null) {
 			cart = new Cart();
 			cart.setUser(user);
@@ -87,7 +90,7 @@ public class CartRestController {
 			cart = cartRepository.save(cart);
 		} else {
 			if (cart.isActive()) {
-				
+
 				cart.setQuantity(cart.getQuantity() + 1);
 				cart.setActive(true);
 				cart = cartRepository.save(cart);
@@ -98,7 +101,7 @@ public class CartRestController {
 				cart = cartRepository.save(cart);
 			}
 		}
-
+		
 		return ResponseEntity.ok("{\"message\": \"Thêm Thành Công\"}");
 	}
 

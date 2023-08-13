@@ -26,6 +26,7 @@ import com.example.service.CookieService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class HomeController {
@@ -59,7 +60,7 @@ public class HomeController {
 
 	@RequestMapping("/client/denied")
 	public String error(Model model) {
-		System.out.println("chú m k có tuổi");
+	
 		return "redirect:/client/index";
 	}
 
@@ -71,7 +72,7 @@ public class HomeController {
 
 	@RequestMapping("/client/index")
 	public String index(Model model, @RequestParam("cid") Optional<Integer> cid) {
-		System.out.println(cid);
+	
 		if (cid.isPresent()) {
 
 			List<Product> page = daoProduct.findByCategory(cid.get());
@@ -93,14 +94,16 @@ public class HomeController {
 	}
 
 	@RequestMapping(value = "/client/login/success")
-	public String success(Model model, HttpServletResponse response) {
+	public String success(Model model, HttpServletResponse response,HttpServletRequest request) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
+
 			UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
 			String username = userDetails.getUsername();
-
+			
 			Account account = daoAccount.findByUserName(username);
+			
 			String id = String.valueOf(account.getId());
 			String fullName = account.getFullName();
 
@@ -110,11 +113,13 @@ public class HomeController {
 			if (account != null) {
 				cookieService.setCookie(response, "username", id, 3600);
 				cookieService.setCookie(response, "fullName", sanitizedFullName, 3600);
+				HttpSession session = request.getSession();
+				session.setAttribute("AccountSession", account);
+
 				System.out.println("Đăng nhập thành công");
 			} else {
 				System.out.println("Không tìm thấy tài khoản");
 			}
-
 			return "redirect:/client/index";
 		} else {
 			return "redirect:/client/index";
@@ -127,5 +132,4 @@ public class HomeController {
 		return "login";
 	}
 
-	
 }

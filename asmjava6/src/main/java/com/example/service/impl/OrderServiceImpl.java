@@ -1,5 +1,7 @@
 package com.example.service.impl;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,5 +25,24 @@ public class OrderServiceImpl implements OderService{
 		OrderRepository.save(order);
 		
 	}
+	@Override
+    public void setActiveForOrder(int orderId) {
+        Optional<Order> optionalOrder = OrderRepository.findById(orderId);
+        if (optionalOrder.isPresent()) {
+            Order order = optionalOrder.get();
+            order.setActive(true);
+            OrderRepository.save(order);
+        } else {
+            // Xử lý trường hợp không tìm thấy đơn hàng với ID cụ thể
+            // (ví dụ: thông báo lỗi, redirect, ...)
+        }
+    }
+
+	@Override
+	public Order findById(Integer orderId) {
+		// TODO Auto-generated method stub
+		return OrderRepository.findById(orderId).get();
+	}
+	
 
 }

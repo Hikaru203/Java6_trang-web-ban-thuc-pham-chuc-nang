@@ -209,27 +209,21 @@
 							<div class="col-md-6 form-group">
 								<label>Số điện thoại</label> <input class="form-control"
 									id="phoneNumber" name="phoneNumber" pattern="[0-9]{10}"
-									type="tel" placeholder="+84">
+									type="tel" placeholder="+84 |">
 							</div>
 
 
 
 							<div class="col-md-6 form-group">
-								<label>Ngày</label> <input class="form-control" type="date"
+								<label>Ngày giờ</label> <input class="form-control" type="date"
 									ng-model="selectedDate"
 									ng-init="selectedDate = selectedDate | date:'yyyy-MM-dd'">
 							</div>
-							<div class="col-md-6 form-group">
-								<label>Huyện</label> <select class="custom-select"
-									ng-model="selectedDistrict"
-									ng-options="district.name for district in districts">
-									<option value="">Chọn huyện</option>
-								</select>
-							</div>
+							
 							<div class="col-md-6 form-group">
 								<label>Địa Chỉ</label>
-								<textarea class="form-control" placeholder="Cần thơ"
-									id="address" name="address"></textarea>
+								<input class="form-control" placeholder="Cần thơ |"
+									id="address" name="address"></input>
 							</div>
 
 

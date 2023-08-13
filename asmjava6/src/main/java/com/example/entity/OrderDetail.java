@@ -10,13 +10,23 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.math.BigDecimal;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "Order_Details")
-
+@Getter
+@Setter
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class OrderDetail implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -35,5 +45,4 @@ public class OrderDetail implements Serializable {
     @JoinColumn(name = "cart_id", referencedColumnName = "id")
     private Cart cart;
 
-    // Getters and setters, constructors, and other methods
 }
