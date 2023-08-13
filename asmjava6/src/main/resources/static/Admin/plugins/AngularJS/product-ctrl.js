@@ -235,8 +235,8 @@ app.controller("myCtrl", function ($scope, $http, $window) {
 	}
 	$scope.user = function () {
 		$http.get("http://localhost:8080/ManagedAccountByUserName/" + usernameCookie).then(resp => {
-			$scope.user = resp.data; // Thay đổi tên biến 'users' thành 'discounts'
-			console.log($scope.user);
+			$scope.userLogin = resp.data; // Thay đổi tên biến 'users' thành 'discounts'
+			console.log($scope.userLogin);
 		}).catch(error => {
 			console.log(error);
 		});

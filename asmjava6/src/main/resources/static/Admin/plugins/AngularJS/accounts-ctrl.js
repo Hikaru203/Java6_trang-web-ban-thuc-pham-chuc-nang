@@ -30,8 +30,8 @@ app.controller("myCtrl", function ($scope, $http, $window) {
 			$scope.form = resp.data;
 			if ($scope.user != null) {
 				console.log($scope.user);
-				$scope.users = $scope.form.filter(user => user.id != $scope.user.id);
-				$scope.users = $scope.form.filter(user => user.active == true);
+				$scope.users = $scope.form.filter(user => user.id != $scope.userLogin.id);
+				$scope.users = $scope.users.filter(user => user.active == true);
 				console.log($scope.users);
 
 
