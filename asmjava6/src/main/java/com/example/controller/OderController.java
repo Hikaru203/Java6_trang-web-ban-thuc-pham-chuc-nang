@@ -137,21 +137,22 @@ public class OderController {
 
 		Integer orderIdObj = (Integer) session.getAttribute("orderId");
 
-		if (orderIdObj != null) {
-			if (paymentStatus == 1) {
-				int orderId = orderIdObj.intValue();
-				OderService.setActiveForOrder(orderId);
-//				Cart cartIdObj = cartService.findById(cartId);
-//				OrderDetail detail = new OrderDetail();
-//				detail.setOrder(orderdObj); // Sử dụng orderId lấy từ session
-//				detail.setCart(cartIdObj);
-//				detail.setOrdresCode(Txnref);
-//
-//				detailService.save(detail);
-			}
-		} else {
-			// Xử lý trường hợp không tìm thấy orderId trong session
-		}
+		   if (orderIdObj != null) {
+		        if (paymentStatus == 1) {
+		            int orderId = orderIdObj.intValue();
+		            Order order = OderService.findById(orderId); // Lấy đối tượng Order từ cơ sở dữ liệu
+		            if (order != null) {
+		                order.setOrdresCode(Txnref); // Gán giá trị Txnref cho trường ordresCode
+		                order.setActive(true); // Đặt trạng thái đơn hàng thành đã kích hoạt (hoặc "true" tùy theo logic của bạn)
+		                OderService.save(order); // Lưu lại đối tượng Order đã chỉnh sửa
+		            } else {
+		                // Xử lý trường hợp không tìm thấy đơn hàng với ID cụ thể
+		                // (ví dụ: thông báo lỗi, redirect, ...)
+		            }
+		        }
+		    } else {
+		        // Xử lý trường hợp không tìm thấy orderId trong session
+		    }
 		model.addAttribute("orderId", orderInfo);
 		model.addAttribute("totalPrice", formattedTotalAmount);
 		model.addAttribute("paymentTime", formattedPaymentTime);

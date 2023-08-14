@@ -51,7 +51,9 @@ public class Order {
     
     @JoinColumn(name = "is_acctive")
     private boolean isActive;
-
+    
+    @JoinColumn(name = "ordres_code")
+    private String ordresCode;
 	
 }
 
