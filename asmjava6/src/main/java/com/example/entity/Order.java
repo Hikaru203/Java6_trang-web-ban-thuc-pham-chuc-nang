@@ -55,6 +55,11 @@ public class Order {
     @JoinColumn(name = "ordres_code")
     private String ordresCode;
 	
+    @JoinColumn(name = "district")
+    private String district;
+    
+    @JoinColumn(name = "wards")
+    private String wards;
 }
 
 

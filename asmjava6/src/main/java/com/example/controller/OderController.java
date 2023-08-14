@@ -76,7 +76,8 @@ public class OderController {
 	@PostMapping("/client/submitOrder")
 	public String submidOrder(@RequestParam("amount") int orderTotal, @RequestParam("orderInfo") String orderInfo,
 			HttpServletRequest request, @CookieValue(value = "username", defaultValue = "0") String userIdCookie,
-			@RequestParam("address") String address, @RequestParam("phoneNumber") String phoneNumber) {
+			@RequestParam("address") String address, @RequestParam("phoneNumber") String phoneNumber,
+			@RequestParam("country") String country,@RequestParam("district") String district,@RequestParam("wards") String wards) {
 
 		String baseUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
 		String vnpayUrl = vnPayService.createOrder(orderTotal, orderInfo, baseUrl);
@@ -103,6 +104,9 @@ public class OderController {
 		order.setOrderDate(new Date()); // Ngày hiện tại
 		order.setTotalPrice(orderTotal);
 		order.setActive(false);
+		order.setCountry(country);
+	    order.setDistrict(district);
+	    order.setWards(wards);
 		OderService.save(order);
 		session.setAttribute("orderId", order.getId());
 		return "redirect:" + vnpayUrl;
