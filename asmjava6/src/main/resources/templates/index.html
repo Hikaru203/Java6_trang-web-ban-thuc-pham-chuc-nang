@@ -46,7 +46,7 @@
               <button
                 type="button"
                 class="btn btn-sm btn-light dropdown-toggle"
-                data-toggle="dropdown"
+                data-toggle="dropdown" id="myaccount"
               >
                 My Account
               </button>
@@ -688,6 +688,26 @@
 	
 		// Gọi hàm cập nhật nội dung khi trang web tải xong
 		window.onload = updateDropdownContent;
+      // JavaScript code to update "My Account" button text from cookie
+      document.addEventListener("DOMContentLoaded", function () {
+        const myAccountButton = document.getElementById("myaccount");
+        
+        const username = getCookie("username");
+        
+        if (username) {
+          myAccountButton.textContent = username;
+        }
+      });
+      
+      // Function to get the value of a cookie by name
+      function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) {
+          return parts.pop().split(";").shift();
+        }
+      }
+    
 	</script>
   </body>
 </html>
