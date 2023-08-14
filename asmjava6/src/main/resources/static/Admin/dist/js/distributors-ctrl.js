@@ -1,15 +1,14 @@
 app.controller("distributor-ctrl", function ($scope, $http, $window) {
     $scope.items = [];
     $scope.form = {};
-    $scope.lockbtnAdd=false;
-    $scope.lockbtnDelete=true;
-    $scope.lockbtnUpdate=true;
+    $scope.lockbtnAdd = false;
+    $scope.lockbtnDelete = true;
+    $scope.lockbtnUpdate = true;
     $scope.initialize = function () {
         // load brands
         $http.get("/rest/distributors").then(resp => {
             $scope.items = resp.data;
         });
-
     }
 
     // Khởi đầu
@@ -18,18 +17,18 @@ app.controller("distributor-ctrl", function ($scope, $http, $window) {
     // Xóa form
     $scope.reset = function () {
         $scope.form = {};
-        $scope.lockbtnAdd=false;
-        $scope.lockbtnDelete=true;
-        $scope.lockbtnUpdate=true;
+        $scope.lockbtnAdd = false;
+        $scope.lockbtnDelete = true;
+        $scope.lockbtnUpdate = true;
     }
 
     // Hiển thị lên form
     $scope.edit = function (item) {
         $scope.form = angular.copy(item);
         $(".nav-tabs a:eq(1)").tab('show');
-        $scope.lockbtnAdd=true;
-        $scope.lockbtnDelete=false;
-        $scope.lockbtnUpdate=false;
+        $scope.lockbtnAdd = true;
+        $scope.lockbtnDelete = false;
+        $scope.lockbtnUpdate = false;
     }
 
     // Thêm  mới 
@@ -163,4 +162,31 @@ app.controller("distributor-ctrl", function ($scope, $http, $window) {
         }
 
     }
+    function getCookieValue(cookieName) {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.startsWith(cookieName + '=')) {
+                return cookie.substring(cookieName.length + 1);
+            }
+        }
+        return null;
+    }
+
+    const usernameCookie = getCookieValue('id');
+    if (usernameCookie !== null) {
+        console.log('Giá trị của cookie username là:', usernameCookie);
+    } else {
+        console.log('Cookie username không tồn tại.');
+    }
+    $scope.user = function () {
+        $http.get("http://localhost:8080/ManagedAccountByUserName/" + usernameCookie).then(resp => {
+            $scope.userLogin = resp.data;
+            console.log($scope.userLogin);
+        }).catch(error => {
+            console.log(error);
+        });
+    };
+    $scope.user();
+
 })

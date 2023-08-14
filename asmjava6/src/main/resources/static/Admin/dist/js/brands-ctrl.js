@@ -2,9 +2,9 @@ const app = angular.module('myApp', []);
 app.controller("brand-ctrl", function ($scope, $http, $window) {
     $scope.items = [];
     $scope.form = {};
-    $scope.lockbtnAdd=false;
-    $scope.lockbtnDelete=true;
-    $scope.lockbtnUpdate=true;
+    $scope.lockbtnAdd = false;
+    $scope.lockbtnDelete = true;
+    $scope.lockbtnUpdate = true;
     $scope.initialize = function () {
         // load brands
         $http.get("/rest/brands").then(resp => {
@@ -18,52 +18,52 @@ app.controller("brand-ctrl", function ($scope, $http, $window) {
     // Xóa form
     $scope.reset = function () {
         $scope.form = {};
-        $scope.lockbtnAdd=false;
-        $scope.lockbtnDelete=true;
-        $scope.lockbtnUpdate=true;
+        $scope.lockbtnAdd = false;
+        $scope.lockbtnDelete = true;
+        $scope.lockbtnUpdate = true;
     }
 
     // Hiển thị lên form
     $scope.edit = function (item) {
         $scope.form = angular.copy(item);
         $(".nav-tabs a:eq(1)").tab('show');
-        $scope.lockbtnAdd=true;
-        $scope.lockbtnDelete=false;
-        $scope.lockbtnUpdate=false;
+        $scope.lockbtnAdd = true;
+        $scope.lockbtnDelete = false;
+        $scope.lockbtnUpdate = false;
     }
-   
+
 
     // Thêm  mới 
     $scope.create = function () {
         $scope.hassError = false;
         if ($scope.validate()) {
-        $scope.hassError = false;
-        var item = angular.copy($scope.form);
-        $http.post('/rest/brands', item).then(resp => {
-            $scope.items.push(resp.data);
-            $scope.reset();
-            alert("Thêm mới sản phẩm thành công!");
-        }).catch(error => {
-            alert("Lỗi thêm mới sản phẩm!");
-            console.log("Error", error)
-        })
+            $scope.hassError = false;
+            var item = angular.copy($scope.form);
+            $http.post('/rest/brands', item).then(resp => {
+                $scope.items.push(resp.data);
+                $scope.reset();
+                alert("Thêm mới sản phẩm thành công!");
+            }).catch(error => {
+                alert("Lỗi thêm mới sản phẩm!");
+                console.log("Error", error)
+            })
         }
     }
 
     // Cập nhật 
     $scope.update = function () {
         if ($scope.validate()) {
-        var item = angular.copy($scope.form);
-        $http.put(`/rest/brands/${item.id}`, item).then(resp => {
-            var index = $scope.items.findIndex(
-                p => p.id == item.id);
-            $scope.items[index] = item;
-            alert("Cập nhật sản phẩm thành công!");
-        })
-            .catch(error => {
-                alert("Lỗi cập nhật sản phẩm!");
-                console.log("Error", error)
+            var item = angular.copy($scope.form);
+            $http.put(`/rest/brands/${item.id}`, item).then(resp => {
+                var index = $scope.items.findIndex(
+                    p => p.id == item.id);
+                $scope.items[index] = item;
+                alert("Cập nhật sản phẩm thành công!");
             })
+                .catch(error => {
+                    alert("Lỗi cập nhật sản phẩm!");
+                    console.log("Error", error)
+                })
         }
     }
     // Xóa 
@@ -96,18 +96,18 @@ app.controller("brand-ctrl", function ($scope, $http, $window) {
         },
         prev() {
             this.page--;
-            if(this.page <0){
+            if (this.page < 0) {
                 this.last();
             }
         },
         next() {
             this.page++;
-            if(this.page >=this.count){
+            if (this.page >= this.count) {
                 this.first();
             }
         },
         last() {
-            this.page = this.count-1;
+            this.page = this.count - 1;
         }
     }
 
@@ -120,12 +120,12 @@ app.controller("brand-ctrl", function ($scope, $http, $window) {
         responsibleNameNull: "Tên người chịu trách nhiệm không được rỗng",
         // ...
     };
-    
+
     $scope.validate = function () {
-        $scope.message1="";
-        $scope.message2="";
-        $scope.message3="";
-        $scope.checkV=false;
+        $scope.message1 = "";
+        $scope.message2 = "";
+        $scope.message3 = "";
+        $scope.checkV = false;
         if ($scope.form.name === undefined) {
             $scope.hassError = true;
             $scope.message1 = $scope.brandMessages.nameNull;
@@ -134,24 +134,50 @@ app.controller("brand-ctrl", function ($scope, $http, $window) {
         if (!isNaN($scope.form.name)) {
             $scope.hassError = true;
             $scope.message1 = $scope.brandMessages.nameNumber;
-            $scope.checkV=true;
+            $scope.checkV = true;
         }
         if ($scope.form.responsibleName === undefined) {
             $scope.hassError = true;
             $scope.message2 = $scope.brandMessages.responsibleNameNull;
-            $scope.checkV=true;
+            $scope.checkV = true;
         }
         if ($scope.form.origin === undefined) {
             $scope.hassError = true;
             $scope.message3 = $scope.brandMessages.originNull;
-            $scope.checkV=true;
+            $scope.checkV = true;
         }
-        if($scope.checkV===true){
+        if ($scope.checkV === true) {
             return false;
-        }else{
+        } else {
             return true;
         }
-        
+
     }
-   
+    function getCookieValue(cookieName) {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.startsWith(cookieName + '=')) {
+                return cookie.substring(cookieName.length + 1);
+            }
+        }
+        return null;
+    }
+
+    const usernameCookie = getCookieValue('id');
+    if (usernameCookie !== null) {
+        console.log('Giá trị của cookie username là:', usernameCookie);
+    } else {
+        console.log('Cookie username không tồn tại.');
+    }
+    $scope.user = function () {
+        $http.get("http://localhost:8080/ManagedAccountByUserName/" + usernameCookie).then(resp => {
+            $scope.userLogin = resp.data;
+            console.log($scope.userLogin);
+        }).catch(error => {
+            console.log(error);
+        });
+    };
+    $scope.user();
+
 })

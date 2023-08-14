@@ -21,6 +21,50 @@ public class AdminController {
         return "admin/AddProduct";
     }
 
+    @GetMapping({ "/admin/ManagedAccount" })
+    public String GetAccounts() {
+        return "admin/ManagedAccount";
+    }
+
+     @GetMapping({ "/admin/AddUser" })
+    public String AddAccount() {
+        return "admin/AddUser";
+    }
+
+    @GetMapping({ "/admin/EditAccount/{id}" })
+    public String EditAccounts() {
+        return "admin/AddUser";
+    }
+
+    @GetMapping({ "/admin/ManagedDiscount" })
+    public String GetDiscount() {
+        return "admin/ManagedDiscount";
+    }
+
+     @GetMapping({ "/admin/AddDiscount" })
+    public String AddDiscount() {
+        return "admin/AddDiscount";
+    }
+
+    @GetMapping({ "/admin/EditDiscount/{id}" })
+    public String EditDiscount() {
+        return "admin/AddDiscount";
+    }
+
+    @GetMapping({ "/admin/ManagedCategories" })
+    public String GetCategories() {
+        return "admin/ManagedCategories";
+    }
+
+     @GetMapping({ "/admin/AddCategories" })
+    public String AddCategories() {
+        return "admin/AddCategories";
+    }
+
+    @GetMapping({ "/admin/EditCategories/{id}" })
+    public String EditCategories() {
+        return "admin/AddCategories";
+    }
     @GetMapping({ "/admin/ManagedBrands" })
     public String ManagedBrands() {
         return "admin/ManagedBrands";
