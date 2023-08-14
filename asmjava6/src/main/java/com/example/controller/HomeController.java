@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.entity.Account;
@@ -21,6 +22,8 @@ import com.example.jparepository.ProductRepository;
 import com.example.service.CartService;
 import com.example.service.CookieService;
 
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
@@ -123,6 +126,54 @@ public class HomeController {
 	public String capnhat(Model model) {
 		model.addAttribute("loi", "Sai thông tin đăng nhập, Vui lòng nhập lại");
 		return "/capnhat";
+	}
+
+	@RequestMapping(value = "/client/update/account", method = RequestMethod.GET)
+	public String showUpdateAccountForm(Model model, HttpServletRequest request) {
+		// ...
+		return "redirect:/capnhat"; // Trả về template để hiển thị form
+	}
+
+	@RequestMapping(value = "/client/update/account", method = RequestMethod.POST)
+	public String updateAccount(Model model, HttpServletRequest request, HttpServletResponse response,
+			@RequestParam String fullName, @RequestParam String email, @RequestParam String password) {
+		// Đọc giá trị cookie "username"
+		Cookie[] cookies = request.getCookies();
+		String usernameFromCookie = null;
+		for (Cookie cookie : cookies) {
+			if ("username".equals(cookie.getName())) {
+				usernameFromCookie = cookie.getValue();
+				break;
+			}
+		}
+
+		if (usernameFromCookie != null) {
+			// Lấy thông tin tài khoản từ cơ sở dữ liệu dựa trên tên người dùng
+			Account account = daoAccount.findByUserName(usernameFromCookie);
+
+			if (account != null) {
+				// Thực hiện cập nhật thông tin tài khoản theo yêu cầu
+				account.setFullName(fullName);
+				account.setEmail(email);
+				// Nếu cần cập nhật mật khẩu, hãy xử lý ở đây
+				if (!password.isEmpty()) {
+					account.setPassword(password);
+				}
+				// ... cập nhật các thông tin khác của tài khoản
+
+				// Lưu thông tin tài khoản đã cập nhật vào cơ sở dữ liệu
+				daoAccount.save(account);
+
+				// Chuyển hướng hoặc trả về phản hồi cho người dùng
+				return "redirect:/capnhat";
+			} else {
+				// Không tìm thấy tài khoản
+				return "redirect:/client/index";
+			}
+		} else {
+			// Không có giá trị cookie "username"
+			return "redirect:/client/index";
+		}
 	}
 
 }
