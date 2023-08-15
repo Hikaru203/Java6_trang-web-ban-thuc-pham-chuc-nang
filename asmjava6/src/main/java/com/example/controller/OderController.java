@@ -73,11 +73,17 @@ public class OderController {
 		return "checkout";
 	}
 
+	@RequestMapping("/client/ordersuccess2")
+	public String ordersuccess2() {
+		return "ordersuccess2";
+	}
+
 	@PostMapping("/client/submitOrder")
 	public String submidOrder(@RequestParam("amount") int orderTotal, @RequestParam("orderInfo") String orderInfo,
 			HttpServletRequest request, @CookieValue(value = "username", defaultValue = "0") String userIdCookie,
 			@RequestParam("address") String address, @RequestParam("phoneNumber") String phoneNumber,
-			@RequestParam("country") String country,@RequestParam("district") String district,@RequestParam("wards") String wards) {
+			@RequestParam("country") String country, @RequestParam("district") String district,
+			@RequestParam("wards") String wards, @RequestParam("paymentMethod") String paymentMenThod) {
 
 		String baseUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
 		String vnpayUrl = vnPayService.createOrder(orderTotal, orderInfo, baseUrl);
@@ -88,28 +94,36 @@ public class OderController {
 		Order order = new Order();
 		// Assuming you have a service to retrieve the Account object by ID
 		Account user = accountService.findById(AccountSession.getId()).get();
-
 		if (user != null) {
 			order.setUser(user);
 		} else {
 			// Handle the case where the user is not found
 			// You might want to redirect to an error page or handle it in some other way
 		}
-
 		// Lấy các thông tin còn lại từ form
-		// Lấy đối tượng Account từ cơ sở dữ liệu
+		// Lấy đối tượng Account từ cơ sở dữ
 		order.setUser(user);
 		order.setAdress(address);
 		order.setPhoneNumber(phoneNumber);
 		order.setOrderDate(new Date()); // Ngày hiện tại
 		order.setTotalPrice(orderTotal);
-		order.setActive(false);
 		order.setCountry(country);
-	    order.setDistrict(district);
-	    order.setWards(wards);
-		OderService.save(order);
-		session.setAttribute("orderId", order.getId());
-		return "redirect:" + vnpayUrl;
+		order.setDistrict(district);
+		order.setWards(wards);
+
+		if (paymentMenThod.equals("COD")) {
+			order.setActive(true);
+			OderService.save(order);
+			session.setAttribute("orderId", order.getId());
+			return "redirect:" + "ordersuccess2";
+		} else {
+
+			order.setActive(false);
+			OderService.save(order);
+			session.setAttribute("orderId", order.getId());
+			return "redirect:" + vnpayUrl;
+		}
+
 	}
 
 	@GetMapping("/vnpay-payment")
@@ -141,22 +155,23 @@ public class OderController {
 
 		Integer orderIdObj = (Integer) session.getAttribute("orderId");
 
-		   if (orderIdObj != null) {
-		        if (paymentStatus == 1) {
-		            int orderId = orderIdObj.intValue();
-		            Order order = OderService.findById(orderId); // Lấy đối tượng Order từ cơ sở dữ liệu
-		            if (order != null) {
-		                order.setOrdresCode(Txnref); // Gán giá trị Txnref cho trường ordresCode
-		                order.setActive(true); // Đặt trạng thái đơn hàng thành đã kích hoạt (hoặc "true" tùy theo logic của bạn)
-		                OderService.save(order); // Lưu lại đối tượng Order đã chỉnh sửa
-		            } else {
-		                // Xử lý trường hợp không tìm thấy đơn hàng với ID cụ thể
-		                // (ví dụ: thông báo lỗi, redirect, ...)
-		            }
-		        }
-		    } else {
-		        // Xử lý trường hợp không tìm thấy orderId trong session
-		    }
+		if (orderIdObj != null) {
+			if (paymentStatus == 1) {
+				int orderId = orderIdObj.intValue();
+				Order order = OderService.findById(orderId); // Lấy đối tượng Order từ cơ sở dữ liệu
+				if (order != null) {
+					order.setOrdresCode(Txnref); // Gán giá trị Txnref cho trường ordresCode
+					order.setActive(true); // Đặt trạng thái đơn hàng thành đã kích hoạt (hoặc "true" tùy theo logic của
+											// bạn)
+					OderService.save(order); // Lưu lại đối tượng Order đã chỉnh sửa
+				} else {
+					// Xử lý trường hợp không tìm thấy đơn hàng với ID cụ thể
+					// (ví dụ: thông báo lỗi, redirect, ...)
+				}
+			}
+		} else {
+			// Xử lý trường hợp không tìm thấy orderId trong session
+		}
 		model.addAttribute("orderId", orderInfo);
 		model.addAttribute("totalPrice", formattedTotalAmount);
 		model.addAttribute("paymentTime", formattedPaymentTime);
