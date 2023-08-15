@@ -1,12 +1,17 @@
 package com.example.rest;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.text.NumberFormat;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -20,11 +25,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.entity.Account;
+import com.example.entity.EmailData;
 import com.example.entity.Favorite;
 import com.example.entity.Product;
 import com.example.jparepository.AccountRepository;
 import com.example.jparepository.FavoriteRepository;
 import com.example.jparepository.ProductRepository;
+import com.example.service.EmailService;
 
 @CrossOrigin("*")
 @RestController
@@ -32,6 +39,8 @@ import com.example.jparepository.ProductRepository;
 public class ProductRestController {
 	@Autowired
 	ProductRepository daoProduct;
+	@Autowired
+	private EmailService emailService;
 
 	@Autowired
 	AccountRepository accountRepository;
@@ -118,13 +127,48 @@ public class ProductRestController {
 
 		return favoriteRepository.findByAccount(account);
 	}
+
 	@DeleteMapping("/remove/favorite-product/{productId}/{accountId}")
-    public ResponseEntity<Favorite> removeFromFavorite(
-            @PathVariable Integer productId,
-            @PathVariable Integer accountId) {
-		
-		Favorite Favorite = favoriteRepository.findByAccountAndProduct(accountRepository.findById(accountId).get(), daoProduct.findById(productId).get());
+	public ResponseEntity<Favorite> removeFromFavorite(@PathVariable Integer productId,
+			@PathVariable Integer accountId) {
+
+		Favorite Favorite = favoriteRepository.findByAccountAndProduct(accountRepository.findById(accountId).get(),
+				daoProduct.findById(productId).get());
 		favoriteRepository.delete(Favorite);
-        return ResponseEntity.ok(Favorite);
-    }
+		return ResponseEntity.ok(Favorite);
+	}
+
+	@PostMapping(value = "/send-email/{productId}/{userCookie}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<HashMap<String, String>> sendEmail(@PathVariable("productId") int id,
+			@PathVariable("userCookie") String user, @RequestBody EmailData emailData) {
+		Product data = daoProduct.findById(id);
+
+		try {
+			String productName = "Tên sản phẩm: " + data.getName();
+			String productPrice = "Giá: " + data.getPrice();
+			String productDescription = "Mô tả: " + data.getDescription();
+			String productLink = "Link: " + "http://localhost:8080/client/detail/" + id;
+
+			// Tạo nội dung email với mã hóa UTF-8 và định dạng HTML
+			String emailContent = "<html><body>" + "<p>" + productName + "</p>" + "<p>" + productPrice + "</p>" + "<p>"
+					+ productDescription + "</p>" + "<p>" + productLink + "</p>" +
+
+					"</body></html>";
+
+			emailService.sendEmail(emailData.getRecipientEmail(), "Chia sẻ sản phẩm", emailContent);
+
+			HashMap<String, String> responseMap = new HashMap<>();
+			responseMap.put("status", "success");
+			responseMap.put("message", emailContent);
+
+			return ResponseEntity.ok(responseMap);
+		} catch (Exception e) {
+			HashMap<String, String> errorMap = new HashMap<>();
+			errorMap.put("status", "error");
+			errorMap.put("message", "Lỗi khi gửi email: " + e.getMessage());
+
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMap);
+		}
+	}
+
 }

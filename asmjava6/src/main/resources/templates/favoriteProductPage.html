@@ -4,10 +4,13 @@
 
 <head>
 <meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>MultiShop</title>
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <meta content="Free HTML Templates" name="keywords">
 <meta content="Free HTML Templates" name="description">
+
+
 
 <!-- Favicon -->
 <link href="img/favicon.ico" rel="icon">
@@ -30,7 +33,10 @@
 
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.9/angular.js"></script>
-
+<div id="fb-root"></div>
+<script async defer crossorigin="anonymous"
+	src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v17.0&appId=1592385204428073&autoLogAppEvents=1"
+	nonce="de8cgXY1"></script>
 
 <!-- Customized Bootstrap Stylesheet -->
 <link href="/css/style.css" rel="stylesheet">
@@ -258,7 +264,7 @@
 							<div class="row">
 								<div ng-repeat="p in favoriteProducts"
 									class="col-lg-4 col-md-7 col-sm-6">
-									<div class="product-item bg-light mb-4" style="height: 450px;">
+									<div class="product-item bg-light mb-4" style="height: 500px;">
 										<div class="product-img position-relative overflow-hidden">
 											<img class="img-fluid w-100"
 												ng-src="/images/{{ p.product.image }}" alt="" height="600px"
@@ -280,15 +286,25 @@
 											<div
 												class="d-flex align-items-center justify-content-center mt-2">
 												<h5>{{ p.product.name }}</h5>
-
 											</div>
 											<h6 class="text-muted ml-2">
 												<div>{{ p.product.price }} đ</div>
 											</h6>
 										</div>
+										<!-- Chia sẻ button group -->
+										<div class="d-flex justify-content-between mx-3 mt-2">
+											<button class="btn btn-outline-dark btn-square"
+												ng-click="openShareModal(p.product.id)"><i
+													class="fa fa-envelope"></i></button>
+											<iframe
+												src="https://www.facebook.com/plugins/share_button.php?href=https%3A%2F%2F9973-113-188-21-52.ngrok-free.app%2F&layout&size&appId=1592385204428073&width=77&height=20"
+												width="77" height="20"
+												style="border: none; overflow: hidden" scrolling="no"
+												frameborder="0" allowfullscreen="true"
+												allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+										</div>
 									</div>
 								</div>
-
 							</div>
 						</div>
 					</div>
@@ -433,12 +449,38 @@
 			</div>
 		</div>
 		<!-- Footer End -->
-
+		<!-- Nơi đặt modal (ngay trước phần kết thúc của body) -->
+		<div id="shareModal" class="modal fade" tabindex="-1" role="dialog">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Chia sẻ sản phẩm qua email</h5>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<form ng-submit="sendEmail()">
+							<div class="form-group">
+								<label for="email">Email người nhận</label> <input type="email"
+									class="form-control" id="email" ng-model="recipientEmail"
+									required>
+							</div>
+							<button type="submit" class="btn btn-primary">Gửi</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
 
 		<!-- Back to Top -->
 		<a href="#" class="btn btn-primary back-to-top"><i
 			class="fa fa-angle-double-up"></i></a>
-
+		<div id="fb-root"></div>
+		<script async defer crossorigin="anonymous"
+			src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v17.0&appId= 1592385204428073&autoLogAppEvents=1"
+			nonce="2TgJ7Yci"></script>
 
 		<!-- JavaScript Libraries -->
 		<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>

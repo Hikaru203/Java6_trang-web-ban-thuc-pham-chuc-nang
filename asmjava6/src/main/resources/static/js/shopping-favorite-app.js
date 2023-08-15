@@ -39,7 +39,45 @@ app.controller("shopping-cart-ctrl", function($scope, $http) {
 
 		return null;
 	}
+	// Hàm để gửi thông tin sản phẩm qua email
+	$scope.shareProduct = function(productId, recipientEmail) {
+		const userCookie = getCookie("username");
 
+		if (userCookie) {
+			const url = `http://localhost:8080/rest/products/send-email/${productId}/${userCookie}`;
+			const data = {
+				recipientEmail: recipientEmail
+			};
+
+			$http.post(url, data)
+				.then(response => {
+					alert("Thông tin sản phẩm đã được chia sẻ qua email!");
+				})
+				.catch(error => {
+					console.error(error);
+				});
+		} else {
+			console.log("Không tìm thấy cookie username.");
+		}
+	};
+	// Hàm để mở modal gửi email
+	$scope.openShareModal = function(productId) {
+		$scope.sharedProductId = productId;
+		$scope.recipientEmail = "huynqpc03028@fpt.edu.vn"; // Đặt lại email người nhận
+		$('#shareModal').modal('show');
+	};
+
+	// Hàm gửi thông tin sản phẩm qua email
+	$scope.sendEmail = function() {
+		const productId = $scope.sharedProductId;
+		const recipientEmail = $scope.recipientEmail;
+
+		if (productId && recipientEmail) {
+			$scope.shareProduct(productId, recipientEmail);
+		} else {
+			console.log("Vui lòng nhập đủ thông tin sản phẩm và email người nhận.");
+		}
+	};
 	$scope.removeFromFavorites = function(productId) {
 		const userCookie = getCookie("username");
 
@@ -52,7 +90,7 @@ app.controller("shopping-cart-ctrl", function($scope, $http) {
 
 					$http.delete(url)
 						.then(response => {
-							alert("Xoá thành công")
+							alert("Bỏ thích thành công")
 							console.log(response.data);
 							// Sau khi xóa thành công, cập nhật lại danh sách sản phẩm yêu thích
 							load_all();
@@ -109,8 +147,6 @@ app.controller("shopping-cart-ctrl", function($scope, $http) {
 			}
 		},
 	};
-
-
 	load_all();
 	// Load danh sách sản phẩm yêu thích ban đầu
 });
