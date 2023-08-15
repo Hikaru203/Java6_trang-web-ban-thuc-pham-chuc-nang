@@ -1,11 +1,9 @@
-const host = "http://localhost:8080";
 var queryString = new URLSearchParams(window.location.search);
 var jsonData = queryString.get('data');
 var form = JSON.parse(decodeURIComponent(jsonData));
 var fileNameLabel = document.querySelector('.custom-file-label');
 
-app.controller("myCtrl", function ($scope, $http, $window) {
-
+app.controller("myCtrl2", function ($scope, $http, $window) {
 
 	$scope.form = {};
 	$scope.items = [];

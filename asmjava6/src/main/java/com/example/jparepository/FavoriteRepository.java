@@ -17,5 +17,11 @@ public interface FavoriteRepository extends JpaRepository<Favorite, Integer> {
     "GROUP BY p.name " +
     "ORDER BY like_count DESC")
 List<Object[]> fetchLikeCountByProduct();
+@Query(nativeQuery = true, value = "SELECT u.fullname " +
+"FROM Favorites f " +
+"JOIN Users u ON u.id = f.user_id " +
+"JOIN Products p ON p.id = f.product_id " +
+"WHERE p.name LIKE ?1")
+List<String> findUsersWhoLikedProduct(String nameProduct);
 
 }

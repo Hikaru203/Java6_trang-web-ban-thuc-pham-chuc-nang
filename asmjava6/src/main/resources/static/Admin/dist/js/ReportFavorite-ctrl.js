@@ -1,12 +1,19 @@
 app.controller("reportFavorite-ctrl", function ($scope, $http, $window) {
     $scope.items = [];
     $scope.form = {};
+    $scope.userFavoriteList =[];
     $scope.initialize = function () {
         // Load product data
         $http.get("/rest/Report/Favorite").then(resp => {
             $scope.items = resp.data;
 
         });
+        $scope.getUserFavorite = function(productName) {
+            $http.get(`/rest/Report/UserFavorite/${productName}` ).then(resp => {
+                $scope.userFavoriteList = resp.data;
+                // Do something with $scope.userFavoriteList
+            });
+        };
     };
 
     function getCookieValue(cookieName) {

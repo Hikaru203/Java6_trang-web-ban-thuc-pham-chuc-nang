@@ -93,4 +93,8 @@ public class AdminController {
     public String ReportProduct() {
         return "admin/ReportProduct";
     }
+    @GetMapping({ "/admin/ManagedProducts" })
+    public String ManagedProducts() {
+        return "admin/ManagedProducts";
+    }
 }
