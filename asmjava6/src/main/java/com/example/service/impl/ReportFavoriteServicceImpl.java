@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.entity.LikeCountData;
+import com.example.entity.UserLikedProduct;
 import com.example.jparepository.FavoriteRepository;
 import com.example.service.ReportFavoriteService;
 
@@ -30,5 +31,21 @@ public List<LikeCountData> getLikeCountData() {
 
     return likeCountDataList;
 }
+@Override
+public List<UserLikedProduct> getUsersWhoLikedProduct(String productName) {
+    List<String> usersWhoLiked = favoriteRepository.findUsersWhoLikedProduct(productName);
+    List<UserLikedProduct> userLikedProducts = new ArrayList<>();
+
+    for (String userName : usersWhoLiked) {
+        UserLikedProduct userLikedProduct = new UserLikedProduct();
+        userLikedProduct.setUserName(userName);
+        userLikedProduct.setProductName(productName);
+
+        userLikedProducts.add(userLikedProduct);
+    }
+
+    return userLikedProducts;
+}
+
 
 }

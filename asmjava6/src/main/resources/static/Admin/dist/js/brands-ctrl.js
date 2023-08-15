@@ -1,4 +1,4 @@
-const app = angular.module('myApp', []);
+
 app.controller("brand-ctrl", function ($scope, $http, $window) {
     $scope.items = [];
     $scope.form = {};

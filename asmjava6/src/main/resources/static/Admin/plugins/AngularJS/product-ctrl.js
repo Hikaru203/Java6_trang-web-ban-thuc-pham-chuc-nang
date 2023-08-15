@@ -4,7 +4,7 @@ var jsonData = queryString.get('data');
 var form = JSON.parse(decodeURIComponent(jsonData));
 var fileNameLabel = document.querySelector('.custom-file-label');
 
-app.controller("myCtrl", function ($scope, $http, $window) {
+app.controller("myCtrl1", function ($scope, $http, $window) {
 	$scope.form = {};
 	$scope.items = [];
 	$scope.currentPage = 1;

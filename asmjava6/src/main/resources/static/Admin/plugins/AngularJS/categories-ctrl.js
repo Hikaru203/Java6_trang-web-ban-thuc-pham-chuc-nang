@@ -1,5 +1,5 @@
-var host = "http://localhost:8080";
-app.controller("myCtrl", function ($scope, $http) {
+
+app.controller("myCtrl4", function ($scope, $http) {
   $scope.form = {};
   $scope.categories = [];
   $scope.items = [];

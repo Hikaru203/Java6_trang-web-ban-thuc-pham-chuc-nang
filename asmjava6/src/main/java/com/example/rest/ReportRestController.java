@@ -6,13 +6,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 
 import com.example.entity.LikeCountData;
 import com.example.entity.ProductTotalPriceData;
 import com.example.entity.RevenueData;
+import com.example.entity.UserLikedProduct;
 import com.example.service.ReportFavoriteService;
 import com.example.service.ReportService;
 
@@ -36,4 +39,8 @@ public class ReportRestController {
     public List<LikeCountData> getAllFavorite() {
         return favoriteService.getLikeCountData();
     }
+    @GetMapping("/UserFavorite/{productName}")
+public List<UserLikedProduct> getUserFavorite(@PathVariable("productName") String productName) {
+    return favoriteService.getUsersWhoLikedProduct(productName);
+}
 }
