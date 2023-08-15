@@ -9,36 +9,35 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.entity.AddressDistrict;
-import com.example.entity.OrderDTO;
 import com.example.jparepository.AddressDistrictJpaRepository;
-import com.example.service.OrderService;
 
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/rest/orders")
 public class OrderRestController {
-	 private final AddressDistrictJpaRepository addressDistrictRepository;
+	private final AddressDistrictJpaRepository addressDistrictRepository;
 
-	    @Autowired
-	    public OrderRestController(AddressDistrictJpaRepository addressDistrictRepository) {
-	        this.addressDistrictRepository = addressDistrictRepository;
-	    }
-
-	    @GetMapping
-	    public List<AddressDistrict> getAllDistricts() {
-	        List<AddressDistrict> districts = addressDistrictRepository.findAll();
-	        for (AddressDistrict district : districts) {
-	            System.out.println("District name: " + district.getName());
-	        }
-	        return districts;
-	    }
 	@Autowired
-     OrderService orderService;
+	public OrderRestController(AddressDistrictJpaRepository addressDistrictRepository) {
+		this.addressDistrictRepository = addressDistrictRepository;
+	}
 
-    @GetMapping("/complex")
-    public List<OrderDTO> getOrderDetailsWithProductNames() {
-        
-        return orderService.getComplexOrders();
-    }
+	@GetMapping
+	public List<AddressDistrict> getAllDistricts() {
+		List<AddressDistrict> districts = addressDistrictRepository.findAll();
+		for (AddressDistrict district : districts) {
+			System.out.println("District name: " + district.getName());
+		}
+		return districts;
+	}
+
+	@Autowired
+	OrderService orderService;
+
+	@GetMapping("/complex")
+	public List<OrderDTO> getOrderDetailsWithProductNames() {
+
+		return orderService.getComplexOrders();
+	}
 
 }

@@ -26,6 +26,7 @@ import com.example.jparepository.ProductRepository;
 import com.example.service.CartService;
 import com.example.service.CookieService;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
@@ -60,7 +61,6 @@ public class HomeController {
 
 	@RequestMapping("/client/denied")
 	public String error(Model model) {
-
 		return "redirect:/client/index";
 	}
 
@@ -72,7 +72,7 @@ public class HomeController {
 
 	@RequestMapping("/client/index")
 	public String index(Model model, @RequestParam("cid") Optional<Integer> cid) {
-		System.out.println(cid);
+
 		if (cid.isPresent()) {
 
 			List<Product> page = daoProduct.findByCategory(cid.get());
@@ -94,46 +94,47 @@ public class HomeController {
 	}
 
 	@RequestMapping(value = "/client/login/success")
-public String success(Model model, HttpServletResponse response) {
-    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-    if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        String username = userDetails.getUsername();
+	public String success(Model model, HttpServletResponse response, HttpServletRequest request) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
 
-        Account account = daoAccount.findByUserName(username);
-        if (account != null) {
-            String id = String.valueOf(account.getId());
-            String fullName = account.getFullName();
+			UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
-            // Sanitize values and encode them properly
-            String sanitizedFullName = fullName.replaceAll(" ", "_");
-            String cleanedUsername = account.getUserName().replaceAll("\\s", "");
+			String username = userDetails.getUsername();
 
-            try {
-                cleanedUsername = URLEncoder.encode(cleanedUsername, StandardCharsets.UTF_8.toString());
-                sanitizedFullName = URLEncoder.encode(sanitizedFullName, StandardCharsets.UTF_8.toString());
-                id = URLEncoder.encode(id, StandardCharsets.UTF_8.toString());
+			Account account = daoAccount.findByUserName(username);
 
-                // Set cookies with sanitized and encoded values
-                cookieService.setCookie(response, "id", cleanedUsername, 3600);
-                cookieService.setCookie(response, "username", id, 3600);
-                cookieService.setCookie(response, "fullName", sanitizedFullName, 3600);
+			String id = String.valueOf(account.getId());
+			String fullName = account.getFullName();
 
-                System.out.println("Đăng nhập thành công");
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-                System.out.println("Lỗi encoding cookie values");
-            }
-        } else {
-            System.out.println("Không tìm thấy tài khoản");
-        }
+			if (account != null) {
 
-        return "redirect:/client/index";
-    } else {
-        return "redirect:/client/index";
-    }
-}
+				// Sanitize values and encode them properly
+				String sanitizedFullName = fullName.replaceAll(" ", "_");
+				String cleanedUsername = account.getUserName().replaceAll("\\s", "");
 
+				try {
+					cleanedUsername = URLEncoder.encode(cleanedUsername, StandardCharsets.UTF_8.toString());
+					sanitizedFullName = URLEncoder.encode(sanitizedFullName, StandardCharsets.UTF_8.toString());
+					id = URLEncoder.encode(id, StandardCharsets.UTF_8.toString());
+
+					// Set cookies with sanitized and encoded values
+					cookieService.setCookie(response, "id", cleanedUsername, 3600);
+					cookieService.setCookie(response, "username", id, 3600);
+					cookieService.setCookie(response, "fullName", sanitizedFullName, 3600);
+
+					System.out.println("Đăng nhập thành công");
+				} catch (UnsupportedEncodingException e) {
+					e.printStackTrace();
+					System.out.println("Lỗi encoding cookie values");
+				}
+			} else {
+				System.out.println("Không tìm thấy tài khoản");
+			}
+			return "redirect:/client/index";
+		}
+
+	}
 
 	@RequestMapping(value = "/client/signin/error")
 	public String loi(Model model) {
@@ -142,7 +143,6 @@ public String success(Model model, HttpServletResponse response) {
 	}
 
 	@RequestMapping("/client/shop")
-
 	public String shop(Model model, @RequestParam("cid") Optional<Integer> cid) {
 		System.out.println(cid);
 		if (cid.isPresent()) {
@@ -163,5 +163,4 @@ public String success(Model model, HttpServletResponse response) {
 		return currencyFormat.format(value);
 
 	}
-
 }
