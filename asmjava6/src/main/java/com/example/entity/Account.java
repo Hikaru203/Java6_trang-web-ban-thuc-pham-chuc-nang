@@ -56,7 +56,7 @@ public class Account implements Serializable {
     @JsonIgnore
     private List<Order> orders;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "account")
     @JsonIgnore
     private List<Favorite> favorites;
 

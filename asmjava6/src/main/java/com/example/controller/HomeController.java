@@ -45,7 +45,7 @@ public class HomeController {
 
 	@RequestMapping(value = "/client/detail/{id}")
 	public String detail(Model model, @PathVariable("id") int id) {
-		Product item = daoProduct.findById(id).get();
+		Product item = daoProduct.findById(id);
 		model.addAttribute("itemDetail", item);
 		return "detail";
 	}
@@ -175,12 +175,6 @@ public class HomeController {
 	public String capnhat(Model model) {
 		model.addAttribute("loi", "Sai thông tin đăng nhập, Vui lòng nhập lại");
 		return "/capnhat";
-	}
-
-	@RequestMapping(value = "/client/update/account", method = RequestMethod.GET)
-	public String showUpdateAccountForm(Model model, HttpServletRequest request) {
-		// ...
-		return "redirect:/capnhat"; // Trả về template để hiển thị form
 	}
 
 	@RequestMapping(value = "/client/update/account", method = RequestMethod.POST)
