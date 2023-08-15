@@ -183,28 +183,10 @@
                 return false; // Trả về false để ngăn việc cập nhật thành công
             }
     
-            {% comment %} // Gửi yêu cầu kiểm tra email trùng
-            const isDuplicate = checkDuplicateEmail(email);
-    
-            if (isDuplicate) {
-                document.getElementById("emailError").textContent = "Email hiện tại đã có người sử dụng";
-                return false;
-            }
-
-            alert('Cập nhật thành công.');
-    
-            return true; // Trả về true để xác nhận cập nhật thành công {% endcomment %}
+          
         }
     
-        {% comment %} async function checkDuplicateEmail(email) {
-            try {
-                const response = await fetch(`/api/check-email?email=${email}`);
-                const data = await response.json();
-                return data.isDuplicate;
-            } catch (error) {
-                console.error('Lỗi khi kiểm tra email:', error);
-                return false;
-            } {% endcomment %}
+       
         
     </script>
     
@@ -216,6 +198,7 @@
             <h4 class="card-title mt-3 text-center">Cập nhật tài khoản</h4>
             <p class="text-center">Vui lòng cập nhật thông tin tài khoản</p>
             <form th:action="@{/client/update/account}" method="POST" name="updateForm" onsubmit="return validateForm()">
+              
                 <div id="fullnameError" style="color: red;"></div>
                 <div class="form-group input-group">
                     <div class="input-group-prepend">
