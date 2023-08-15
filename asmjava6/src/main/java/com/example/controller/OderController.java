@@ -5,6 +5,7 @@ import java.text.DecimalFormatSymbols;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.config.VNPayService;
 import com.example.entity.Account;
+import com.example.entity.Cart;
 import com.example.entity.Order;
 import com.example.jparepository.AccountRepository;
 import com.example.jparepository.OrderRepository;
@@ -75,7 +77,7 @@ public class OderController {
 		String vnpayUrl = vnPayService.createOrder(orderTotal, orderInfo, baseUrl);
 		HttpSession session = request.getSession();
 		Account AccountSession = (Account) session.getAttribute("AccountSession");
-
+		List<Cart> carts = cartService.findByUserId(AccountSession.getId());
 		// Lấy thông tin từ form để tạo đơn hàng và lưu vào cơ sở dữ liệu
 		Order order = new Order();
 		// Assuming you have a service to retrieve the Account object by ID
@@ -96,7 +98,10 @@ public class OderController {
 		order.setCountry(country);
 		order.setDistrict(district);
 		order.setWards(wards);
-
+		System.out.println(carts.size());
+		for (Cart cart : carts) {
+			cart.setActive(false);
+		}
 		if (paymentMenThod.equals("COD")) {
 			order.setActive(true);
 			OderService.save(order);

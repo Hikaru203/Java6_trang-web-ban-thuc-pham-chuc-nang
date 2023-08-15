@@ -28,6 +28,7 @@ import com.example.service.CookieService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class HomeController {
@@ -122,7 +123,8 @@ public class HomeController {
 					cookieService.setCookie(response, "id", cleanedUsername, 3600);
 					cookieService.setCookie(response, "username", id, 3600);
 					cookieService.setCookie(response, "fullName", sanitizedFullName, 3600);
-
+					HttpSession session = request.getSession();
+					session.setAttribute("AccountSession", account);
 					System.out.println("Đăng nhập thành công");
 				} catch (UnsupportedEncodingException e) {
 					e.printStackTrace();
