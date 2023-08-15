@@ -1,11 +1,12 @@
-const app = angular.module("shopping-cart-app", ['ngCookies']);
-app.filter("vnCurrency", function() {
-	return function(input) {
+const app = angular.module('shopping-cart-app', ['ngCookies']);
+
+app.filter("vnCurrency", function () {
+	return function (input) {
 		if (isNaN(input)) return input;
 		return currency(input, { symbol: "₫", separator: ",", precision: 0 }).format();
 	};
 });
-app.controller("shopping-cart-ctrl", ['$scope', '$http', '$cookies', function($scope, $http, $cookies) {
+app.controller("shopping-cart-ctrl", ['$scope', '$http', '$cookies', function ($scope, $http, $cookies) {
 	// Định nghĩa biến username và gán giá trị cho nó
 	$scope.items = [];
 	$scope.form = {};
@@ -20,7 +21,7 @@ app.controller("shopping-cart-ctrl", ['$scope', '$http', '$cookies', function($s
 	}
 
 	console.log(username);
-	$scope.initialize = function() {
+	$scope.initialize = function () {
 		$http.get(`/rest/carts/userCart/${username}`).then(resp => {
 			console.log('Dữ liệu từ API:', resp.data);
 			const activeItems = resp.data.filter(item => item.active);
@@ -85,7 +86,7 @@ app.controller("shopping-cart-ctrl", ['$scope', '$http', '$cookies', function($s
 	};
 
 
-	$scope.updateQty = function(item) {
+	$scope.updateQty = function (item) {
 
 		var url = `/rest/carts/update-quantity/${item.id}/${item.quantity}`;
 		$http.put(url, {})
@@ -99,18 +100,18 @@ app.controller("shopping-cart-ctrl", ['$scope', '$http', '$cookies', function($s
 			});
 	};
 
-	$scope.increaseQty = function(item) {
+	$scope.increaseQty = function (item) {
 		item.quantity += 1;
 		$scope.updateQty(item);
 	};
 
-	$scope.decreaseQty = function(item) {
+	$scope.decreaseQty = function (item) {
 		if (item.quantity > 1) {
 			item.quantity -= 1;
 			$scope.updateQty(item);
 		}
 	};
-	$scope.getTotalQuantity = function() {
+	$scope.getTotalQuantity = function () {
 		let totalQuantity = 0;
 		for (const item of $scope.items) {
 			totalQuantity += item.quantity;
@@ -119,14 +120,14 @@ app.controller("shopping-cart-ctrl", ['$scope', '$http', '$cookies', function($s
 		return totalQuantity;
 	};
 
-	$scope.getTotalPrice = function() {
+	$scope.getTotalPrice = function () {
 		let totalPrice = 0;
 		for (const item of $scope.items) {
 			totalPrice += item.product.price * item.quantity;
 		}
 		return totalPrice;
 	};
-	$scope.removeItem = function(id) {
+	$scope.removeItem = function (id) {
 		$http.put(`/rest/carts/deleteCart/${id}`)
 			.then(response => {
 				// Xóa sản phẩm thành công, cập nhật lại danh sách sản phẩm trong giỏ hàng
@@ -136,7 +137,7 @@ app.controller("shopping-cart-ctrl", ['$scope', '$http', '$cookies', function($s
 				console.error(error);
 			});
 	};
-	$scope.alertSuccess = function(message) {
+	$scope.alertSuccess = function (message) {
 		Toastify({
 			text: message,
 			duration: 1000,
@@ -148,11 +149,11 @@ app.controller("shopping-cart-ctrl", ['$scope', '$http', '$cookies', function($s
 				background: "#34c240",
 				color: "white",
 			},
-			onClick: function() { }
+			onClick: function () { }
 		}).showToast();
 	};
 
-	$scope.shipfee = function() {
+	$scope.shipfee = function () {
 		var ship;
 		var header = {
 			"token": "d6f64767-329b-11ee-af43-6ead57e9219a",
@@ -195,7 +196,7 @@ app.controller("shopping-cart-ctrl", ['$scope', '$http', '$cookies', function($s
 			.catch(error => {
 				console.error(error);
 			});*/
-	$scope.submidOrder = function(total, fullName) {
+	$scope.submidOrder = function (total, fullName) {
 		var requestData = {
 			amount: total,
 			orderInfo: fullName
@@ -210,7 +211,7 @@ app.controller("shopping-cart-ctrl", ['$scope', '$http', '$cookies', function($s
 				console.error(error);
 			});
 	};
-	$scope.test = function(total, fullName) {
+	$scope.test = function (total, fullName) {
 		var requestData = {
 			amount: total,
 			orderInfo: fullName

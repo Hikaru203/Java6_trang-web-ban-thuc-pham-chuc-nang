@@ -24,7 +24,7 @@ import com.example.jparepository.AccountRepository;
 import com.example.jparepository.OrderRepository;
 import com.example.service.CartService;
 import com.example.service.OderDetailService;
-import com.example.service.OderService;
+import com.example.service.OrderService;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -33,7 +33,7 @@ import jakarta.servlet.http.HttpSession;
 @Controller
 public class OderController {
 	@Autowired
-	OderService OderService;
+	OrderService OderService;
 	@Autowired
 	AccountRepository accountService;
 	@Autowired

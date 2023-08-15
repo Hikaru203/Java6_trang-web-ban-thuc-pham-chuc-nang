@@ -13,7 +13,7 @@ public interface OrderService {
 
      void save(Order order);
 
-     Order findById(Long id);
+     Order findById(Integer id);
 
-     void setActiveForOrder(Long id);
+     void setActiveForOrder(int id);
 }
