@@ -133,6 +133,7 @@ public class HomeController {
 			}
 			return "redirect:/client/index";
 		}
+		return "redirect:/client/index";
 
 	}
 
