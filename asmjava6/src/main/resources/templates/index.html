@@ -266,10 +266,10 @@
           <div class="product-img position-relative overflow-hidden">
             <img class="img-fluid w-100" th:src="@{|/images/${item.image}|}" alt="" height="200px" width="95%" />
             <div class="product-action">
-              <a class="btn btn-outline-dark btn-square" th:attr="ng-click=@{|cart.addToCart(${item.id})|}"><i
-                  class="fa fa-shopping-cart"></i></a>
-              <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
-              <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
+              <a class="btn btn-outline-dark btn-square" th:attr="ng-click=@{|cart.favorite(${item.id})|}"><i
+                  class="fa fa-heart"></i></a>
+              <a class="btn btn-outline-dark btn-square"><button th:attr="ng-click=@{|cart.favorite(${item.id})|}"
+                  class="far fa-heart btn btn-outline-dark btn-square"></button></a>
               <a class="btn btn-outline-dark btn-square" th:href="@{|/detail/${item.id}|}"><i
                   class="fa fa-search"></i></a>
             </div>
@@ -451,6 +451,7 @@
   <!-- Template Javascript -->
   <script th:src="@{/js/main.js}"></script>
   <script th:src="@{/js/shopping-cart-ctrl.js}"></script>
+  <script th:src="@{/js/shopping-favorite-app.js}"></script>
   <script>
     // Kiểm tra xem cookie có tồn tại không
     function checkCookieExistence(cookieName) {
@@ -467,14 +468,14 @@
       if (isLoggedIn) {
         accountDropdown.querySelector('.dropdown-item[href="/client/login"]').style.display = 'none';
         accountDropdown.querySelector('.dropdown-item[href="/dangky"]').style.display = 'none';
-        accountDropdown.querySelector('.dropdown-item[href="/admin/updateprofile"]').style.display = 'block';
+        accountDropdown.querySelector('.dropdown-item[href="/client/update/account"]').style.display = 'block';
 
         accountDropdown.querySelector('.dropdown-item[href="/admin/index"]').style.display = 'block';
         accountDropdown.querySelector('.dropdown-item[href="/client/logout"]').style.display = 'block';
       } else {
         accountDropdown.querySelector('.dropdown-item[href="/client/login"]').style.display = 'block';
         accountDropdown.querySelector('.dropdown-item[href="/dangky"]').style.display = 'block';
-        accountDropdown.querySelector('.dropdown-item[href="/admin/updateprofile"]').style.display = 'none';
+        accountDropdown.querySelector('.dropdown-item[href="/client/update/account"]').style.display = 'none';
 
         accountDropdown.querySelector('.dropdown-item[href="/admin/index"]').style.display = 'none';
         accountDropdown.querySelector('.dropdown-item[href="/client/logout"]').style.display = 'none';
