@@ -47,7 +47,7 @@
             <div class="dropdown-menu dropdown-menu-right" id="account-dropdown">
               <a href="/client/login" class="dropdown-item">Đăng nhập</a>
               <a href="/dangky" class="dropdown-item">Đăng ký</a>
-              <a href="/admin/updateprofile" class="dropdown-item">Cập nhật tài khoản</a>
+              <a href="/client/update/account" class="dropdown-item">Cập nhật tài khoản</a>
               <a href="/admin/index" class="dropdown-item">admin</a>
               <a href="/client/logout" class="dropdown-item">Đăng xuất</a>
             </div>
@@ -139,10 +139,10 @@
                   <a href="checkout" class="dropdown-item">Thanh toán</a>
                 </div>
               </div>
-              <a href="contact" class="nav-item nav-link">Yêu thích</a>
+              <a href="/favorite" class="nav-item nav-link">Yêu thích</a>
             </div>
             <div class="navbar-nav ml-auto py-0 d-none d-lg-block">
-              <a href="" class="btn px-0">
+              <a th:href="@{/client/favorite}" class="btn px-0">
                 <i class="fas fa-heart text-primary"></i>
                 <span class="badge text-secondary border border-secondary rounded-circle"
                   style="padding-bottom: 2px">0</span>
@@ -322,35 +322,7 @@
   <!-- Products End -->
 
   <!-- Vendor Start -->
-  <div class="container-fluid py-5">
-    <div class="row px-xl-5">
-      <div class="col">
-        <div class="owl-carousel vendor-carousel">
-          <div class="bg-light p-4">
-            <img src="../images/hang1.jpg" alt="" />
-          </div>
-          <div class="bg-light p-4">
-            <img src="../images/hang2.jpg" alt="" />
-          </div>
-          <div class="bg-light p-4">
-            <img src="../images/hang3.png" alt="" />
-          </div>
-          <div class="bg-light p-4">
-            <img src="../images/hang4.jpg" alt="" />
-          </div>
-          <div class="bg-light p-4">
-            <img src="../images/hang5.webp" alt="" />
-          </div>
-          <div class="bg-light p-4">
-            <img src="../images/hang6.jpg" alt="" />
-          </div>
-          <div class="bg-light p-4">
-            <img src="../images/hang7.png" alt="" />
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  
   <!-- Vendor End -->
 
   <!-- Footer Start -->
@@ -467,14 +439,14 @@
       if (isLoggedIn) {
         accountDropdown.querySelector('.dropdown-item[href="/client/login"]').style.display = 'none';
         accountDropdown.querySelector('.dropdown-item[href="/dangky"]').style.display = 'none';
-        accountDropdown.querySelector('.dropdown-item[href="/admin/updateprofile"]').style.display = 'block';
+        accountDropdown.querySelector('.dropdown-item[href="/client/update/account"]').style.display = 'block';
 
         accountDropdown.querySelector('.dropdown-item[href="/admin/index"]').style.display = 'block';
         accountDropdown.querySelector('.dropdown-item[href="/client/logout"]').style.display = 'block';
       } else {
         accountDropdown.querySelector('.dropdown-item[href="/client/login"]').style.display = 'block';
         accountDropdown.querySelector('.dropdown-item[href="/dangky"]').style.display = 'block';
-        accountDropdown.querySelector('.dropdown-item[href="/admin/updateprofile"]').style.display = 'none';
+        accountDropdown.querySelector('.dropdown-item[href="/client/update/account"]').style.display = 'none';
 
         accountDropdown.querySelector('.dropdown-item[href="/admin/index"]').style.display = 'none';
         accountDropdown.querySelector('.dropdown-item[href="/client/logout"]').style.display = 'none';
