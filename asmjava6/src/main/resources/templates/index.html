@@ -130,16 +130,6 @@
             <div class="navbar-nav mr-auto py-0">
               <a href="index" class="nav-item nav-link active">Trang chủ</a>
               <a href="shop" class="nav-item nav-link">Sản phẩm</a>
-              <a href="detail" class="nav-item nav-link">Chi tiết sản phẩm</a>
-              <div class="nav-item dropdown">
-                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Trang <i
-                    class="fa fa-angle-down mt-1"></i></a>
-                <div class="dropdown-menu bg-primary rounded-0 border-0 m-0">
-                  <a href="/client/cart" class="dropdown-item">Giỏ hàng</a>
-                  <a href="checkout" class="dropdown-item">Thanh toán</a>
-                </div>
-              </div>
-              <a href="/favorite" class="nav-item nav-link">Yêu thích</a>
             </div>
             <div class="navbar-nav ml-auto py-0 d-none d-lg-block">
               <a th:href="@{/client/favorite}" class="btn px-0">
@@ -261,26 +251,40 @@
       <span class="bg-secondary pr-3">Sản phẩm nổi bật</span>
     </h2>
     <div class="row px-xl-5">
-      <div class="col-lg-3 col-md-4 col-sm-6 pb-1" th:each="item : ${products}">
+      <div class="col-lg-3 col-md-4 col-sm-6 pb-1" th:each="item, iterStat : ${products}" th:if="${iterStat.index < 4}">
         <div class="product-item bg-light mb-4" style="height: 450px">
           <div class="product-img position-relative overflow-hidden">
             <img class="img-fluid w-100" th:src="@{|/images/${item.image}|}" alt="" height="200px" width="95%" />
             <div class="product-action">
               <a class="btn btn-outline-dark btn-square" th:attr="ng-click=@{|cart.addToCart(${item.id})|}"><i
                   class="fa fa-shopping-cart"></i></a>
-              <a class="btn btn-outline-dark btn-square" th:attr="ng-click=@{|cart.favorite(${item.id})|}"><i
-                  class="fa fa-heart"></i></a>
-              <a class="btn btn-outline-dark btn-square" th:href="@{|/detail/${item.id}|}"><i
+              <a class="btn btn-outline-dark btn-square" ng-controller="shopping-favorite-ctrl"
+                th:attr="ng-click=@{|cart.favorite(${item.id})|}"><i class="fa fa-heart"></i></a>
+              <a class="btn btn-outline-dark btn-square" th:href="@{|/client/detail/${item.id}|}"><i
                   class="fa fa-search"></i></a>
             </div>
           </div>
           <div class="text-center py-4">
             <div class="d-flex align-items-center justify-content-center mt-2">
-              <h5 th:text="${item.name}"></h5>
-              <h6 class="text-muted ml-2">
-                <del th:text="${item.price}"></del>
-              </h6>
+              <h5 class="text-truncate" th:text="${item.name}"></h5>
             </div>
+
+            <h6 class="text-muted ml-2 row">
+              <!-- Check if there are discounts for the product -->
+              <div class="col-md-6">
+                <span th:if="${item.discounts.size() > 0}">
+                  <del th:text="${item.price}" id="product-price"></del>
+                </span>
+                <span th:unless="${item.discounts.size() > 0}" th:text="${item.price}" id="product-price"></span>
+              </div>
+              <div class="col-md-6">
+                <span th:if="${item.discounts.size() > 0}">
+                  <span th:each="discount : ${item.discounts}">
+                    <div th:text="${discount.discountAmount}" id="product-price"></div>
+                  </span>
+                </span>
+              </div>
+            </h6>
           </div>
         </div>
       </div>
@@ -423,7 +427,7 @@
   <!-- Template Javascript -->
   <script th:src="@{/js/main.js}"></script>
   <script th:src="@{/js/shopping-cart-ctrl.js}"></script>
-  <script th:src="@{/js/shopping-favorite-app}"></script>
+  <script th:src="@{/js/shopping-favorite-app2.js}"></script>
 
   <script>
     // Kiểm tra xem cookie có tồn tại không

@@ -237,4 +237,6 @@ app.controller("shopping-cart-ctrl", ['$scope', '$http', '$cookies', function ($
 	$scope.selectedDate = new Date();
 	$scope.shipfee()
 	$scope.cart.loadCartItems(username);
+
+	
 }]);
