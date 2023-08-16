@@ -25,12 +25,10 @@
     </div>
     <div style="padding-top: 10px; text-align: center;">
       <a href="?lang=vi">
-        <button type="submit" name="lang" class="btn btn-primary" value="vi"
-          th:text="#{menu.transactions.vn}"></button>
+        <button type="submit" name="lang" class="btn btn-primary" value="vi" th:text="#{menu.transactions.vn}"></button>
       </a>
       <a href="?lang=en">
-        <button type="submit" name="lang" class="btn btn-primary" value="en"
-          th:text="#{menu.transactions.en}"></button>
+        <button type="submit" name="lang" class="btn btn-primary" value="en" th:text="#{menu.transactions.en}"></button>
       </a>
     </div>
 
@@ -129,259 +127,259 @@
   </div>
   <!-- /.sidebar -->
 </aside>
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper" ng-controller="myCtrl3">
-      <!-- Content Header (Page header) -->
-      <div class="content-header">
-        <div class="container-fluid">
-          <div class="row mb-2">
-            <div class="col-sm-6">
-              <h1 class="m-0">Khuyến mãi</h1>
-            </div>
-            <!-- /.col -->
-            <div class="col-sm-6">
-              <ol class="breadcrumb float-sm-right">
-                <li class="breadcrumb-item active">Khuyến mãi</li>
-              </ol>
-            </div>
-            <!-- /.col -->
-          </div>
-          <!-- /.row -->
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper" ng-controller="myCtrl3">
+  <!-- Content Header (Page header) -->
+  <div class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1 class="m-0">Khuyến mãi</h1>
         </div>
-        <!-- /.container-fluid -->
+        <!-- /.col -->
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item active">Khuyến mãi</li>
+          </ol>
+        </div>
+        <!-- /.col -->
       </div>
-      <!-- /.content-header -->
-
-      <!-- Main content -->
-      <section class="content">
-        <div class="container mt-4">
-          <ul class="nav nav-tabs" id="myTab" role="tablist">
-            <li class="nav-item">
-              <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
-                aria-selected="true">Danh sách</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
-                aria-selected="false">Cập nhật</a>
-            </li>
-          </ul>
-
-          <div class="tab-content" id="myTabContent">
-            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-              <div class="ml-auto" style="margin-top: 15px; padding-right: 15px">
-                <div class="form-group">
-                  <input type="text" class="form-control" ng-model="searchKeyword" placeholder="Tìm kiếm..." />
-                </div>
-              </div>
-              <table id="example1" class="table table-bordered table-striped">
-                <style>
-                  div.dataTables_wrapper div.dataTables_filter label {
-                    display: none;
-                  }
-
-                  div.dataTables_wrapper div.dataTables_filter input {
-                    display: none;
-                  }
-
-                  .dataTables_empty {
-                    display: none;
-                  }
-                </style>
-                <thead>
-                  <tr>
-                    <th>Sản phẩm khuyến mãi</th>
-                    <th>Giá khuyến mãi</th>
-                    <th>Ngày bắt đầu</th>
-                    <th>Ngày kết thúc</th>
-                    <th>Tùy chỉnh</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr ng-repeat="discount in getCurrentPageDiscounts()">
-                    <td>{{discount.product.name}}</td>
-                    <td>{{discount.discountAmount}}</td>
-                    <!-- Định dạng ngày bắt đầu discount -->
-                    <td>{{ discount.startDate | date : 'dd/MM/yyyy' }}</td>
-
-                    <!-- Định dạng ngày kết thúc discount -->
-                    <td>{{ discount.endDate | date : 'dd/MM/yyyy' }}</td>
-
-                    <td>
-                      <a class="fas fa-trash-alt" ng-click="delete(discount.id)"></a>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-              <div class="panel-footer text-center">
-                <button ng-click="setPage(1)" class="btn btn-primary">
-                  <i class="fas fa-arrow-circle-up"></i>
-                </button>
-                <button ng-click="setPage(currentPage - 1)" class="btn btn-primary">
-                  <i class="fas fa-arrow-circle-left"></i>
-                </button>
-                <button class="btn btn-success">{{currentPage }} of {{totalPages()}}</button>
-                <button ng-click="setPage(currentPage + 1)" class="btn btn-primary">
-                  <i class="fas fa-arrow-circle-right"></i>
-                </button>
-                <button ng-click="setPage(totalPages())" class="btn btn-primary">
-                  <i class="fas fa-arrow-circle-down"></i>
-                </button>
-              </div>
-
-            </div>
-            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-              <form>
-                <div class="card-body">
-
-                  <!-- select -->
-                  <div class="form-group">
-                    <label>Loại thuốc</label>
-                    <select class="form-control" ng-model="form.product.id"
-                      ng-options="item.id as item.name for item in items | filter:{active: true}">
-                      <option value="">Chọn sản phẩm</option>
-                    </select>
-                    </select>
-
-                  </div>
-                  <div class="form-group"> <label for="exampleInputEmail1">Giá giảm</label>
-                    <input type="number" class="form-control" ng-model="form.discountAmount" id="exampleInputEmail1"
-                      placeholder="Nhập giá giảm">
-                  </div>
-                  <!-- Date and time range -->
-                  <div class="form-group">
-                    <label>Ngày và giờ:</label>
-                    <div class="input-group">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="far fa-clock"></i></span>
-                      </div>
-                      <input type="text" class="form-control float-right" id="reservationtime" ng-model="form.dateRange"
-                        ng-change="updateDateRange(form.dateRange)">
-                    </div>
-                    <!-- /.input group -->
-                  </div>
-
-                  <!-- Input ẩn để lưu giữ ngày bắt đầu -->
-                  <input type="hidden" ng-model="form.startDate" />
-
-                  <!-- Input ẩn để lưu giữ ngày kết thúc -->
-                  <input type="hidden" ng-model="form.endDate" />
-
-                  <!-- /.form group -->
-              </form>
-              <div class="panel-footer text-center">
-                <button ng-click="create()" class="btn btn-primary">
-                  <i class="fas fa-plus"></i>
-                  lưu
-                </button>
-                <button ng-click="reset()" class="btn btn-info">
-                  <i class="fas fa-redo-alt"></i>
-                  làm mới
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- /.card-body -->
-      </section>
-      <!-- /.content -->
+      <!-- /.row -->
     </div>
-    <!-- /.content-wrapper -->
-
-    <!-- Control Sidebar -->
-    <aside class="control-sidebar control-sidebar-dark">
-      <!-- Control sidebar content goes here -->
-
-      <div class="card">
-        <div class="card-header">
-          <h3 class="card-title">DataTable with default features</h3>
-        </div>
-        <!-- /.card-header -->
-
-        <!-- /.card-body -->
-      </div>
-    </aside>
-    <!-- /.control-sidebar -->
-
-    <!-- Main Footer -->
+    <!-- /.container-fluid -->
   </div>
-  <!-- ./wrapper -->
+  <!-- /.content-header -->
 
-  
-  <script>
-    $(function () {
-      $("#example1")
-        .DataTable({
-          responsive: true,
-          lengthChange: false,
-          autoWidth: false,
-          buttons: ["copy", "csv", "excel", "pdf", "print", "colvis"],
-        })
-        .buttons()
-        .container()
-        .appendTo("#example1_wrapper .col-md-6:eq(0)");
+  <!-- Main content -->
+  <section class="content">
+    <div class="container mt-4">
+      <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item">
+          <button class="nav-link active" id="home-tab" data-toggle="tab" data-target="#home" role="tab"
+            aria-controls="home" aria-selected="true">Danh sách</button>
+        </li>
+        <li class="nav-item">
+          <button class="nav-link" id="profile-tab" data-toggle="tab" data-target="#profile" role="tab"
+            aria-controls="profile" aria-selected="false">Cập nhật</button>
+        </li>
+      </ul>
+
+
+      <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+          <div class="ml-auto" style="margin-top: 15px; padding-right: 15px">
+            <div class="form-group">
+              <input type="text" class="form-control" ng-model="searchKeyword" placeholder="Tìm kiếm..." />
+            </div>
+          </div>
+          <table id="example1" class="table table-bordered table-striped">
+            <style>
+              div.dataTables_wrapper div.dataTables_filter label {
+                display: none;
+              }
+
+              div.dataTables_wrapper div.dataTables_filter input {
+                display: none;
+              }
+
+              .dataTables_empty {
+                display: none;
+              }
+            </style>
+            <thead>
+              <tr>
+                <th>Sản phẩm khuyến mãi</th>
+                <th>Giá khuyến mãi</th>
+                <th>Ngày bắt đầu</th>
+                <th>Ngày kết thúc</th>
+                <th>Tùy chỉnh</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="discount in getCurrentPageDiscounts()">
+                <td>{{discount.product.name}}</td>
+                <td>{{discount.discountAmount}}</td>
+                <!-- Định dạng ngày bắt đầu discount -->
+                <td>{{ discount.startDate | date : 'dd/MM/yyyy' }}</td>
+
+                <!-- Định dạng ngày kết thúc discount -->
+                <td>{{ discount.endDate | date : 'dd/MM/yyyy' }}</td>
+
+                <td>
+                  <a class="fas fa-trash-alt" ng-click="delete(discount.id)"></a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="panel-footer text-center">
+            <button ng-click="setPage(1)" class="btn btn-primary">
+              <i class="fas fa-arrow-circle-up"></i>
+            </button>
+            <button ng-click="setPage(currentPage - 1)" class="btn btn-primary">
+              <i class="fas fa-arrow-circle-left"></i>
+            </button>
+            <button class="btn btn-success">{{currentPage }} of {{totalPages()}}</button>
+            <button ng-click="setPage(currentPage + 1)" class="btn btn-primary">
+              <i class="fas fa-arrow-circle-right"></i>
+            </button>
+            <button ng-click="setPage(totalPages())" class="btn btn-primary">
+              <i class="fas fa-arrow-circle-down"></i>
+            </button>
+          </div>
+
+        </div>
+        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+          <form>
+            <div class="card-body">
+
+              <!-- select -->
+              <div class="form-group">
+                <label>Loại thuốc</label>
+                <select class="form-control" ng-model="form.product.id"
+                  ng-options="item.id as item.name for item in items | filter:{active: true}">
+                  <option value="">Chọn sản phẩm</option>
+                </select>
+                </select>
+
+              </div>
+              <div class="form-group"> <label for="exampleInputEmail1">Giá giảm</label>
+                <input type="number" class="form-control" ng-model="form.discountAmount" id="exampleInputEmail1"
+                  placeholder="Nhập giá giảm">
+              </div>
+              <!-- Date and time range -->
+              <div class="form-group">
+                <label>Ngày và giờ:</label>
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="far fa-clock"></i></span>
+                  </div>
+                  <input type="text" class="form-control float-right" id="reservationtime" ng-model="form.dateRange"
+                    ng-change="updateDateRange(form.dateRange)">
+                </div>
+                <!-- /.input group -->
+              </div>
+
+              <!-- Input ẩn để lưu giữ ngày bắt đầu -->
+              <input type="hidden" ng-model="form.startDate" />
+
+              <!-- Input ẩn để lưu giữ ngày kết thúc -->
+              <input type="hidden" ng-model="form.endDate" />
+
+              <!-- /.form group -->
+          </form>
+          <div class="panel-footer text-center">
+            <button ng-click="create()" class="btn btn-primary">
+              <i class="fas fa-plus"></i>
+              lưu
+            </button>
+            <button ng-click="reset()" class="btn btn-info">
+              <i class="fas fa-redo-alt"></i>
+              làm mới
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /.card-body -->
+  </section>
+  <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+
+<!-- Control Sidebar -->
+<aside class="control-sidebar control-sidebar-dark">
+  <!-- Control sidebar content goes here -->
+
+  <div class="card">
+    <div class="card-header">
+      <h3 class="card-title">DataTable with default features</h3>
+    </div>
+    <!-- /.card-header -->
+
+    <!-- /.card-body -->
+  </div>
+</aside>
+<!-- /.control-sidebar -->
+
+<!-- Main Footer -->
+</div>
+<!-- ./wrapper -->
+
+
+<script>
+  $(function () {
+    $("#example1")
+      .DataTable({
+        responsive: true,
+        lengthChange: false,
+        autoWidth: false,
+        buttons: ["copy", "csv", "excel", "pdf", "print", "colvis"],
+      })
+      .buttons()
+      .container()
+      .appendTo("#example1_wrapper .col-md-6:eq(0)");
+  });
+</script>
+<script>
+  $(function () {
+    //Initialize Select2 Elements
+    $('.select2').select2()
+
+    //Initialize Select2 Elements
+    $('.select2bs4').select2({
+      theme: 'bootstrap4'
+    })
+
+    //Datemask dd/mm/yyyy
+    $('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
+    //Datemask2 mm/dd/yyyy
+    $('#datemask2').inputmask('mm/dd/yyyy', { 'placeholder': 'mm/dd/yyyy' })
+    //Money Euro
+    $('[data-mask]').inputmask()
+
+    //Date picker
+    $('#reservationdate').datetimepicker({
+      format: 'L'
     });
-  </script>
-  <script>
-    $(function () {
-      //Initialize Select2 Elements
-      $('.select2').select2()
 
-      //Initialize Select2 Elements
-      $('.select2bs4').select2({
-        theme: 'bootstrap4'
-      })
+    //Date and time picker
+    $('#reservationdatetime').datetimepicker({ icons: { time: 'far fa-clock' } });
 
-      //Datemask dd/mm/yyyy
-      $('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
-      //Datemask2 mm/dd/yyyy
-      $('#datemask2').inputmask('mm/dd/yyyy', { 'placeholder': 'mm/dd/yyyy' })
-      //Money Euro
-      $('[data-mask]').inputmask()
-
-      //Date picker
-      $('#reservationdate').datetimepicker({
-        format: 'L'
-      });
-
-      //Date and time picker
-      $('#reservationdatetime').datetimepicker({ icons: { time: 'far fa-clock' } });
-
-      //Date range picker
-      $('#reservation').daterangepicker()
-      //Date range picker with time picker
-      $('#reservationtime').daterangepicker({
-        timePicker: true,
-        timePickerIncrement: 30,
-        locale: {
-          format: 'MM/DD/YYYY hh:mm A'
-        }
-      })
-      //Date range as a button
-      $('#daterange-btn').daterangepicker(
-        {
-          ranges: {
-            'Today': [moment(), moment()],
-            'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-            'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-            'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-            'This Month': [moment().startOf('month'), moment().endOf('month')],
-            'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-          },
-          startDate: moment().subtract(29, 'days'),
-          endDate: moment()
+    //Date range picker
+    $('#reservation').daterangepicker()
+    //Date range picker with time picker
+    $('#reservationtime').daterangepicker({
+      timePicker: true,
+      timePickerIncrement: 30,
+      locale: {
+        format: 'MM/DD/YYYY hh:mm A'
+      }
+    })
+    //Date range as a button
+    $('#daterange-btn').daterangepicker(
+      {
+        ranges: {
+          'Today': [moment(), moment()],
+          'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+          'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+          'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+          'This Month': [moment().startOf('month'), moment().endOf('month')],
+          'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
         },
-        function (start, end) {
-          $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
-        }
-      )
+        startDate: moment().subtract(29, 'days'),
+        endDate: moment()
+      },
+      function (start, end) {
+        $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
+      }
+    )
 
-      //Timepicker
-      $('#timepicker').datetimepicker({
-        format: 'LT'
-      })
-    });
+    //Timepicker
+    $('#timepicker').datetimepicker({
+      format: 'LT'
+    })
+  });
 
 
         // DropzoneJS Demo Code End
-  </script>
-  
+</script>

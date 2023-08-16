@@ -18,7 +18,7 @@ app.controller("myCtrl1", function ($scope, $http, $window) {
 		$scope.form = {};
 		$scope.items = [];
 		$scope.load_all();
-		$(".nav-tabs a:eq(0)").tab('show');
+		$(".nav-tabs button:eq(0)").tab('show');
 
 	};
 
@@ -111,7 +111,7 @@ app.controller("myCtrl1", function ($scope, $http, $window) {
 		var url = host + `/ManagedProduct/${id}`;
 		$http.get(url).then(resp => {
 			$scope.form = resp.data;
-			$(".nav-tabs a:eq(1)").tab('show');
+			$(".nav-tabs button:eq(1)").tab('show');
 		}).catch(error => {
 			console.log(error);
 		});
@@ -167,7 +167,7 @@ app.controller("myCtrl1", function ($scope, $http, $window) {
 			var index = $scope.items.findIndex(p => p.id === $scope.form.id);
 			console.log(index);
 			$scope.items[index] = resp.data;
-			$(".nav-tabs a:eq(0)").tab('show');
+			$(".nav-tabs button:eq(0)").tab('show');
 			$scope.reset();
 			$scope.load_all();
 			console.log("thanh cong", resp);

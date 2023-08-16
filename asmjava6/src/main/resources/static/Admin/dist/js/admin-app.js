@@ -43,6 +43,7 @@ app.config(function ($routeProvider) {
             templateUrl: "/admin/ReportFavoriteProducts", // Đường dẫn đến trang dashboard
             controller: "reportFavorite-ctrl"
         })
+
         // ... Thêm các route khác tương tự ...
         .otherwise({
             redirectTo: "/"

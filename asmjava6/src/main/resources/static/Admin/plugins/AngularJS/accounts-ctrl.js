@@ -20,7 +20,7 @@ app.controller("myCtrl2", function ($scope, $http, $window) {
 		$scope.users = [];
 		$scope.usersBlock = [];
 		$scope.load_all();
-		$(".nav-tabs a:eq(0)").tab('show');
+		$(".nav-tabs button:eq(0)").tab('show');
 	};
 
 	$scope.load_all = function () {
@@ -124,7 +124,7 @@ app.controller("myCtrl2", function ($scope, $http, $window) {
 			if ($scope.form.admin == true) {
 				alert("Không thể sửa tài khoản admin");
 			} else {
-				$(".nav-tabs a:eq(1)").tab('show');
+				$(".nav-tabs button:eq(2)").tab('show');
 			}
 		}).catch(error => {
 			console.log(error);
@@ -156,7 +156,7 @@ app.controller("myCtrl2", function ($scope, $http, $window) {
 	$scope.update = function () {
 		$scope.formErrors = {};
 		var item = angular.copy($scope.form);
-		$(".nav-tabs a:eq(0)").tab('show');
+		$(".nav-tabs button:eq(0)").tab('show');
 		var isValid = validateAccount1(item);
 		var url = host + `/ManagedAccount/${$scope.form.id}`;
 		console.log($scope.form.id);
@@ -170,7 +170,7 @@ app.controller("myCtrl2", function ($scope, $http, $window) {
 			$scope.items[index] = resp.data;
 			$scope.reset();
 			$scope.load_all();
-			$(".nav-tabs a:eq(0)").tab('show');
+			$(".nav-tabs button:eq(0)").tab('show');
 
 			console.log("thanh cong", resp);
 		}).catch(error => {
@@ -181,7 +181,7 @@ app.controller("myCtrl2", function ($scope, $http, $window) {
 	$scope.updateInLog = function () {
 		$scope.formErrors = {};
 		var item = angular.copy($scope.userLogin);
-		$(".nav-tabs a:eq(0)").tab('show');
+		$(".nav-tabs button:eq(0)").tab('show');
 		alert("Cập nhật thành công");
 		var url = host + `/ManagedAccount/${$scope.userLogin.id}`;
 		console.log($scope.userLogin.id);
@@ -208,7 +208,7 @@ app.controller("myCtrl2", function ($scope, $http, $window) {
 			console.log($scope.items[index]);
 			$scope.reset();
 			$scope.load_all();
-			$(".nav-tabs a:eq(0)").tab('show');
+			$(".nav-tabs button:eq(0)").tab('show');
 
 			console.log("thanh cong", resp);
 		}).catch(error => {
