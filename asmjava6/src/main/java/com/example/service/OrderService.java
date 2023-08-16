@@ -12,4 +12,8 @@ public interface OrderService {
      Order create(JsonNode orderData);
 
      void save(Order order);
+
+     Order findById(Integer id);
+
+     void setActiveForOrder(int id);
 }

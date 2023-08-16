@@ -2,7 +2,6 @@ package com.example.entity;
 
 import java.io.Serializable;
 
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -28,7 +27,7 @@ public class Favorite implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private Account user;
+    private Account account;
 
     @ManyToOne
     @JoinColumn(name = "product_id", nullable = false)

@@ -100,7 +100,7 @@
         button.parent().parent().find('input').val(newVal);
     });
 
-})(jQuery);
+})
 
 var priceElements = document.querySelectorAll("#product-price");
 var currencyFormatter = new Intl.NumberFormat("vi-VN", {

@@ -47,7 +47,7 @@
             <div class="dropdown-menu dropdown-menu-right" id="account-dropdown">
               <a href="/client/login" class="dropdown-item">Đăng nhập</a>
               <a href="/dangky" class="dropdown-item">Đăng ký</a>
-              <a href="/admin/updateprofile" class="dropdown-item">Cập nhật tài khoản</a>
+              <a href="/client/update/account" class="dropdown-item">Cập nhật tài khoản</a>
               <a href="/admin/index" class="dropdown-item">admin</a>
               <a href="/client/logout" class="dropdown-item">Đăng xuất</a>
             </div>
@@ -113,7 +113,7 @@
         <nav class="collapse position-absolute navbar navbar-vertical navbar-light align-items-start p-0 bg-light"
           id="navbar-vertical" style="width: calc(100% - 30px); z-index: 999">
           <div class="navbar-nav w-100">
-            <a th:each="c:${cates}" th:href="@{|/index?cid=${c.id}|}" class="nav-item nav-link">[[${c.name}]]</a>
+            <a th:each="c:${cates}" th:href="@{|?cid=${c.id}|}" class="nav-item nav-link">[[${c.name}]]</a>
           </div>
         </nav>
       </div>
@@ -130,19 +130,9 @@
             <div class="navbar-nav mr-auto py-0">
               <a href="index" class="nav-item nav-link active">Trang chủ</a>
               <a href="shop" class="nav-item nav-link">Sản phẩm</a>
-              <a href="detail" class="nav-item nav-link">Chi tiết sản phẩm</a>
-              <div class="nav-item dropdown">
-                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Trang <i
-                    class="fa fa-angle-down mt-1"></i></a>
-                <div class="dropdown-menu bg-primary rounded-0 border-0 m-0">
-                  <a href="/client/cart" class="dropdown-item">Giỏ hàng</a>
-                  <a href="checkout" class="dropdown-item">Thanh toán</a>
-                </div>
-              </div>
-              <a href="contact" class="nav-item nav-link">Yêu thích</a>
             </div>
             <div class="navbar-nav ml-auto py-0 d-none d-lg-block">
-              <a href="" class="btn px-0">
+              <a th:href="@{/client/favorite}" class="btn px-0">
                 <i class="fas fa-heart text-primary"></i>
                 <span class="badge text-secondary border border-secondary rounded-circle"
                   style="padding-bottom: 2px">0</span>
@@ -261,26 +251,40 @@
       <span class="bg-secondary pr-3">Sản phẩm nổi bật</span>
     </h2>
     <div class="row px-xl-5">
-      <div class="col-lg-3 col-md-4 col-sm-6 pb-1" th:each="item : ${products}">
+      <div class="col-lg-3 col-md-4 col-sm-6 pb-1" th:each="item, iterStat : ${products}" th:if="${iterStat.index < 4}">
         <div class="product-item bg-light mb-4" style="height: 450px">
           <div class="product-img position-relative overflow-hidden">
             <img class="img-fluid w-100" th:src="@{|/images/${item.image}|}" alt="" height="200px" width="95%" />
             <div class="product-action">
               <a class="btn btn-outline-dark btn-square" th:attr="ng-click=@{|cart.addToCart(${item.id})|}"><i
                   class="fa fa-shopping-cart"></i></a>
-              <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
-              <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
-              <a class="btn btn-outline-dark btn-square" th:href="@{|/detail/${item.id}|}"><i
+              <a class="btn btn-outline-dark btn-square" ng-controller="shopping-favorite-ctrl"
+                th:attr="ng-click=@{|cart.favorite(${item.id})|}"><i class="fa fa-heart"></i></a>
+              <a class="btn btn-outline-dark btn-square" th:href="@{|/client/detail/${item.id}|}"><i
                   class="fa fa-search"></i></a>
             </div>
           </div>
           <div class="text-center py-4">
             <div class="d-flex align-items-center justify-content-center mt-2">
-              <h5 th:text="${item.name}"></h5>
-              <h6 class="text-muted ml-2">
-                <del th:text="${item.price}"></del>
-              </h6>
+              <h5 class="text-truncate" th:text="${item.name}"></h5>
             </div>
+
+            <h6 class="text-muted ml-2 row">
+              <!-- Check if there are discounts for the product -->
+              <div class="col-md-6">
+                <span th:if="${item.discounts.size() > 0}">
+                  <del th:text="${item.price}" id="product-price"></del>
+                </span>
+                <span th:unless="${item.discounts.size() > 0}" th:text="${item.price}" id="product-price"></span>
+              </div>
+              <div class="col-md-6">
+                <span th:if="${item.discounts.size() > 0}">
+                  <span th:each="discount : ${item.discounts}">
+                    <div th:text="${discount.discountAmount}" id="product-price"></div>
+                  </span>
+                </span>
+              </div>
+            </h6>
           </div>
         </div>
       </div>
@@ -322,35 +326,7 @@
   <!-- Products End -->
 
   <!-- Vendor Start -->
-  <div class="container-fluid py-5">
-    <div class="row px-xl-5">
-      <div class="col">
-        <div class="owl-carousel vendor-carousel">
-          <div class="bg-light p-4">
-            <img src="../images/hang1.jpg" alt="" />
-          </div>
-          <div class="bg-light p-4">
-            <img src="../images/hang2.jpg" alt="" />
-          </div>
-          <div class="bg-light p-4">
-            <img src="../images/hang3.png" alt="" />
-          </div>
-          <div class="bg-light p-4">
-            <img src="../images/hang4.jpg" alt="" />
-          </div>
-          <div class="bg-light p-4">
-            <img src="../images/hang5.webp" alt="" />
-          </div>
-          <div class="bg-light p-4">
-            <img src="../images/hang6.jpg" alt="" />
-          </div>
-          <div class="bg-light p-4">
-            <img src="../images/hang7.png" alt="" />
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+
   <!-- Vendor End -->
 
   <!-- Footer Start -->
@@ -427,12 +403,7 @@
         </div>
       </div>
     </div>
-    <div class="row border-top mx-xl-5 py-4" style="border-color: rgba(256, 256, 256, 0.1) !important">
-      <div class="col-md-6 px-xl-0"></div>
-      <div class="col-md-6 px-xl-0 text-center text-md-right">
-        <img class="img-fluid" src="img/payments.png" alt="" />
-      </div>
-    </div>
+    
   </div>
   <!-- Footer End -->
 
@@ -450,7 +421,9 @@
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.1/dist/sweetalert2.min.js"></script>
   <!-- Template Javascript -->
   <script th:src="@{/js/main.js}"></script>
-  <script th:src="@{/js/test.js}"></script>
+  <script th:src="@{/js/shopping-cart-ctrl.js}"></script>
+  <script th:src="@{/js/shopping-favorite-app2.js}"></script>
+
   <script>
     // Kiểm tra xem cookie có tồn tại không
     function checkCookieExistence(cookieName) {
@@ -467,14 +440,14 @@
       if (isLoggedIn) {
         accountDropdown.querySelector('.dropdown-item[href="/client/login"]').style.display = 'none';
         accountDropdown.querySelector('.dropdown-item[href="/dangky"]').style.display = 'none';
-        accountDropdown.querySelector('.dropdown-item[href="/admin/updateprofile"]').style.display = 'block';
+        accountDropdown.querySelector('.dropdown-item[href="/client/update/account"]').style.display = 'block';
 
         accountDropdown.querySelector('.dropdown-item[href="/admin/index"]').style.display = 'block';
         accountDropdown.querySelector('.dropdown-item[href="/client/logout"]').style.display = 'block';
       } else {
         accountDropdown.querySelector('.dropdown-item[href="/client/login"]').style.display = 'block';
         accountDropdown.querySelector('.dropdown-item[href="/dangky"]').style.display = 'block';
-        accountDropdown.querySelector('.dropdown-item[href="/admin/updateprofile"]').style.display = 'none';
+        accountDropdown.querySelector('.dropdown-item[href="/client/update/account"]').style.display = 'none';
 
         accountDropdown.querySelector('.dropdown-item[href="/admin/index"]').style.display = 'none';
         accountDropdown.querySelector('.dropdown-item[href="/client/logout"]').style.display = 'none';
