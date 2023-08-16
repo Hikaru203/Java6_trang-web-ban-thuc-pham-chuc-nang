@@ -27,8 +27,8 @@ public interface FavoriteRepository extends JpaRepository<Favorite, Integer> {
             "WHERE p.name LIKE ?1")
     List<String> findUsersWhoLikedProduct(String nameProduct);
 
-    Favorite findByAccountAndProduct(Account account, Product product);
+    Favorite findByAccountAndProduct(Account user, Product product);
 
-    List<Favorite> findByAccount(Account account);
+    List<Favorite> findByAccount(Account user);
 
 }

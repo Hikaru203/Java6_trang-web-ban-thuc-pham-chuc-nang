@@ -48,7 +48,7 @@ public class AdminAPI {
     }
 
     @GetMapping({ "/ManagedProduct/{id}" })
-    public Optional<Product> getProduct(@PathVariable("id") int id) {
+    public Product getProduct(@PathVariable("id") int id) {
         return productRepository.findById(id);
     }
 
@@ -71,7 +71,7 @@ public class AdminAPI {
     }
 
     @GetMapping({ "/ManagedAccount/{id}" })
-    public Optional<Account> getAccount(@PathVariable("id") int id) {
+    public Account getAccount(@PathVariable("id") int id) {
         return userRepository.findById(id);
     }
 

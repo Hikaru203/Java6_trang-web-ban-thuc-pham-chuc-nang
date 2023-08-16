@@ -7,7 +7,7 @@ app.controller("shopping-cart-ctrl", function($scope, $http) {
 				// Gán dữ liệu vào biến favoriteProducts để hiển thị
 				$scope.favoriteProducts = response.data;
 				console.log($scope.favoriteProducts);
-				const userCookie = getCookie("username");
+				const userCookie = getCookie("id");
 				console.log(userCookie);
 				$http.get(`http://localhost:8080/rest/accounts/${userCookie}`)
 					.then(accountResponse => {
@@ -41,7 +41,7 @@ app.controller("shopping-cart-ctrl", function($scope, $http) {
 	}
 	// Hàm để gửi thông tin sản phẩm qua email
 	$scope.shareProduct = function(productId, recipientEmail) {
-		const userCookie = getCookie("username");
+		const userCookie = getCookie("id");
 
 		if (userCookie) {
 			const url = `http://localhost:8080/rest/products/send-email/${productId}/${userCookie}`;
@@ -79,7 +79,7 @@ app.controller("shopping-cart-ctrl", function($scope, $http) {
 		}
 	};
 	$scope.removeFromFavorites = function(productId) {
-		const userCookie = getCookie("username");
+		const userCookie = getCookie("id");
 
 		if (userCookie) {
 			// Gọi API để tìm accountId dựa trên username
@@ -109,7 +109,7 @@ app.controller("shopping-cart-ctrl", function($scope, $http) {
 	$scope.cart = {
 		items: [],
 		async favorite(id) {
-			const userCookie = getCookie("username");
+			const userCookie = getCookie("id");
 			console.log(userCookie);
 
 			if (userCookie) {

@@ -268,8 +268,8 @@
             <div class="product-action">
               <a class="btn btn-outline-dark btn-square" th:attr="ng-click=@{|cart.addToCart(${item.id})|}"><i
                   class="fa fa-shopping-cart"></i></a>
-              <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
-              <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
+              <a class="btn btn-outline-dark btn-square" th:attr="ng-click=@{|cart.favorite(${item.id})|}"><i
+                  class="fa fa-heart"></i></a>
               <a class="btn btn-outline-dark btn-square" th:href="@{|/detail/${item.id}|}"><i
                   class="fa fa-search"></i></a>
             </div>
@@ -322,7 +322,7 @@
   <!-- Products End -->
 
   <!-- Vendor Start -->
-  
+
   <!-- Vendor End -->
 
   <!-- Footer Start -->
@@ -423,6 +423,8 @@
   <!-- Template Javascript -->
   <script th:src="@{/js/main.js}"></script>
   <script th:src="@{/js/shopping-cart-ctrl.js}"></script>
+  <script th:src="@{/js/shopping-favorite-app}"></script>
+
   <script>
     // Kiểm tra xem cookie có tồn tại không
     function checkCookieExistence(cookieName) {

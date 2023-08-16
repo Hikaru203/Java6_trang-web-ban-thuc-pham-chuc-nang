@@ -81,7 +81,7 @@ public class OderController {
 		// Lấy thông tin từ form để tạo đơn hàng và lưu vào cơ sở dữ liệu
 		Order order = new Order();
 		// Assuming you have a service to retrieve the Account object by ID
-		Account user = accountService.findById(AccountSession.getId()).get();
+		Account user = accountService.findById(AccountSession.getId());
 		if (user != null) {
 			order.setUser(user);
 		} else {
