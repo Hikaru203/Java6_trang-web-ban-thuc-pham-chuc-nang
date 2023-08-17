@@ -244,7 +244,7 @@
   </nav>
 
 </div>
-<div th:fragment="menu">
+<div th:fragment="menu" style="height: 60px !important; ">
   <div class="user-panel mt-3 pb-3 mb-3 d-flex">
     <div class="image">
       <img src="" th:src="@{/Admin/dist/img/user2-160x160.jpg}" class="img-circle elevation-2" alt="User Image" />
@@ -253,5 +253,5 @@
       <a href="#" class="d-block">{{userLogin.fullName}}</a>
     </div>
   </div>
-
+  <br>
 </div>

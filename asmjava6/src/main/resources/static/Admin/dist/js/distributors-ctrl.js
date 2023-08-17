@@ -25,7 +25,7 @@ app.controller("distributor-ctrl", function ($scope, $http, $window) {
     // Hiển thị lên form
     $scope.edit = function (item) {
         $scope.form = angular.copy(item);
-        $(".nav-tabs button:eq(1)").tab('show');
+		$(".nav-tabs button:eq(1)").tab('show');
         $scope.lockbtnAdd = true;
         $scope.lockbtnDelete = false;
         $scope.lockbtnUpdate = false;

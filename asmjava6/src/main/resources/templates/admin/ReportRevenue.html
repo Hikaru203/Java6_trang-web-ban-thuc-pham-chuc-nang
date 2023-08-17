@@ -1,50 +1,34 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
   <!-- Brand Logo -->
-  <a href="" class="brand-link">
-    <img th:src="@{/Admin/dist/img/AdminLTELogo.png}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
-      style="opacity: 0.8" />
-    <span class="brand-text font-weight-light">OOR</span>
-  </a>
+
 
   <!-- Sidebar -->
-  <div class="sidebar">
+  <div class="sidebar" style="margin-top: 0px; height: 100%;">
     <!-- Sidebar user panel (optional) -->
     <div th:insert="~{admin/layout :: menu}"></div>
 
 
     <!-- SidebarSearch Form -->
-    <div class="form-inline">
-      <div class="input-group" data-widget="sidebar-search">
-        <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search" />
-        <div class="input-group-append">
-          <button class="btn btn-sidebar">
-            <i class="fas fa-search fa-fw"></i>
-          </button>
-        </div>
-      </div>
-    </div>
     <div style="padding-top: 10px; text-align: center;">
       <a href="?lang=vi">
-        <button type="submit" name="lang" class="btn btn-primary" value="vi"
-          th:text="#{menu.transactions.vn}"></button>
+        <button type="submit" name="lang" class="btn btn-primary" value="vi" th:text="#{menu.transactions.vn}"></button>
       </a>
       <a href="?lang=en">
-        <button type="submit" name="lang" class="btn btn-primary" value="en"
-          th:text="#{menu.transactions.en}"></button>
+        <button type="submit" name="lang" class="btn btn-primary" value="en" th:text="#{menu.transactions.en}"></button>
       </a>
     </div>
 
     <!-- Sidebar Menu -->
     <nav class="mt-2">
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-        <li class="nav-item ">
-          <div class="nav-link ">
+        <li class="nav-item menu-open">
+          <a href="#" class="nav-link ">
             <i class="nav-icon fas fa-tachometer-alt"></i>
             <p>
               <span th:text="#{menu.dashboard}"></span>
               <i class="right fas fa-angle-left"></i>
             </p>
-          </div>
+          </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
               <a href="#!/" class="nav-link ">
@@ -53,7 +37,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="#!/account" class="nav-link">
+              <a href="#!/account" class="nav-link ">
                 <i class="far fa-circle nav-icon"></i>
                 <p><span th:text="#{menu.accounts}"></span></p>
               </a>
@@ -92,13 +76,13 @@
         </li>
 
         <li class="nav-item menu-open">
-          <a href="" class="nav-link active">
+          <div class="nav-link active">
             <i class="nav-icon fas fa-copy"></i>
             <p>
               <span th:text="#{menu.reports}"></span>
               <i class="fas fa-angle-left right"></i>
             </p>
-          </a>
+          </div>
           <ul class="nav nav-treeview">
             <li class="nav-item">
               <a href="#!/Revenue" class="nav-link active">
@@ -121,6 +105,39 @@
           </ul>
         </li>
       </ul>
+      <br>
+      <div class="form-inline">
+        <div class="input-group" data-widget="sidebar-search">
+
+          <a href="/client/logout" class="dropdown-item logout-button">Đăng xuất</a>
+
+        </div>
+        <style>
+          .logout-button {
+            width: 100%;
+            height: 40px;
+            background-color: red;
+            text-align: center;
+            border: 1px solid black;
+            color: white;
+            /* Thay đổi màu chữ */
+            text-decoration: none;
+            /* Loại bỏ gạch chân */
+            padding: 10px;
+            /* Khoảng cách nội dung và biên của liên kết */
+            display: block;
+            /* Hiển thị dạng block để chiếm toàn bộ chiều ngang */
+            transition: background-color 0.3s;
+            /* Hiệu ứng chuyển đổi màu nền */
+          }
+
+          .logout-button:hover {
+            background-color: white;
+            color: black !important;
+            /* Màu nền khi hover */
+          }
+        </style>
+      </div>
     </nav>
 
 
@@ -129,74 +146,74 @@
   </div>
   <!-- /.sidebar -->
 </aside>
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-      <!-- Content Header (Page header) -->
-      <div class="content-header">
-        <div class="container-fluid">
-          <div class="row mb-2">
-            <div class="col-sm-6">
-              <h1 class="m-0">Doanh thu</h1>
-            </div>
-            <!-- /.col -->
-            <div class="col-sm-6">
-              <ol class="breadcrumb float-sm-right">
-
-                <li class="breadcrumb-item active">Doanh thu</li>
-              </ol>
-            </div>
-            <!-- /.col -->
-          </div>
-          <!-- /.row -->
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <div class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1 class="m-0">Doanh thu</h1>
         </div>
-        <!-- /.container-fluid -->
+        <!-- /.col -->
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+
+            <li class="breadcrumb-item active">Doanh thu</li>
+          </ol>
+        </div>
+        <!-- /.col -->
       </div>
-      <!-- /.content-header -->
-
-      <!-- Main content -->
-      <section class="content">
-        <!-- /.col-md-6 -->
-        <div class="col-lg-12">
-          <div class="card">
-            <div class="card-header border-0">
-
-            </div>
-            <div class="card-body">
-              <div class="d-flex">
-                <p class="d-flex flex-column">
-                  <span class="text-bold text-lg">{{ totalRevenue | currency:' ' }} VND</span>
-                  <span>Tổng doanh thu</span>
-                </p>
-
-              </div>
-              <!-- /.d-flex -->
-
-              <div class="position-relative mb-4">
-                <canvas id="revenue-chart" height="100"></canvas>
-              </div>
-            </div>
-          </div>
-          <!-- /.card -->
-      </section>
-      <!-- /.content -->
+      <!-- /.row -->
     </div>
-    <!-- /.content-wrapper -->
-
-    <!-- Control Sidebar -->
-    <aside class="control-sidebar control-sidebar-dark">
-      <!-- Control sidebar content goes here -->
-
-      <div class="card">
-        <div class="card-header">
-          <h3 class="card-title">DataTable with default features</h3>
-        </div>
-        <!-- /.card-header -->
-
-        <!-- /.card-body -->
-      </div>
-    </aside>
-    <!-- /.control-sidebar -->
-
-    <!-- Main Footer -->
+    <!-- /.container-fluid -->
   </div>
-  <!-- ./wrapper -->
+  <!-- /.content-header -->
+
+  <!-- Main content -->
+  <section class="content">
+    <!-- /.col-md-6 -->
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header border-0">
+
+        </div>
+        <div class="card-body">
+          <div class="d-flex">
+            <p class="d-flex flex-column">
+              <span class="text-bold text-lg">{{ totalRevenue | currency:' ' }} VND</span>
+              <span>Tổng doanh thu</span>
+            </p>
+
+          </div>
+          <!-- /.d-flex -->
+
+          <div class="position-relative mb-4">
+            <canvas id="revenue-chart" height="100"></canvas>
+          </div>
+        </div>
+      </div>
+      <!-- /.card -->
+  </section>
+  <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+
+<!-- Control Sidebar -->
+<aside class="control-sidebar control-sidebar-dark">
+  <!-- Control sidebar content goes here -->
+
+  <div class="card">
+    <div class="card-header">
+      <h3 class="card-title">DataTable with default features</h3>
+    </div>
+    <!-- /.card-header -->
+
+    <!-- /.card-body -->
+  </div>
+</aside>
+<!-- /.control-sidebar -->
+
+<!-- Main Footer -->
+</div>
+<!-- ./wrapper -->

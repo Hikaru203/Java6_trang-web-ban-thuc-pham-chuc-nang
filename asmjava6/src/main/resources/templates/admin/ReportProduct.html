@@ -1,28 +1,15 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
   <!-- Brand Logo -->
-  <a href="" class="brand-link">
-    <img th:src="@{/Admin/dist/img/AdminLTELogo.png}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
-      style="opacity: 0.8" />
-    <span class="brand-text font-weight-light">OOR</span>
-  </a>
+  
 
   <!-- Sidebar -->
-  <div class="sidebar">
+  <div class="sidebar" style="margin-top: 0px; height: 100%;">
     <!-- Sidebar user panel (optional) -->
     <div th:insert="~{admin/layout :: menu}"></div>
 
 
     <!-- SidebarSearch Form -->
-    <div class="form-inline">
-      <div class="input-group" data-widget="sidebar-search">
-        <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search" />
-        <div class="input-group-append">
-          <button class="btn btn-sidebar">
-            <i class="fas fa-search fa-fw"></i>
-          </button>
-        </div>
-      </div>
-    </div>
+    
     <div style="padding-top: 10px; text-align: center;">
       <a href="?lang=vi">
         <button type="submit" name="lang" class="btn btn-primary" value="vi"
@@ -37,14 +24,14 @@
     <!-- Sidebar Menu -->
     <nav class="mt-2">
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-        <li class="nav-item ">
-          <div class="nav-link ">
+        <li class="nav-item menu-open">
+          <a href="#" class="nav-link ">
             <i class="nav-icon fas fa-tachometer-alt"></i>
             <p>
               <span th:text="#{menu.dashboard}"></span>
               <i class="right fas fa-angle-left"></i>
             </p>
-          </div>
+          </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
               <a href="#!/" class="nav-link ">
@@ -53,7 +40,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="#!/account" class="nav-link">
+              <a href="#!/account" class="nav-link ">
                 <i class="far fa-circle nav-icon"></i>
                 <p><span th:text="#{menu.accounts}"></span></p>
               </a>
@@ -92,13 +79,13 @@
         </li>
 
         <li class="nav-item menu-open">
-          <a href="#" class="nav-link active">
+          <div class="nav-link active">
             <i class="nav-icon fas fa-copy"></i>
             <p>
               <span th:text="#{menu.reports}"></span>
               <i class="fas fa-angle-left right"></i>
             </p>
-          </a>
+          </div>
           <ul class="nav nav-treeview">
             <li class="nav-item">
               <a href="#!/Revenue" class="nav-link">
@@ -121,6 +108,39 @@
           </ul>
         </li>
       </ul>
+      <br>
+      <div class="form-inline">
+        <div class="input-group" data-widget="sidebar-search">
+
+          <a href="/client/logout" class="dropdown-item logout-button">Đăng xuất</a>
+
+        </div>
+        <style>
+          .logout-button {
+            width: 100%;
+            height: 40px;
+            background-color: red;
+            text-align: center;
+            border: 1px solid black;
+            color: white;
+            /* Thay đổi màu chữ */
+            text-decoration: none;
+            /* Loại bỏ gạch chân */
+            padding: 10px;
+            /* Khoảng cách nội dung và biên của liên kết */
+            display: block;
+            /* Hiển thị dạng block để chiếm toàn bộ chiều ngang */
+            transition: background-color 0.3s;
+            /* Hiệu ứng chuyển đổi màu nền */
+          }
+
+          .logout-button:hover {
+            background-color: white;
+            color: black !important;
+            /* Màu nền khi hover */
+          }
+        </style>
+      </div>
     </nav>
 
 
