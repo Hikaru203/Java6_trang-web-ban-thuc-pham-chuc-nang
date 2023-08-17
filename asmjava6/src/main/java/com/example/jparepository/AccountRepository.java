@@ -9,8 +9,8 @@ import com.example.entity.Account;
 @Repository
 public interface AccountRepository extends JpaRepository<Account, Integer> {
     Account findByUserName(String userName);
-    Account findById(int id);
-
 
     Account findByEmail(String email);
+
+    Account findById(int id);
 }

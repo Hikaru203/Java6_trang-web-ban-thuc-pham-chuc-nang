@@ -1,10 +1,10 @@
-const host = "http://localhost:8080";
+
 var queryString = new URLSearchParams(window.location.search);
 var jsonData = queryString.get('data');
 var form = JSON.parse(decodeURIComponent(jsonData));
 var fileNameLabel = document.querySelector('.custom-file-label');
 
-app.controller("myCtrl", function ($scope, $http, $window) {
+app.controller("myCtrl3", function ($scope, $http, $window) {
 	$scope.form = {};
 	$scope.items = [];
 	$scope.discounts = []; // Thay đổi tên biến 'users' thành 'discounts'
@@ -207,7 +207,7 @@ app.controller("myCtrl", function ($scope, $http, $window) {
 		return null;
 	}
 
-	const usernameCookie = getCookieValue('username');
+	const usernameCookie = getCookieValue('id');
 	if (usernameCookie !== null) {
 		console.log('Giá trị của cookie username là:', usernameCookie);
 	} else {
@@ -215,8 +215,8 @@ app.controller("myCtrl", function ($scope, $http, $window) {
 	}
 	$scope.user = function () {
 		$http.get("http://localhost:8080/ManagedAccountByUserName/" + usernameCookie).then(resp => {
-			$scope.user = resp.data; // Thay đổi tên biến 'users' thành 'discounts'
-			console.log($scope.user);
+			$scope.userLogin = resp.data; // Thay đổi tên biến 'users' thành 'discounts'
+			console.log($scope.userLogin);
 		}).catch(error => {
 			console.log(error);
 		});

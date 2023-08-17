@@ -8,44 +8,58 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
+
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
-
-import java.time.LocalDateTime;
-
-
-
+import java.math.BigDecimal;
+import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "Orders")
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class Order implements Serializable {
-    private static final long serialVersionUID = 1L;
+@Getter
+@Setter
+public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     private Account user;
-
-    @Column(name = "adress",nullable = false)
+    
+    @JoinColumn(name = "adress", nullable = false)
     private String adress;
-
-    @Column(name = "phone_number",nullable = false)
+    // Getters and setters, constructors, and other methods
+    @JoinColumn(name = "phone_number", nullable = false)
     private String phoneNumber;
-
-    @Column(name = "country",nullable = false)
+    
+    @JoinColumn(name = "country", nullable = false)
     private String country;
-
-    @Column(name = "order_date", nullable = false)
-    private LocalDateTime orderdate;
-
-    // Constructors, getters, setters, and other methods as needed.
+    
+    @Column(name = "date_order")
+    private Date orderDate;
+    
+    @Column(name = "total_price")
+    private int totalPrice;
+    
+    @JoinColumn(name = "is_acctive")
+    private boolean isActive;
+    
+    @JoinColumn(name = "ordres_code")
+    private String ordresCode;
+	
+    @JoinColumn(name = "district")
+    private String district;
+    
+    @JoinColumn(name = "wards")
+    private String wards;
 }
+
+

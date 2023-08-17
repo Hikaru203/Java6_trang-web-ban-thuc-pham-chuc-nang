@@ -10,6 +10,11 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "AddressCity")
 public class AddressCity implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@Column(name = "addresscity_id")
 	private int addresscity_id;

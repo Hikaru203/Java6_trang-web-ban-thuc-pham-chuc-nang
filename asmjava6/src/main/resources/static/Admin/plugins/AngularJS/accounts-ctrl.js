@@ -1,11 +1,9 @@
-const host = "http://localhost:8080";
 var queryString = new URLSearchParams(window.location.search);
 var jsonData = queryString.get('data');
 var form = JSON.parse(decodeURIComponent(jsonData));
 var fileNameLabel = document.querySelector('.custom-file-label');
 
-app.controller("myCtrl", function ($scope, $http, $window) {
-
+app.controller("myCtrl2", function ($scope, $http, $window) {
 
 	$scope.form = {};
 	$scope.items = [];
@@ -20,19 +18,23 @@ app.controller("myCtrl", function ($scope, $http, $window) {
 		// Đặt giá trị mặc định cho các biến hoặc xóa dữ liệu nếu cần thiết.
 		$scope.form = {};
 		$scope.users = [];
+		$scope.usersBlock = [];
 		$scope.load_all();
-		$(".nav-tabs a:eq(0)").tab('show');
+		$(".nav-tabs button:eq(0)").tab('show');
 	};
 
 	$scope.load_all = function () {
 		$http.get(host + "/ManagedAccount").then(resp => {
-			$scope.users = resp.data;
+			$scope.form = resp.data;
 			if ($scope.user != null) {
 				console.log($scope.user);
-				$scope.users = $scope.users.filter(user => user.id != $scope.user.id);
-				$scope.form = $scope.user;
+				$scope.users = $scope.form.filter(user => user.id != $scope.userLogin.id);
 				$scope.users = $scope.users.filter(user => user.active == true);
 				console.log($scope.users);
+
+
+				$scope.usersBlock = $scope.form.filter(user => user.active == false);
+				console.log($scope.usersBlock);
 			}
 		}).catch(error => {
 			console.log(error);
@@ -81,6 +83,25 @@ app.controller("myCtrl", function ($scope, $http, $window) {
 		return filteredUsers.slice(startIndex, endIndex);
 	};
 
+	$scope.getCurrentPageUsersBlock = function () {
+		if (!$scope.usersBlock || !Array.isArray($scope.usersBlock)) {
+			// Handle the case when $scope.users is not defined or not an array
+			return [];
+		}
+
+		// Check if a search keyword is provided
+		const searchKeyword = $scope.searchKeyword ? $scope.searchKeyword.toLowerCase() : '';
+
+		const filteredUsers = $scope.usersBlock.filter(user => {
+			const fullName = user.fullName ? user.fullName.toLowerCase() : '';
+			const userName = user.userName ? user.userName.toLowerCase() : '';
+			const email = user.email ? user.email.toLowerCase() : '';
+			return fullName.includes(searchKeyword) || userName.includes(searchKeyword) || email.includes(searchKeyword);
+		});
+
+		return filteredUsers;
+	};
+
 
 
 	$scope.getPagesRange = function () {
@@ -103,7 +124,7 @@ app.controller("myCtrl", function ($scope, $http, $window) {
 			if ($scope.form.admin == true) {
 				alert("Không thể sửa tài khoản admin");
 			} else {
-				$(".nav-tabs a:eq(1)").tab('show');
+				$(".nav-tabs button:eq(2)").tab('show');
 			}
 		}).catch(error => {
 			console.log(error);
@@ -135,7 +156,7 @@ app.controller("myCtrl", function ($scope, $http, $window) {
 	$scope.update = function () {
 		$scope.formErrors = {};
 		var item = angular.copy($scope.form);
-		$(".nav-tabs a:eq(0)").tab('show');
+		$(".nav-tabs button:eq(0)").tab('show');
 		var isValid = validateAccount1(item);
 		var url = host + `/ManagedAccount/${$scope.form.id}`;
 		console.log($scope.form.id);
@@ -149,13 +170,54 @@ app.controller("myCtrl", function ($scope, $http, $window) {
 			$scope.items[index] = resp.data;
 			$scope.reset();
 			$scope.load_all();
-			$(".nav-tabs a:eq(0)").tab('show');
+			$(".nav-tabs button:eq(0)").tab('show');
 
 			console.log("thanh cong", resp);
 		}).catch(error => {
 			console.log(error);
 		});
 	};
+
+	$scope.updateInLog = function () {
+		$scope.formErrors = {};
+		var item = angular.copy($scope.userLogin);
+		$(".nav-tabs button:eq(0)").tab('show');
+		alert("Cập nhật thành công");
+		var url = host + `/ManagedAccount/${$scope.userLogin.id}`;
+		console.log($scope.userLogin.id);
+		$http.put(url, item).then(resp => {
+			var index = $scope.items.findIndex(p => p.id === $scope.userLogin.id);
+
+			// Kiểm tra và sử dụng dữ liệu cũ nếu password và fullName là rỗng
+			if (!$scope.userLogin.password) {
+				if ($scope.items[index] && $scope.items[index].password) {
+					resp.data.password = $scope.items[index].password;
+					alert(resp.data.password);
+				}
+			}
+
+			if (!$scope.userLogin.fullName) {
+				if ($scope.items[index] && $scope.items[index].fullName) {
+					resp.data.fullName = $scope.items[index].fullName;
+					alert(resp.data.fullName);
+				}
+			}
+			alert(resp.data.password);
+			console.log(resp.data.password);
+			$scope.items[index] = resp.data;
+			console.log($scope.items[index]);
+			$scope.reset();
+			$scope.load_all();
+			$(".nav-tabs button:eq(0)").tab('show');
+
+			console.log("thanh cong", resp);
+		}).catch(error => {
+			console.log(error);
+		});
+	};
+
+
+
 
 	$scope.editRemove = function (id) {
 		var url = host + `/ManagedAccount/${id}`;
@@ -164,7 +226,11 @@ app.controller("myCtrl", function ($scope, $http, $window) {
 			if ($scope.form.admin == true) {
 				alert("Không thể xóa tài khoản admin");
 			} else {
-				$scope.form.active = false;
+				if ($scope.form.active == false) {
+					$scope.form.active = true;
+				} else if ($scope.form.active == true) {
+					$scope.form.active = false;
+				}
 				console.log($scope.form);
 				$scope.update();
 			}
@@ -265,7 +331,7 @@ app.controller("myCtrl", function ($scope, $http, $window) {
 		return null;
 	}
 
-	const usernameCookie = getCookieValue('username');
+	const usernameCookie = getCookieValue('id');
 	if (usernameCookie !== null) {
 		console.log('Giá trị của cookie username là:', usernameCookie);
 	} else {
@@ -273,8 +339,8 @@ app.controller("myCtrl", function ($scope, $http, $window) {
 	}
 	$scope.user = function () {
 		$http.get("http://localhost:8080/ManagedAccountByUserName/" + usernameCookie).then(resp => {
-			$scope.user = resp.data;
-			console.log($scope.user);
+			$scope.userLogin = resp.data;
+			console.log($scope.userLogin);
 		}).catch(error => {
 			console.log(error);
 		});

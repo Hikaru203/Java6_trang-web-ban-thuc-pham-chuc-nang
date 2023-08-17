@@ -1,5 +1,5 @@
-var host = "http://localhost:8080";
-app.controller("myCtrl", function ($scope, $http) {
+
+app.controller("myCtrl4", function ($scope, $http) {
   $scope.form = {};
   $scope.categories = [];
   $scope.items = [];
@@ -157,7 +157,7 @@ app.controller("myCtrl", function ($scope, $http) {
 		return null;
 	}
 
-	const usernameCookie = getCookieValue('username');
+	const usernameCookie = getCookieValue('id');
 	if (usernameCookie !== null) {
 		console.log('Giá trị của cookie username là:', usernameCookie);
 	} else {
@@ -165,8 +165,8 @@ app.controller("myCtrl", function ($scope, $http) {
 	}
   $scope.user = function () {
 		$http.get("http://localhost:8080/ManagedAccountByUserName/" + usernameCookie).then(resp => {
-			$scope.user = resp.data; // Thay đổi tên biến 'users' thành 'discounts'
-			console.log($scope.user);
+			$scope.userLogin = resp.data; // Thay đổi tên biến 'users' thành 'discounts'
+			console.log($scope.userLogin);
 		}).catch(error => {
 			console.log(error);
 		});

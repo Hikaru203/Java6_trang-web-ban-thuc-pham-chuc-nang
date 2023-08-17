@@ -1,19 +1,12 @@
 package com.example.rest;
 
-import java.util.Date;
 import java.util.HashMap;
-import java.io.UnsupportedEncodingException;
-import java.nio.charset.StandardCharsets;
-import java.text.NumberFormat;
 import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -47,6 +40,9 @@ public class ProductRestController {
 
 	@Autowired
 	FavoriteRepository favoriteRepository;
+
+	@Autowired
+	AccountRepository daoAccount;
 
 	@GetMapping
 	public List<Product> getAllProducts() {
@@ -97,7 +93,7 @@ public class ProductRestController {
 	public ResponseEntity<String> addToFavorite(@PathVariable("id") Integer itemId,
 			@PathVariable("userName") int userId) {
 
-		Account account = accountRepository.findById(userId);
+		Account account = daoAccount.findById(userId);
 
 		if (account == null) {
 			return ResponseEntity.badRequest().body("Không tìm thấy thông tin!");

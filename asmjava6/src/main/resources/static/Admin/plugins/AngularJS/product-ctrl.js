@@ -4,7 +4,7 @@ var jsonData = queryString.get('data');
 var form = JSON.parse(decodeURIComponent(jsonData));
 var fileNameLabel = document.querySelector('.custom-file-label');
 
-app.controller("myCtrl", function ($scope, $http, $window) {
+app.controller("myCtrl1", function ($scope, $http, $window) {
 	$scope.form = {};
 	$scope.items = [];
 	$scope.currentPage = 1;
@@ -12,12 +12,13 @@ app.controller("myCtrl", function ($scope, $http, $window) {
 	$scope.isSubmitting = false;
 	$scope.isSubediting = true;
 	$scope.formErrors = {}; // Khởi tạo biến lưu trữ các thông báo lỗi
+	$scope.mgsBlock = "";
 
 	$scope.reset = function () {
 		$scope.form = {};
 		$scope.items = [];
 		$scope.load_all();
-		$(".nav-tabs a:eq(0)").tab('show');
+		$(".nav-tabs button:eq(0)").tab('show');
 
 	};
 
@@ -31,17 +32,19 @@ app.controller("myCtrl", function ($scope, $http, $window) {
 
 			}
 			if ($scope.items != null) {
-				$scope.items = $scope.items.filter(user => user.active == true);
-				console.log($scope.items);
-			}
+				$scope.products = $scope.items.filter(user => user.active == true);
+				console.log($scope.products);
 
+				$scope.productsBlock = $scope.items.filter(user => user.active == false);
+				console.log($scope.productsBlock);
+			}
 		}).catch(error => {
 			console.log(error);
 		});
 	};
 
 	$scope.totalPages = function () {
-		return Math.ceil($scope.items.length / $scope.itemsPerPage);
+		return Math.ceil($scope.products.length / $scope.itemsPerPage);
 	};
 
 	$scope.setPage = function (page) {
@@ -57,13 +60,30 @@ app.controller("myCtrl", function ($scope, $http, $window) {
 	$scope.getCurrentPageItems = function () {
 		const startIndex = ($scope.currentPage - 1) * $scope.itemsPerPage;
 		const endIndex = startIndex + $scope.itemsPerPage;
-		const filteredItems = $scope.items.filter(item => {
+		const filteredItems = $scope.products.filter(item => {
 			const keyword = $scope.searchKeyword ? $scope.searchKeyword.toLowerCase() : '';
 			const itemName = item.name ? item.name.toLowerCase() : '';
 			const itemDescription = item.description ? item.description.toLowerCase() : '';
 			return itemName.includes(keyword) || itemDescription.includes(keyword);
 		});
 		return filteredItems.slice(startIndex, endIndex);
+	};
+
+	$scope.getCurrentPageItemsBlock = function () {
+		if ($scope.productsBlock.length == 0) {
+			$scope.mgsBlock = "Không có sản phẩm nào bị khóa";
+
+		} else {
+			$scope.mgsBlock = "";
+
+		}
+		const filteredItems = $scope.productsBlock.filter(item => {
+			const keyword = $scope.searchKeyword ? $scope.searchKeyword.toLowerCase() : '';
+			const itemName = item.name ? item.name.toLowerCase() : '';
+			const itemDescription = item.description ? item.description.toLowerCase() : '';
+			return itemName.includes(keyword) || itemDescription.includes(keyword);
+		});
+		return filteredItems.slice();
 	};
 
 	$scope.getPagesRange = function () {
@@ -91,7 +111,7 @@ app.controller("myCtrl", function ($scope, $http, $window) {
 		var url = host + `/ManagedProduct/${id}`;
 		$http.get(url).then(resp => {
 			$scope.form = resp.data;
-			$(".nav-tabs a:eq(1)").tab('show');
+			$(".nav-tabs button:eq(1)").tab('show');
 		}).catch(error => {
 			console.log(error);
 		});
@@ -101,8 +121,11 @@ app.controller("myCtrl", function ($scope, $http, $window) {
 		var url = host + `/ManagedProduct/${id}`;
 		$http.get(url).then(resp => {
 			$scope.form = resp.data;
-			$scope.form.active = false;
-			console.log($scope.form);
+			if ($scope.form.active == true) {
+				$scope.form.active = false;
+			} else {
+				$scope.form.active = true;
+			}
 			$scope.update();
 		}).catch(error => {
 			console.log(error);
@@ -144,7 +167,7 @@ app.controller("myCtrl", function ($scope, $http, $window) {
 			var index = $scope.items.findIndex(p => p.id === $scope.form.id);
 			console.log(index);
 			$scope.items[index] = resp.data;
-			$(".nav-tabs a:eq(0)").tab('show');
+			$(".nav-tabs button:eq(0)").tab('show');
 			$scope.reset();
 			$scope.load_all();
 			console.log("thanh cong", resp);
@@ -204,7 +227,7 @@ app.controller("myCtrl", function ($scope, $http, $window) {
 		return null;
 	}
 
-	const usernameCookie = getCookieValue('username');
+	const usernameCookie = getCookieValue('id');
 	if (usernameCookie !== null) {
 		console.log('Giá trị của cookie username là:', usernameCookie);
 	} else {
@@ -212,12 +235,25 @@ app.controller("myCtrl", function ($scope, $http, $window) {
 	}
 	$scope.user = function () {
 		$http.get("http://localhost:8080/ManagedAccountByUserName/" + usernameCookie).then(resp => {
-			$scope.user = resp.data; // Thay đổi tên biến 'users' thành 'discounts'
-			console.log($scope.user);
+			$scope.userLogin = resp.data; // Thay đổi tên biến 'users' thành 'discounts'
+			console.log($scope.userLogin);
 		}).catch(error => {
 			console.log(error);
 		});
 	};
+	$scope.limitDescription = function (description, limit) {
+		if (description.length <= limit) {
+			return description;
+		} else {
+			var truncatedDescription = description.substring(0, limit);
+			var lastSpaceIndex = truncatedDescription.lastIndexOf(' ');
+			if (lastSpaceIndex !== -1) {
+				truncatedDescription = truncatedDescription.substring(0, lastSpaceIndex);
+			}
+			return truncatedDescription + '...';
+		}
+	};
+
 	$scope.user();
 	$scope.load_all();
 	$scope.load_all_categories();

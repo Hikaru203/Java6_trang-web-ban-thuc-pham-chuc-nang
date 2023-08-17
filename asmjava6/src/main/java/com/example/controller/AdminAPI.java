@@ -26,119 +26,120 @@ import com.example.service.CookieService;
 @CrossOrigin({ "*" })
 @RestController
 public class AdminAPI {
-	@Autowired
-	private ProductRepository productRepository;
+    @Autowired
+    private ProductRepository productRepository;
 
-	@Autowired
-	private AccountRepository userRepository;
 
-	@Autowired
-	private DiscountRepository discountRepository;
+    @Autowired
+    private CategoryRepository categoryRepository;
 
-	@Autowired
-	private CategoryRepository categoryRepository;
+    @Autowired
+    CookieService cookieService;
 
-	@Autowired
-	CookieService cookieService;
+    @Autowired
+    AccountRepository userRepository;
 
-	@GetMapping({ "/ManagedProduct" })
-	public Object getProducts() {
-		return productRepository.findAll();
-	}
+    @Autowired
+    DiscountRepository discountRepository;
 
-	@GetMapping({ "/ManagedProduct/{id}" })
-	public Product getProduct(@PathVariable("id") int id) {
-		return (Product) productRepository.findById(id);
-	}
+    @GetMapping({ "/ManagedProduct" })
+    public Object getProducts() {
+        return productRepository.findAll();
+    }
 
-	@PostMapping({ "/ManagedProduct" })
-	public Product addProduct(@RequestBody Product product) {
-		product.setActive(true);
-		this.productRepository.save(product);
-		return product;
-	}
+    @GetMapping({ "/ManagedProduct/{id}" })
+    public Product getProduct(@PathVariable("id") int id) {
+        return productRepository.findById(id);
+    }
 
-	@PutMapping({ "/ManagedProduct/{id}" })
-	public Product updateProduct(@PathVariable("id") Integer id, @RequestBody Product product) {
-		this.productRepository.save(product);
-		return product;
-	}
+    @PostMapping({ "/ManagedProduct" })
+    public Product addProduct(@RequestBody Product product) {
+        product.setActive(true);
+        this.productRepository.save(product);
+        return product;
+    }
 
-	@GetMapping({ "/ManagedAccount" })
-	public List<Account> getAccounts() {
-		return userRepository.findAll();
-	}
+    @PutMapping({ "/ManagedProduct/{id}" })
+    public Product updateProduct(@PathVariable("id") Integer id, @RequestBody Product product) {
+        this.productRepository.save(product);
+        return product;
+    }
 
-	@GetMapping({ "/ManagedAccount/{id}" })
-	public Account getAccount(@PathVariable("id") int id) {
-		return userRepository.findById(id);
-	}
+    @GetMapping({ "/ManagedAccount" })
+    public List<Account> getAccounts() {
+        return userRepository.findAll();
+    }
 
-	@GetMapping({ "/ManagedAccountByUserName/{id}" })
-	public Account getAccountByUserName(@PathVariable("id") String id) {
-		return userRepository.findByUserName(id);
-	}
+    @GetMapping({ "/ManagedAccount/{id}" })
+    public Account getAccount(@PathVariable("id") int id) {
+        return userRepository.findById(id);
+    }
 
-	@PostMapping({ "/ManagedAccount" })
-	public Account addAccounts(@RequestBody Account account) {
-		account.setActive(true);
-		this.userRepository.save(account);
-		return account;
-	}
+    @GetMapping({ "/ManagedAccountByUserName/{id}" })
+    public Account getAccountByUserName(@PathVariable("id") String id) {
+        return userRepository.findByUserName(id);
+    }
 
-	@PutMapping({ "/ManagedAccount/{id}" })
-	public Account updateAccount(@PathVariable("id") Integer id, @RequestBody Account account) {
-		this.userRepository.save(account);
-		return account;
-	}
+    @PostMapping({ "/ManagedAccount" })
+    public Account addAccounts(@RequestBody Account account) {
+        account.setActive(true);
+        this.userRepository.save(account);
+        return account;
+    }
 
-	@GetMapping({ "/ManagedDiscount" })
-	public Object getDiscounts() {
-		return discountRepository.findAll();
-	}
+    @PutMapping({ "/ManagedAccount/{id}" })
+    public Account updateAccount(@PathVariable("id") Integer id, @RequestBody Account account) {
+        this.userRepository.save(account);
+        return account;
+    }
 
-	@GetMapping({ "/ManagedDiscount/{id}" })
-	public Optional<Discount> getDiscount(@PathVariable("id") int id) {
-		return discountRepository.findById(id);
-	}
+    @GetMapping({ "/ManagedDiscount" })
+    public Object getDiscounts() {
+        return discountRepository.findAll();
+    }
 
-	@PostMapping({ "/ManagedDiscount" })
-	public Discount addDiscount(@RequestBody Discount discount) {
-		this.discountRepository.save(discount);
-		return discount;
-	}
+    @GetMapping({ "/ManagedDiscount/{id}" })
+    public Optional<Discount> getDiscount(@PathVariable("id") int id) {
+        return discountRepository.findById(id);
+    }
 
-	@PutMapping({ "/ManagedDiscount/{id}" })
-	public Discount updateDiscount(@PathVariable("id") Integer id, @RequestBody Discount discount) {
-		this.discountRepository.save(discount);
-		return discount;
-	}
+    @PostMapping({ "/ManagedDiscount" })
+    public Discount addDiscount(@RequestBody Discount discount) {
+        this.discountRepository.save(discount);
+        return discount;
+    }
 
-	@DeleteMapping({ "/ManagedDiscount/{id}" })
-	public void deleteDiscount(@PathVariable("id") Integer id) {
-		this.discountRepository.deleteById(id);
-	}
+    @PutMapping({ "/ManagedDiscount/{id}" })
+    public Discount updateDiscount(@PathVariable("id") Integer id, @RequestBody Discount discount) {
+        this.discountRepository.save(discount);
+        return discount;
+    }
 
-	@GetMapping({ "/ManagedCategories" })
-	public Object getCategories() {
-		return this.categoryRepository.findAll();
-	}
+    @DeleteMapping({ "/ManagedDiscount/{id}" })
+    public void deleteDiscount(@PathVariable("id") Integer id) {
+        this.discountRepository.deleteById(id);
+    }
 
-	@GetMapping({ "/ManagedCategories/{id}" })
-	public Optional<Category> getCategory(@PathVariable("id") int id) {
-		return categoryRepository.findById(id);
-	}
+    @GetMapping({ "/ManagedCategories" })
+    public Object getCategories() {
+        return this.categoryRepository.findAll();
+    }
 
-	@PostMapping({ "/ManagedCategories" })
-	public Category addCategories(@RequestBody Category category) {
-		this.categoryRepository.save(category);
-		return category;
-	}
+    @GetMapping({ "/ManagedCategories/{id}" })
+    public Optional<Category> getCategory(@PathVariable("id") int id) {
+        return categoryRepository.findById(id);
+    }
 
-	@PutMapping({ "/ManagedCategories/{id}" })
-	public Category updateCategories(@PathVariable("id") Integer id, @RequestBody Category category) {
-		this.categoryRepository.save(category);
-		return category;
-	}
+    @PostMapping({ "/ManagedCategories" })
+    public Category addCategories(@RequestBody Category category) {
+        this.categoryRepository.save(category);
+        return category;
+    }
+
+    @PutMapping({ "/ManagedCategories/{id}" })
+    public Category updateCategories(@PathVariable("id") Integer id, @RequestBody Category category) {
+        this.categoryRepository.save(category);
+        return category;
+    }
 
 }

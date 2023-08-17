@@ -25,6 +25,8 @@
   <link rel="stylesheet" th:href="@{/Admin/plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css}" />
   <!-- BS Stepper -->
   <link rel="stylesheet" th:href="@{/Admin/plugins/bs-stepper/css/bs-stepper.min.css}" />
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-cookies.min.js"></script>
+
 </div>
 
 <div th:fragment="js">
@@ -75,11 +77,27 @@
   <script th:src="@{/Admin/plugins/dropzone/min/dropzone.min.js}"></script>
   <!-- AdminLTE for demo purposes -->
   <script th:src="@{/Admin/dist/js/demo.js}"></script>
+
+
   <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
   <script th:src="@{/Admin/dist/js/pages/dashboard2.js}"></script>
   <script th:src="@{https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js}"></script>
   <script th:src="@{https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js}"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script th:src="@{/Admin/dist/js/admin-app.js}"></script>
+  <script th:src="@{/Admin/plugins/AngularJS/product-ctrl.js}"></script>
+  <script th:src="@{/Admin/plugins/AngularJS/accounts-ctrl.js}"></script>
+  <script th:src="@{/Admin/plugins/AngularJS/discounts-ctrl.js}"></script>
+  <script th:src="@{/Admin/plugins/AngularJS/categories-ctrl.js}"></script>
   <script th:src="@{/Admin/dist/js/brands-ctrl.js}"></script>
+  <script th:src="@{/Admin/dist/js/distributors-ctrl.js}"></script>
+  <script th:src="@{/Admin/dist/js/orders-ctrl.js}"></script>
+  <script th:src="@{/Admin/dist/js/Revenue-ctrl.js}"></script>
+  <script th:src="@{/Admin/dist/js/ReportProduct-ctrl.js}"></script>
+  <script th:src="@{/Admin/dist/js/ReportFavorite-ctrl.js}"></script>
+
+
 </div>
 
 <div th:fragment="nav">
@@ -224,14 +242,16 @@
       </li>
     </ul>
   </nav>
+
 </div>
-<div th:fragment="menu">
+<div th:fragment="menu" style="height: 60px !important; ">
   <div class="user-panel mt-3 pb-3 mb-3 d-flex">
     <div class="image">
       <img src="" th:src="@{/Admin/dist/img/user2-160x160.jpg}" class="img-circle elevation-2" alt="User Image" />
     </div>
     <div class="info">
-      <a href="#" class="d-block">{{user.fullName}}</a>
+      <a href="#" class="d-block">{{userLogin.fullName}}</a>
     </div>
   </div>
+  <br>
 </div>

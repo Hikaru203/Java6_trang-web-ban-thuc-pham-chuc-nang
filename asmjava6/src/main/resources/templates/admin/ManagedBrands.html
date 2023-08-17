@@ -1,333 +1,331 @@
-<!DOCTYPE html>
-<html lang="en">
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+  <!-- Brand Logo -->
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>ORIHIRO OFFICIAL STORE | ADMIN</title>
 
-  <!-- Google Font: Source Sans Pro -->
-  <th:block th:include="admin/layout :: css"></th:block>
+  <!-- Sidebar -->
+  <div class="sidebar" style="margin-top: 0px; height: 100%;">
+    <!-- Sidebar user panel (optional) -->
+    <div th:insert="~{admin/layout :: menu}"></div>
 
-</head>
 
-<body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
-  <div class="wrapper">
+    <!-- SidebarSearch Form -->
 
-    <!-- Preloader -->
-    <div class="preloader flex-column justify-content-center align-items-center">
-      <img class="animation__wobble" th:src="@{/Admin/dist/img/AdminLTELogo.png}" alt="AdminLTELogo" height="60"
-        width="60">
+    <div style="padding-top: 10px; text-align: center;">
+      <a href="?lang=vi">
+        <button type="submit" name="lang" class="btn btn-primary" value="vi" th:text="#{menu.transactions.vn}"></button>
+      </a>
+      <a href="?lang=en">
+        <button type="submit" name="lang" class="btn btn-primary" value="en" th:text="#{menu.transactions.en}"></button>
+      </a>
     </div>
 
-    <!-- Navbar -->
-    <th:block th:include="admin/layout :: nav"></th:block>
+    <!-- Sidebar Menu -->
+    <nav class="mt-2">
+      <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+        <li class="nav-item menu-open">
+          <a href="#" class="nav-link active">
+            <i class="nav-icon fas fa-tachometer-alt"></i>
+            <p>
+              <span th:text="#{menu.dashboard}"></span>
+              <i class="right fas fa-angle-left"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="#!/" class="nav-link ">
+                <i class="far fa-circle nav-icon"></i>
+                <p><span th:text="#{menu.products}"></span></p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#!/account" class="nav-link ">
+                <i class="far fa-circle nav-icon"></i>
+                <p><span th:text="#{menu.accounts}"></span></p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#!/discount" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p><span th:text="#{menu.discounts}"></span></p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#!/categories" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p><span th:text="#{menu.product_categories}"></span></p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#!/distributor" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p><span th:text="#{menu.distributors}"></span></p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#!/brands" class="nav-link active">
+                <i class="far fa-circle nav-icon"></i>
+                <p><span th:text="#{menu.brands}"></span></p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#!/orders" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p><span th:text="#{menu.orders}"></span></p>
+              </a>
+            </li>
+          </ul>
+        </li>
 
-    <!-- /.navbar -->
+        <li class="nav-item menu-open">
+          <div class="nav-link ">
+            <i class="nav-icon fas fa-copy"></i>
+            <p>
+              <span th:text="#{menu.reports}"></span>
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </div>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="#!/Revenue" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p><span th:text="#{menu.revenue}"></span></p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#!/ReportProduct" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p><span th:text="#{menu.products_report}"></span></p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#!/ReportFavoriteProducts" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p><span th:text="#{menu.favorite_products_report}"></span></p>
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+      <br>
+      <div class="form-inline">
+        <div class="input-group" data-widget="sidebar-search">
 
-    <!-- Main Sidebar Container -->
-    <aside class="main-sidebar sidebar-dark-primary elevation-4">
-      <!-- Brand Logo -->
-      <a href="" class="brand-link">
-        <img th:src="@{/Admin/dist/img/AdminLTELogo.png}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
-          style="opacity: .8">
-        <span class="brand-text font-weight-light">OOR</span>
-      </a>
+          <a href="/client/logout" class="dropdown-item logout-button">Đăng xuất</a>
 
-      <!-- Sidebar -->
-      <div class="sidebar">
-        <!-- Sidebar user panel (optional) -->
-        <div th:insert="~{admin/layout :: menu}"></div>
+        </div>
+        <style>
+          .logout-button {
+            width: 100%;
+            height: 40px;
+            background-color: red;
+            text-align: center;
+            border: 1px solid black;
+            color: white;
+            /* Thay đổi màu chữ */
+            text-decoration: none;
+            /* Loại bỏ gạch chân */
+            padding: 10px;
+            /* Khoảng cách nội dung và biên của liên kết */
+            display: block;
+            /* Hiển thị dạng block để chiếm toàn bộ chiều ngang */
+            transition: background-color 0.3s;
+            /* Hiệu ứng chuyển đổi màu nền */
+          }
+
+          .logout-button:hover {
+            background-color: white;
+            color: black !important;
+            /* Màu nền khi hover */
+          }
+        </style>
+      </div>
+    </nav>
 
 
-        <!-- SidebarSearch Form -->
-        <div class="form-inline">
-          <div class="input-group" data-widget="sidebar-search">
-            <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
-            <div class="input-group-append">
-              <button class="btn btn-sidebar">
-                <i class="fas fa-search fa-fw"></i>
+
+    <!-- /.sidebar-menu -->
+  </div>
+  <!-- /.sidebar -->
+</aside>
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper" ng-controller="brand-ctrl">
+  <!-- Content Header (Page header) -->
+  <div class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1 class="m-0">Nhãn hàng</h1>
+        </div><!-- /.col -->
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+
+            <li class="breadcrumb-item active">Nhãn hàng</li>
+          </ol>
+        </div><!-- /.col -->
+      </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+  </div>
+  <!-- /.content-header -->
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="container mt-4">
+      <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item">
+          <button class="nav-link active" id="home-tab" data-toggle="tab" data-target="#home" role="tab"
+            aria-controls="home" aria-selected="true">Danh sách</button>
+        </li>
+        <li class="nav-item">
+          <button class="nav-link" id="profile-tab" data-toggle="tab" data-target="#profile" role="tab"
+            aria-controls="profile" aria-selected="false">Cập nhật</button>
+        </li>
+      </ul>
+
+      <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+          <table id="example1" class="table table-bordered table-striped">
+            <style>
+              div.dataTables_wrapper div.dataTables_filter label {
+                display: none;
+              }
+
+              div.dataTables_wrapper div.dataTables_filter input {
+                display: none;
+              }
+
+              .pagination {
+                display: none;
+              }
+
+              .dataTables_empty {
+                display: none;
+              }
+
+              /* Hiển thị các thẻ div khi có lỗi */
+            </style>
+            <thead>
+              <tr>
+                <th>STT</th>
+                <th>Tên nhãn hàng</th>
+                <th>Người chịu trách nhiệm</th>
+                <th>Nhuồn gốc</th>
+                <th>Tùy chỉnh</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="item in pager.items">
+                <td>{{ $index + 1 }}</td>
+                <td>{{item.name}}</td>
+                <td>{{item.responsibleName}}</td>
+                <td>{{item.origin}}</td>
+                <td><a class="fas fa-trash-alt" ng-click="delete(item)"></a>
+                  <a class="fas fa-edit" ng-click="edit(item)"></a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="panel-footer text-center">
+            <button ng-click="pager.first()" class="btn btn-primary">
+              <i class="fas fa-arrow-circle-up"></i>
+            </button>
+            <button ng-click="pager.prev()" class="btn btn-primary">
+              <i class="fas fa-arrow-circle-left"></i>
+            </button>
+            <button class="btn btn-success">{{pager.page +1}} of {{pager.count}}</button>
+            <button ng-click="pager.next()" class="btn btn-primary">
+              <i class="fas fa-arrow-circle-right"></i>
+            </button>
+            <button ng-click="pager.last()" class="btn btn-primary">
+              <i class="fas fa-arrow-circle-down"></i>
+            </button>
+          </div>
+        </div>
+        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+          <form name="myForm">
+            <div class="error-message ">
+              {{ myForm.name.$valid | json }}
+            </div>
+            <div class="card-body">
+              <div class="form-group">
+                <label for="exampleInputEmail1">ID</label>
+                <input type="text" ng-model="form.id" readonly class="form-control" id="exampleInputEmail1"
+                  placeholder="ID" />
+                <div ng-show="myForm.id.$error.required && myForm.id.$touched">ID is required</div>
+              </div>
+              <div class="form-group">
+                <label for="exampleInputEmail1">Tên nhãn hàng</label>
+                <input type="text" ng-model="form.name" class="form-control" id="exampleInputEmail1"
+                  placeholder="tên nhà phân phối" />
+                <div ng-show="hassError" style="color: red;">{{message1}}</div>
+              </div>
+
+              <div class="form-group">
+                <label for="exampleInputEmail1">Người chịu trách nhiệm</label>
+                <input type="text" ng-model="form.responsibleName" class="form-control" id="exampleInputEmail1"
+                  placeholder="Người chịu trách nhiệm" />
+                <div ng-show="hassError" style="color: red;">{{message2}}</div>
+              </div>
+              <div class="form-group">
+                <label for="exampleInputEmail1">Nguồn gốc</label>
+                <input type="text" ng-model="form.origin" class="form-control" id="exampleInputEmail1"
+                  placeholder="Nguồn gốc" />
+                <div ng-show="hassError" style="color: red;">{{message3}}</div>
+              </div>
+            </div>
+            <!-- /.card-body -->
+            <!-- /.card-body -->
+            <div class="panel-footer text-center">
+              <button ng-click="create()" class="btn btn-primary" ng-disabled="lockbtnAdd">
+                <i class="fas fa-plus"></i>
+                lưu
+              </button>
+              <button ng-click="update()" class="btn btn-success" ng-disabled="lockbtnUpdate">
+                <i class="fas fa-save"></i>
+                cập nhật
+              </button>
+              <button ng-click="delete(form)" class="btn btn-danger" ng-disabled="lockbtnDelete">
+                <i class="fas fa-trash"></i>
+                xóa
+              </button>
+              <button ng-click="reset()" class="btn btn-info">
+                <i class="fas fa-redo-alt"></i>
+                làm mới
               </button>
             </div>
-          </div>
-        </div>
-
-        <!-- Sidebar Menu -->
-        <nav class="mt-2">
-          <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-            <!-- Add icons to the links using the .nav-icon class with font-awesome or any other icon font library -->
-            <li class="nav-item menu-open">
-              <a href="#" class="nav-link active">
-                <i class="nav-icon fas fa-tachometer-alt"></i>
-                <p>
-                  Quản lý
-                  <i class="right fas fa-angle-left"></i>
-                </p>
-              </a>
-              <ul class="nav nav-treeview">
-                <li class="nav-item">
-                  <a th:href="@{/admin/index}" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Sản phẩm</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a th:href="@{/admin/ManagedAccount}" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Tài khoản</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a th:href="@{/admin/ManagedDiscount}" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Khuyến mãi</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a th:href="@{/admin/ManagedCategories}" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Loại sản phẩm</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a th:href="@{/admin/ManagedDistributors}" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Nhà phân phối</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a th:href="@{/admin/ManagedBrands}" class="nav-link active">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Nhãn hàng</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a th:href="@{/admin/ManagedOrders}" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Đơn hàng</p>
-                  </a>
-                </li>
-              </ul>
-            </li>
-
-            <li class="nav-item">
-              <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-copy"></i>
-                <p>
-                  Thống kê-Báo cáo
-                  <i class="fas fa-angle-left right"></i>
-                </p>
-              </a>
-              <ul class="nav nav-treeview">
-                <li class="nav-item">
-                  <a th:href="@{/admin/ReportRevenue}" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Doanh thu</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a th:href="@{/admin/ReportProduct}" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Sản phẩm</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a th:href="@{/admin/ReportFavoriteProducts}" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Sản phẩm theo yêu thích</p>
-                  </a>
-                </li>
-              </ul>
-            </li>
-          </ul>
-        </nav>
-        <!-- /.sidebar-menu -->
-      </div>
-      <!-- /.sidebar -->
-    </aside>
-
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-      <!-- Content Header (Page header) -->
-      <div class="content-header">
-        <div class="container-fluid">
-          <div class="row mb-2">
-            <div class="col-sm-6">
-              <h1 class="m-0">Nhãn hàng</h1>
-            </div><!-- /.col -->
-            <div class="col-sm-6">
-              <ol class="breadcrumb float-sm-right">
-
-                <li class="breadcrumb-item active">Nhãn hàng</li>
-              </ol>
-            </div><!-- /.col -->
-          </div><!-- /.row -->
-        </div><!-- /.container-fluid -->
-      </div>
-      <!-- /.content-header -->
-
-      <!-- Main content -->
-      <section class="content" ng-app="myApp" ng-controller="brand-ctrl">
-        <div class="container mt-4">
-          <ul class="nav nav-tabs" id="myTab" role="tablist">
-            <li class="nav-item">
-              <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
-                aria-selected="true">Danh sách</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
-                aria-selected="false">Cập nhật</a>
-            </li>
-          </ul>
-          <div class="tab-content" id="myTabContent">
-            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-              <table id="example1" class="table table-bordered table-striped">
-                <style>
-                  div.dataTables_wrapper div.dataTables_filter label {
-                    display: none;
-                  }
-
-                  div.dataTables_wrapper div.dataTables_filter input {
-                    display: none;
-                  }
-
-                  .pagination {
-                    display: none;
-                  }
-
-                  .dataTables_empty {
-                    display: none;
-                  }
-                </style>
-                <thead>
-                  <tr>
-                    <th>STT</th>
-                    <th>Tên nhãn hàng</th>
-                    <th>Người chịu trách nhiệm</th>
-                    <th>Nhuồn gốc</th>
-                    <th>Tùy chỉnh</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr ng-repeat="item in pager.items">
-                    <td>{{ $index + 1 }}</td>
-                    <td>{{item.name}}</td>
-                    <td>{{item.responsibleName}}</td>
-                    <td>{{item.origin}}</td>
-                    <td><a class="fas fa-trash-alt" ng-click="delete(item)"></a>
-                      <a class="fas fa-edit" ng-click="edit(item)"></a>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-              <div class="panel-footer text-center">
-                <button ng-click="pager.first()" class="btn btn-primary">
-                  <i class="fas fa-arrow-circle-up"></i>
-                </button>
-                <button ng-click="pager.prev()" class="btn btn-primary">
-                  <i class="fas fa-arrow-circle-left"></i>
-                </button>
-                <button class="btn btn-success">{{pager.page +1}} of {{pager.count}}</button>
-                <button ng-click="pager.next()" class="btn btn-primary">
-                  <i class="fas fa-arrow-circle-right"></i>
-                </button>
-                <button ng-click="pager.last()" class="btn btn-primary">
-                  <i class="fas fa-arrow-circle-down"></i>
-                </button>
-              </div>
-            </div>
-            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-              <form>
-                <div class="card-body">
-                  <div class="form-group">
-                    <label for="exampleInputEmail1">ID</label>
-                    <input type="text" ng-model="form.id" readonly class="form-control" id="exampleInputEmail1"
-                      placeholder="ID" />
-                  </div>
-                  <div class="form-group">
-                    <label for="exampleInputEmail1">Tên nhãn hàng</label>
-                    <input type="text" ng-model="form.name" class="form-control" id="exampleInputEmail1"
-                      placeholder="tên nhà phân phối" />
-                  </div>
-
-                  <div class="form-group">
-                    <label for="exampleInputEmail1">Người chịu trách nhiệm</label>
-                    <input type="text" ng-model="form.responsibleName" class="form-control" id="exampleInputEmail1"
-                      placeholder="Người chịu trách nhiệm" />
-                  </div>
-                  <div class="form-group">
-                    <label for="exampleInputEmail1">Nguồn gốc</label>
-                    <input type="text" ng-model="form.origin" class="form-control" id="exampleInputEmail1"
-                      placeholder="Nguồn gốc" />
-                  </div>
-                </div>
-                <!-- /.card-body -->
-              </form>
-              <div class="panel-footer text-center">
-                <button ng-click="create()" class="btn btn-primary">
-                  <i class="fas fa-plus"></i>
-                  lưu
-                </button>
-                <button ng-click="update()" class="btn btn-success">
-                  <i class="fas fa-save"></i>
-                  cập nhật
-                </button>
-                <button ng-click="delete(form)" class="btn btn-danger">
-                  <i class="fas fa-trash"></i>
-                  xóa
-                </button>
-                <button ng-click="reset()" class="btn btn-info">
-                  <i class="fas fa-redo-alt"></i>
-                  làm mới
-                </button>
-              </div>
-            </div>
-          </div>
-
-
+          </form>
 
 
         </div>
-        <!-- /.card-body -->
-      </section>
-    </div>
-
-    <!-- /.content -->
-  </div>
-  <!-- /.content-wrapper -->
-
-  <!-- Control Sidebar -->
-  <aside class="control-sidebar control-sidebar-dark">
-    <!-- Control sidebar content goes here -->
-
-    <div class="card">
-      <div class="card-header">
-        <h3 class="card-title">DataTable with default features</h3>
       </div>
-      <!-- /.card-header -->
 
-      <!-- /.card-body -->
+
+
+
     </div>
-  </aside>
-  <!-- /.control-sidebar -->
+    <!-- /.card-body -->
+</div>
+</section>
 
-  <!-- Main Footer -->
+<!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
 
+<!-- Control Sidebar -->
+<aside class="control-sidebar control-sidebar-dark">
+  <!-- Control sidebar content goes here -->
+
+  <div class="card">
+    <div class="card-header">
+      <h3 class="card-title">DataTable with default features</h3>
+    </div>
+    <!-- /.card-header -->
+
+    <!-- /.card-body -->
   </div>
-  <!-- ./wrapper -->
+</aside>
+<!-- /.control-sidebar -->
 
-  <!-- REQUIRED SCRIPTS -->
-  <th:block th:include="admin/layout :: js"></th:block>
+<!-- Main Footer -->
 
-  <script>
-    $(function () {
-      $("#example1").DataTable({
-        "responsive": true, "lengthChange": false, "autoWidth": false,
-        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-      }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-
-    });
-  </script>
-</body>
-
-</html>
+</div>
+<!-- ./wrapper -->
