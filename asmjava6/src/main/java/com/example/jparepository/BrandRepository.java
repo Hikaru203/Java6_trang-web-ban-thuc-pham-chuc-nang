@@ -7,5 +7,5 @@ import com.example.entity.Brand;
 
 @Repository
 public interface BrandRepository extends JpaRepository<Brand, Integer> {
-    // Các phương thức truy vấn dữ liệu cho Entity Brand
+    
 }

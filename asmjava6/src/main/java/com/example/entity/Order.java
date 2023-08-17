@@ -10,35 +10,56 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
 @Entity
 @Table(name = "Orders")
-public class Order implements Serializable {
-    private static final long serialVersionUID = 1L;
+@Data
+@Getter
+@Setter
+public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
-
-    @Column(name = "order_date", nullable = false)
+    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
+    private Account user;
+    
+    @JoinColumn(name = "adress", nullable = false)
+    private String adress;
+    // Getters and setters, constructors, and other methods
+    @JoinColumn(name = "phone_number", nullable = false)
+    private String phoneNumber;
+    
+    @JoinColumn(name = "country", nullable = false)
+    private String country;
+    
+    @Column(name = "date_order")
     private Date orderDate;
-
-    @Column(name = "total_amount", nullable = false)
-    private BigDecimal totalAmount;
-
-    @Column(nullable = false)
-    private String note;
-
-    @OneToMany(mappedBy = "order")
-    private List<OrderDetail> orderDetails;
-
-    // Constructors, getters, setters, and other methods as needed.
+    
+    @Column(name = "total_price")
+    private int totalPrice;
+    
+    @JoinColumn(name = "is_acctive")
+    private boolean isActive;
+    
+    @JoinColumn(name = "ordres_code")
+    private String ordresCode;
+	
+    @JoinColumn(name = "district")
+    private String district;
+    
+    @JoinColumn(name = "wards")
+    private String wards;
 }
+
 
