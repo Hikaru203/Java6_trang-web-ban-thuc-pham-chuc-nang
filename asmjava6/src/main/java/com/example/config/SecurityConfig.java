@@ -75,8 +75,7 @@ public class SecurityConfig {
                         .requestMatchers(new AntPathRequestMatcher("/admin/**")).hasRole("ADMIN")
                         .requestMatchers(new AntPathRequestMatcher("/client/cart/**")).hasAnyRole("USER", "ADMIN")
                         .requestMatchers(new AntPathRequestMatcher("/client/favorite/**")).hasAnyRole("USER", "ADMIN")
-                        .requestMatchers(
-                                new AntPathRequestMatcher("/client/**"))
+                        .requestMatchers( new AntPathRequestMatcher("/client/**"))
                         .permitAll())
                 .formLogin(
                         login -> {
