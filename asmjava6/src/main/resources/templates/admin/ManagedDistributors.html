@@ -191,13 +191,13 @@
               </tr>
             </thead>
             <tbody>
-              <tr ng-repeat="item in pager.items">
+              <tr ng-repeat="item in pager.itemssp">
                 <td>{{ $index + 1 }}</td>
                 <td>{{item.name}}</td>
                 <td>{{item.address}}</td>
                 <td>{{item.contactInfo}}</td>
-                <td><a class="fas fa-trash-alt" ng-click="delete(item)"></a>
-                  <a class="fas fa-edit" ng-click="edit(item)"></a>
+                <td><a class="fas fa-trash-alt" ng-click="deletesp(item)"></a>
+                  <a class="fas fa-edit" ng-click="editsp(item)"></a>
                 </td>
               </tr>
             </tbody>
@@ -223,25 +223,25 @@
             <div class="card-body">
               <div class="form-group">
                 <label for="exampleInputEmail1">ID</label>
-                <input type="text" ng-model="form.id" readonly class="form-control" id="exampleInputEmail1"
+                <input type="text" ng-model="formsp.id" readonly class="form-control" id="exampleInputEmail1"
                   placeholder="ID" />
               </div>
               <div class="form-group">
                 <label for="exampleInputEmail1">Tên nhà phân phối</label>
-                <input type="text" ng-model="form.name" class="form-control" id="exampleInputEmail1"
+                <input type="text" ng-model="formsp.name" class="form-control" id="exampleInputEmail1"
                   placeholder="tên nhà phân phối" />
                 <div ng-show="hassError" style="color: red;">{{message1}}</div>
               </div>
 
               <div class="form-group">
                 <label for="exampleInputEmail1">Địa chỉ</label>
-                <input type="text" ng-model="form.address" class="form-control" id="exampleInputEmail1"
+                <input type="text" ng-model="formsp.address" class="form-control" id="exampleInputEmail1"
                   placeholder="Địa chỉ" />
                 <div ng-show="hassError" style="color: red;">{{message3}}</div>
               </div>
               <div class="form-group">
                 <label for="exampleInputEmail1">Số điện thoại</label>
-                <input type="text" ng-model="form.contactInfo" class="form-control" id="exampleInputEmail1"
+                <input type="text" ng-model="formsp.contactInfo" class="form-control" id="exampleInputEmail1"
                   placeholder="Số điện thoại" />
                 <div ng-show="hassError" style="color: red;">{{message2}}</div>
               </div>
@@ -249,18 +249,18 @@
             <!-- /.card-body -->
           </form>
           <div class="panel-footer text-center">
-            <button ng-click="create()" class="btn btn-primary" ng-disabled="lockbtnAdd">
+            <button ng-click="createsp()" class="btn btn-primary" ng-disabled="lockbtnAdd">
               <i class="fas fa-plus"></i> Lưu
             </button>
-            <button ng-click="update()" class="btn btn-success" ng-disabled="lockbtnUpdate">
+            <button ng-click="updatesp()" class="btn btn-success" ng-disabled="lockbtnUpdate">
               <i class="fas fa-save"></i>
               cập nhật
             </button>
-            <button ng-click="delete(form)" class="btn btn-danger" ng-disabled="lockbtnDelete">
+            <button ng-click="deletesp(formsp)" class="btn btn-danger" ng-disabled="lockbtnDelete">
               <i class="fas fa-trash"></i>
               xóa
             </button>
-            <button ng-click="reset()" class="btn btn-info">
+            <button ng-click="resetsp()" class="btn btn-info">
               <i class="fas fa-redo-alt"></i>
               làm mới
             </button>

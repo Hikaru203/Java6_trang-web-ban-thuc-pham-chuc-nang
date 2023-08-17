@@ -32,6 +32,7 @@ import com.example.service.EmailService;
 public class ProductRestController {
 	@Autowired
 	ProductRepository daoProduct;
+	
 	@Autowired
 	private EmailService emailService;
 
