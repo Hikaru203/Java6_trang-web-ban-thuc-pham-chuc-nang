@@ -170,16 +170,26 @@ public class HomeController {
 	}
 
 	@RequestMapping(value = "/capnhat")
-	public String capnhat(Model model) {
+	public String capnhat(Model model, HttpServletRequest request) {
 		model.addAttribute("loi", "Sai thông tin đăng nhập, Vui lòng nhập lại");
+		Cookie[] cookies = request.getCookies();
+		String usernameFromCookie = null;
+		for (Cookie cookie : cookies) {
+			if ("id".equals(cookie.getName())) {
+				usernameFromCookie = cookie.getValue();
+				break;
+			}
+		}
+		Account account = daoAccount.findByUserName(usernameFromCookie);
+		System.out.println(account);
+		model.addAttribute("account", account);
 		return "/capnhat";
 	}
 
 	@RequestMapping(value = "/client/update/account", method = RequestMethod.GET)
 	public String showUpdateAccountForm(Model model, HttpServletRequest request) {
 		// Đọc giá trị cookie "username"
-		
-		// ...
+
 		return "redirect:/capnhat"; // Trả về template để hiển thị form
 	}
 

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,17 +8,18 @@
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-      <!-- Thư viện Toastr CSS -->
-      <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
+    <!-- Thư viện Toastr CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
 
-      <!-- Thư viện Toastr JavaScript -->
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <!-- Thư viện Toastr JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <!------ Include the above in your HEAD tag ---------->
-    
+
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
     <style>
         body {
-            background-image: url('path_to_your_study_image.jpg'); /* Replace 'path_to_your_study_image.jpg' with the actual path to your study-related background image */
+            background-image: url('path_to_your_study_image.jpg');
+            /* Replace 'path_to_your_study_image.jpg' with the actual path to your study-related background image */
             background-repeat: no-repeat;
             background-size: cover;
             background-position: center;
@@ -26,24 +28,26 @@
             justify-content: center;
             align-items: center;
         }
-        
+
         .card {
-            background-color: rgba(255, 255, 255, 0.7); /* Adding a semi-transparent white background to the card */
+            background-color: rgba(255, 255, 255, 0.7);
+            /* Adding a semi-transparent white background to the card */
         }
+
         body {
             background-color: #f2f7fb
         }
-        
+
         .login-block {
             margin: 30px auto;
             min-height: 93.6vh
         }
-        
+
         .login-block .auth-box {
             margin: 20px auto 0;
             max-width: 450px !important
         }
-        
+
         .card {
             border-radius: 5px;
             -webkit-box-shadow: 0 0 5px 0 rgba(43, 43, 43, .1), 0 11px 6px -7px rgba(43, 43, 43, .1);
@@ -52,21 +56,21 @@
             margin-bottom: 30px;
             -webkit-transition: all .3s ease-in-out;
             transition: all .3s ease-in-out;
-                background-color: #fff;
+            background-color: #fff;
         }
-        
+
         .card .card-block {
             padding: 1.25rem
         }
-        
+
         .f-80 {
             font-size: 80px
         }
-        
+
         .form-group {
             margin-bottom: 1.25em
         }
-        
+
         .form-material .form-control {
             display: inline-block;
             height: 43px;
@@ -81,13 +85,13 @@
             box-shadow: none;
             border-bottom: 1px solid #ccc
         }
-        
+
         .btn-md {
             padding: 10px 16px;
             font-size: 15px;
             line-height: 23px
         }
-        
+
         .btn-primary {
             background-color: #4099ff;
             border-color: #4099ff;
@@ -96,7 +100,7 @@
             -webkit-transition: all ease-in .3s;
             transition: all ease-in .3s
         }
-        
+
         .btn {
             border-radius: 2px;
             text-transform: capitalize;
@@ -104,49 +108,49 @@
             padding: 10px 19px;
             cursor: pointer
         }
-        
+
         .m-b-20 {
             margin-bottom: 20px
         }
-        
+
         .btn-md {
             padding: 10px 16px;
             font-size: 15px;
             line-height: 23px
         }
-        
-        .heading{
-        
-          font-size: 21px;
-        
+
+        .heading {
+
+            font-size: 21px;
+
         }
-        
-        #infoMessage p{
-        
-              color: red !important;
+
+        #infoMessage p {
+
+            color: red !important;
         }
-        
-        
+
+
         .btn-google {
-                color: #545454;
+            color: #545454;
             background-color: #ffffff;
             box-shadow: 0 1px 2px 1px #ddd;
         }
-        
-        
+
+
         .or-container {
             align-items: center;
             color: #ccc;
             display: flex;
             margin: 25px 0;
         }
-        
+
         .line-separator {
             background-color: #ccc;
             flex-grow: 5;
             height: 1px;
         }
-        
+
         .or-label {
             flex-grow: 1;
             margin: 0 15px;
@@ -158,12 +162,12 @@
             document.getElementById("fullnameError").textContent = "";
             document.getElementById("emailError").textContent = "";
             document.getElementById("passwordError").textContent = "";
-    
+
             const fullName = document.forms["updateForm"]["fullName"].value;
             const email = document.forms["updateForm"]["email"].value;
             const password = document.forms["updateForm"]["password"].value;
             let checkvar = true;
-    
+
             if (fullName === "") {
                 document.getElementById("fullnameError").textContent = "Vui lòng nhập họ và tên";
                 checkvar = false;
@@ -172,62 +176,67 @@
                 document.getElementById("emailError").textContent = "Vui lòng nhập vào email";
                 checkvar = false;
             }
-    
+
             if (password === "") {
                 document.getElementById("passwordError").textContent = "Vui lòng nhập vào mật khẩu";
                 checkvar = false;
             }
-    
+
             if (!checkvar) {
                 alert('Vui lòng kiểm tra và nhập đầy đủ thông tin.');
                 return false; // Trả về false để ngăn việc cập nhật thành công
             }
-    
-          
+
+
         }
-    
-       
-        
+
+
+
     </script>
-    
-    
+
+
 </head>
+
 <body>
     <div class="card bg-light">
         <article class="card-body mx-auto" style="max-width: 400px;">
             <h4 class="card-title mt-3 text-center">Cập nhật tài khoản</h4>
             <p class="text-center">Vui lòng cập nhật thông tin tài khoản</p>
-            <form th:action="@{/client/update/account}" method="POST" name="updateForm" onsubmit="return validateForm()">
-              
+            <form th:action="@{/client/update/account}" method="POST" name="updateForm"
+                onsubmit="return validateForm()">
+
                 <div id="fullnameError" style="color: red;"></div>
                 <div class="form-group input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text"> <i class="fa fa-user"></i> </span>
                     </div>
-                    <input name="fullName" class="form-control" placeholder="Tên đầy đủ" type="text" th:value="${fullName}">
+                    <input name="fullName" class="form-control" placeholder="Tên đầy đủ" type="text"
+                        th:value="${account.fullName}">
                 </div> <!-- form-group// -->
                 <div id="emailError" style="color: red;"></div>
                 <div class="form-group input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
                     </div>
-                    <input name="email" class="form-control" placeholder="Địa chỉ email" type="email" th:value="${email}">
+                    <input name="email" class="form-control" placeholder="Địa chỉ email" type="email"
+                        th:value="${account.email}">
                 </div> <!-- form-group// -->
                 <div id="passwordError" style="color: red;"></div>
                 <div class="form-group input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
                     </div>
-                    <input name="password" class="form-control" placeholder="Mật khẩu mới" type="password">
+                    <input name="password" class="form-control"  th:value="${account.password}" placeholder="Mật khẩu mới" type="password">
                 </div> <!-- form-group// -->
-                
+
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary btn-block"> Cập nhật </button>
-                </div> <!-- form-group// -->      
-                
-                <p class="text-center">Quay lại <a href="/client/index">Trang chính</a> </p>                                                                 
+                </div> <!-- form-group// -->
+
+                <p class="text-center">Quay lại <a href="/client/index">Trang chính</a> </p>
             </form>
         </article>
     </div> <!-- card.// -->
-    </body>
+</body>
+
 </html>

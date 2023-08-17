@@ -207,7 +207,8 @@
                                         <span th:if="${item.discounts.size() > 0}">
                                             <del id="product-price" th:text="${item.price}"></del>
                                         </span>
-                                        <span th:unless="${item.discounts.size() > 0}" th:text="${item.price}"></span>
+                                        <span th:unless="${item.discounts.size() > 0}" id="product-price"
+                                            th:text="${item.price}"></span>
                                     </div>
                                     <div class="col-md-6">
                                         <span th:if="${item.discounts.size() > 0}">
@@ -289,7 +290,7 @@
                 </div>
             </div>
         </div>
-        
+
     </div>
     <!-- Footer End -->
 
