@@ -1,31 +1,31 @@
 
 app.controller("brand-ctrl", function ($scope, $http, $window) {
-    $scope.items = [];
-    $scope.form = {};
+    $scope.itemsbr = [];
+    $scope.formbr = {};
     $scope.lockbtnAdd = false;
     $scope.lockbtnDelete = true;
     $scope.lockbtnUpdate = true;
     $scope.initialize = function () {
         // load brands
         $http.get("/rest/brands").then(resp => {
-            $scope.items = resp.data;
+            $scope.itemsbr = resp.data;
         });
     }
 
     // Khởi đầu
     $scope.initialize();
 
-    // Xóa form
-    $scope.reset = function () {
-        $scope.form = {};
+    // Xóa formbr
+    $scope.resetbr = function () {
+        $scope.formbr = {};
         $scope.lockbtnAdd = false;
         $scope.lockbtnDelete = true;
         $scope.lockbtnUpdate = true;
     }
 
-    // Hiển thị lên form
-    $scope.edit = function (item) {
-        $scope.form = angular.copy(item);
+    // Hiển thị lên formbr
+    $scope.editbr = function (item) {
+        $scope.formbr = angular.copy(item);
 		$(".nav-tabs button:eq(1)").tab('show');
         $scope.lockbtnAdd = true;
         $scope.lockbtnDelete = false;
@@ -34,14 +34,14 @@ app.controller("brand-ctrl", function ($scope, $http, $window) {
 
 
     // Thêm  mới 
-    $scope.create = function () {
+    $scope.createbr = function () {
         $scope.hassError = false;
         if ($scope.validate()) {
             $scope.hassError = false;
-            var item = angular.copy($scope.form);
+            var item = angular.copy($scope.formbr);
             $http.post('/rest/brands', item).then(resp => {
-                $scope.items.push(resp.data);
-                $scope.reset();
+                $scope.itemsbr.push(resp.data);
+                $scope.resetbr();
                 alert("Thêm mới sản phẩm thành công!");
             }).catch(error => {
                 alert("Lỗi thêm mới sản phẩm!");
@@ -51,13 +51,13 @@ app.controller("brand-ctrl", function ($scope, $http, $window) {
     }
 
     // Cập nhật 
-    $scope.update = function () {
+    $scope.updatebr = function () {
         if ($scope.validate()) {
-            var item = angular.copy($scope.form);
+            var item = angular.copy($scope.formbr);
             $http.put(`/rest/brands/${item.id}`, item).then(resp => {
-                var index = $scope.items.findIndex(
+                var index = $scope.itemsbr.findIndex(
                     p => p.id == item.id);
-                $scope.items[index] = item;
+                $scope.itemsbr[index] = item;
                 alert("Cập nhật sản phẩm thành công!");
             })
                 .catch(error => {
@@ -67,12 +67,12 @@ app.controller("brand-ctrl", function ($scope, $http, $window) {
         }
     }
     // Xóa 
-    $scope.delete = function (item) {
+    $scope.deletebr = function (item) {
         $http.delete(`/rest/brands/${item.id}`).then(resp => {
-            var index = $scope.items.findIndex(
+            var index = $scope.itemsbr.findIndex(
                 p => p.id == item.id);
-            $scope.items.splice(index, 1);
-            $scope.reset();
+            $scope.itemsbr.splice(index, 1);
+            $scope.resetbr();
             alert("Xóa sản phẩm thành công!");
         })
             .catch(error => {
@@ -82,13 +82,13 @@ app.controller("brand-ctrl", function ($scope, $http, $window) {
     $scope.pager = {
         page: 0,
         size: 5,
-        get items() {
+        get itemsbr() {
             var start = this.page * this.size;
-            return $scope.items.slice(start, start + this.size);
+            return $scope.itemsbr.slice(start, start + this.size);
         },
 
         get count() {
-            return Math.ceil(1.0 * $scope.items.length / this.size);
+            return Math.ceil(1.0 * $scope.itemsbr.length / this.size);
         },
 
         first() {
@@ -126,22 +126,22 @@ app.controller("brand-ctrl", function ($scope, $http, $window) {
         $scope.message2 = "";
         $scope.message3 = "";
         $scope.checkV = false;
-        if ($scope.form.name === undefined) {
+        if ($scope.formbr.name === undefined) {
             $scope.hassError = true;
             $scope.message1 = $scope.brandMessages.nameNull;
             $scope.checkV = true;
         }
-        if (!isNaN($scope.form.name)) {
+        if (!isNaN($scope.formbr.name)) {
             $scope.hassError = true;
             $scope.message1 = $scope.brandMessages.nameNumber;
             $scope.checkV = true;
         }
-        if ($scope.form.responsibleName === undefined) {
+        if ($scope.formbr.responsibleName === undefined) {
             $scope.hassError = true;
             $scope.message2 = $scope.brandMessages.responsibleNameNull;
             $scope.checkV = true;
         }
-        if ($scope.form.origin === undefined) {
+        if ($scope.formbr.origin === undefined) {
             $scope.hassError = true;
             $scope.message3 = $scope.brandMessages.originNull;
             $scope.checkV = true;

@@ -1,13 +1,13 @@
 app.controller("distributor-ctrl", function ($scope, $http, $window) {
-    $scope.items = [];
-    $scope.form = {};
+    $scope.itemssp = [];
+    $scope.formsp = {};
     $scope.lockbtnAdd = false;
     $scope.lockbtnDelete = true;
     $scope.lockbtnUpdate = true;
     $scope.initialize = function () {
         // load brands
         $http.get("/rest/distributors").then(resp => {
-            $scope.items = resp.data;
+            $scope.itemssp = resp.data;
         });
     }
 
@@ -15,29 +15,29 @@ app.controller("distributor-ctrl", function ($scope, $http, $window) {
     $scope.initialize();
 
     // Xóa form
-    $scope.reset = function () {
-        $scope.form = {};
+    $scope.resetsp = function () {
+        $scope.formsp = {};
         $scope.lockbtnAdd = false;
         $scope.lockbtnDelete = true;
         $scope.lockbtnUpdate = true;
     }
 
     // Hiển thị lên form
-    $scope.edit = function (item) {
-        $scope.form = angular.copy(item);
-		$(".nav-tabs button:eq(1)").tab('show');
+    $scope.editsp  = function (item) {
+        $scope.formsp = angular.copy(item);
+        $(".nav-tabs button:eq(1)").tab('show');
         $scope.lockbtnAdd = true;
         $scope.lockbtnDelete = false;
         $scope.lockbtnUpdate = false;
     }
 
     // Thêm  mới 
-    $scope.create = function () {
+    $scope.createsp  = function () {
         if ($scope.validate()) {
-            var item = angular.copy($scope.form);
+            var item = angular.copy($scope.formsp);
             $http.post('/rest/distributors', item).then(resp => {
-                $scope.items.push(resp.data);
-                $scope.reset();
+                $scope.itemssp.push(resp.data);
+                $scope.resetsp();
                 alert("Thêm mới thành công!");
             }).catch(error => {
                 alert("Lỗi thêm mới!");
@@ -47,13 +47,13 @@ app.controller("distributor-ctrl", function ($scope, $http, $window) {
     }
 
     // Cập nhật 
-    $scope.update = function () {
+    $scope.updatesp  = function () {
         if ($scope.validate()) {
-            var item = angular.copy($scope.form);
+            var item = angular.copy($scope.formsp);
             $http.put(`/rest/distributors/${item.id}`, item).then(resp => {
-                var index = $scope.items.findIndex(
+                var index = $scope.itemssp.findIndex(
                     p => p.id == item.id);
-                $scope.items[index] = item;
+                $scope.itemssp[index] = item;
                 alert("Cập nhật thành công!");
             })
                 .catch(error => {
@@ -64,16 +64,16 @@ app.controller("distributor-ctrl", function ($scope, $http, $window) {
     }
 
     // Xóa 
-    $scope.delete = function (item) {
+    $scope.deletesp  = function (item) {
         $http.delete(`/rest/distributors/${item.id}`).then(resp => {
-            var index = $scope.items.findIndex(
+            var index = $scope.itemssp.findIndex(
                 p => p.id == item.id);
-            $scope.items.splice(index, 1);
-            $scope.reset();
+            $scope.itemssp.splice(index, 1);
+            $scope.resetsp();
             alert("Xóa thành công!");
         })
             .catch(error => {
-                alert("Lỗi xóa!");
+                alert("Lỗi xóa!"+error);
                 console.log("Error", error)
             })
     }
@@ -81,13 +81,13 @@ app.controller("distributor-ctrl", function ($scope, $http, $window) {
     $scope.pager = {
         page: 0,
         size: 5,
-        get items() {
+        get itemssp() {
             var start = this.page * this.size;
-            return $scope.items.slice(start, start + this.size);
+            return $scope.itemssp.slice(start, start + this.size);
         },
 
         get count() {
-            return Math.ceil(1.0 * $scope.items.length / this.size);
+            return Math.ceil(1.0 * $scope.itemssp.length / this.size);
         },
 
         first() {
@@ -126,17 +126,17 @@ app.controller("distributor-ctrl", function ($scope, $http, $window) {
         $scope.message2 = "";
         $scope.message3 = "";
         $scope.checkV = false;
-        if ($scope.form.name === undefined) {
+        if ($scope.formsp.name === undefined) {
             $scope.hassError = true;
             $scope.message1 = $scope.brandMessages.nameNull;
             $scope.checkV = true;
         }
-        if (!isNaN($scope.form.name)) {
+        if (!isNaN($scope.formsp.name)) {
             $scope.hassError = true;
             $scope.message1 = $scope.brandMessages.nameNaN;
             $scope.checkV = true;
         }
-        if ($scope.form.contactInfo === undefined) {
+        if ($scope.formsp.contactInfo === undefined) {
             $scope.hassError = true;
             $scope.message2 = $scope.brandMessages.phoneNull;
             $scope.checkV = true;
@@ -145,12 +145,12 @@ app.controller("distributor-ctrl", function ($scope, $http, $window) {
         var phoneNumberPattern = /^(?:\+84|0)(?:3[2-9]|5[6-9]|7[0-9]|8[1-9]|9[0-9])[0-9]{7}$/;
 
         // Kiểm tra số điện thoại
-        if (!phoneNumberPattern.test($scope.form.contactInfo)) {
+        if (!phoneNumberPattern.test($scope.formsp.contactInfo)) {
             $scope.hasError = true;
             $scope.message2 = $scope.brandMessages.phoneNaN;
             $scope.checkV = true;
         }
-        if ($scope.form.address === undefined) {
+        if ($scope.formsp.address === undefined) {
             $scope.hassError = true;
             $scope.message3 = $scope.brandMessages.addressNull;
             $scope.checkV = true;

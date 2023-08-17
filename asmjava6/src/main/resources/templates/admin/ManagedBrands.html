@@ -213,13 +213,13 @@
               </tr>
             </thead>
             <tbody>
-              <tr ng-repeat="item in pager.items">
+              <tr ng-repeat="item in pager.itemsbr">
                 <td>{{ $index + 1 }}</td>
                 <td>{{item.name}}</td>
                 <td>{{item.responsibleName}}</td>
                 <td>{{item.origin}}</td>
-                <td><a class="fas fa-trash-alt" ng-click="delete(item)"></a>
-                  <a class="fas fa-edit" ng-click="edit(item)"></a>
+                <td><a class="fas fa-trash-alt" ng-click="deletebr(item)"></a>
+                  <a class="fas fa-edit" ng-click="editbr(item)"></a>
                 </td>
               </tr>
             </tbody>
@@ -248,26 +248,26 @@
             <div class="card-body">
               <div class="form-group">
                 <label for="exampleInputEmail1">ID</label>
-                <input type="text" ng-model="form.id" readonly class="form-control" id="exampleInputEmail1"
+                <input type="text" ng-model="formbr.id" readonly class="form-control" id="exampleInputEmail1"
                   placeholder="ID" />
                 <div ng-show="myForm.id.$error.required && myForm.id.$touched">ID is required</div>
               </div>
               <div class="form-group">
                 <label for="exampleInputEmail1">Tên nhãn hàng</label>
-                <input type="text" ng-model="form.name" class="form-control" id="exampleInputEmail1"
+                <input type="text" ng-model="formbr.name" class="form-control" id="exampleInputEmail1"
                   placeholder="tên nhà phân phối" />
                 <div ng-show="hassError" style="color: red;">{{message1}}</div>
               </div>
 
               <div class="form-group">
                 <label for="exampleInputEmail1">Người chịu trách nhiệm</label>
-                <input type="text" ng-model="form.responsibleName" class="form-control" id="exampleInputEmail1"
+                <input type="text" ng-model="formbr.responsibleName" class="form-control" id="exampleInputEmail1"
                   placeholder="Người chịu trách nhiệm" />
                 <div ng-show="hassError" style="color: red;">{{message2}}</div>
               </div>
               <div class="form-group">
                 <label for="exampleInputEmail1">Nguồn gốc</label>
-                <input type="text" ng-model="form.origin" class="form-control" id="exampleInputEmail1"
+                <input type="text" ng-model="formbr.origin" class="form-control" id="exampleInputEmail1"
                   placeholder="Nguồn gốc" />
                 <div ng-show="hassError" style="color: red;">{{message3}}</div>
               </div>
@@ -275,32 +275,26 @@
             <!-- /.card-body -->
             <!-- /.card-body -->
             <div class="panel-footer text-center">
-              <button ng-click="create()" class="btn btn-primary" ng-disabled="lockbtnAdd">
+              <button ng-click="createbr()" class="btn btn-primary" ng-disabled="lockbtnAdd">
                 <i class="fas fa-plus"></i>
                 lưu
               </button>
-              <button ng-click="update()" class="btn btn-success" ng-disabled="lockbtnUpdate">
+              <button ng-click="updatebr()" class="btn btn-success" ng-disabled="lockbtnUpdate">
                 <i class="fas fa-save"></i>
                 cập nhật
               </button>
-              <button ng-click="delete(form)" class="btn btn-danger" ng-disabled="lockbtnDelete">
+              <button ng-click="deletebr(formbr)" class="btn btn-danger" ng-disabled="lockbtnDelete">
                 <i class="fas fa-trash"></i>
                 xóa
               </button>
-              <button ng-click="reset()" class="btn btn-info">
+              <button ng-click="resetbr()" class="btn btn-info">
                 <i class="fas fa-redo-alt"></i>
                 làm mới
               </button>
             </div>
           </form>
-
-
         </div>
       </div>
-
-
-
-
     </div>
     <!-- /.card-body -->
 </div>
