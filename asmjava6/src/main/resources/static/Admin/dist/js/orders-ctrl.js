@@ -6,7 +6,7 @@ app.controller("order-ctrl", function ($scope, $http, $window) {
     }
     $scope.initialize = function () {
         // load brands
-        $http.get("/rest/orders/complex").then(resp => {
+        $http.get("/rest/orders/all").then(resp => {
             $scope.items = resp.data;
 
             console.log($scope.items);

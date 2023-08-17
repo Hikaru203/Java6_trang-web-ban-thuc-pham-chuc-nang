@@ -9,8 +9,9 @@ app.controller("myCtrl1", function ($scope, $http, $window) {
 	$scope.items = [];
 	$scope.currentPage = 1;
 	$scope.itemsPerPage = 2;
-	$scope.isSubmitting = false;
+	$scope.isSubcreateing = false;
 	$scope.isSubediting = true;
+	$scope.isSubreseting = false;
 	$scope.formErrors = {}; // Khởi tạo biến lưu trữ các thông báo lỗi
 	$scope.mgsBlock = "";
 
@@ -18,6 +19,9 @@ app.controller("myCtrl1", function ($scope, $http, $window) {
 		$scope.form = {};
 		$scope.items = [];
 		$scope.load_all();
+		$scope.isSubcreateing = false;
+		$scope.isSubediting = true;
+		$scope.isSubreseting = false;
 		$(".nav-tabs button:eq(0)").tab('show');
 
 	};
@@ -112,6 +116,9 @@ app.controller("myCtrl1", function ($scope, $http, $window) {
 		$http.get(url).then(resp => {
 			$scope.form = resp.data;
 			$(".nav-tabs button:eq(1)").tab('show');
+			$scope.isSubcreateing = true;
+			$scope.isSubediting = false;
+			$scope.isSubreseting = true;
 		}).catch(error => {
 			console.log(error);
 		});

@@ -1,7 +1,6 @@
-
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
   <!-- Brand Logo -->
-  
+
 
   <!-- Sidebar -->
   <div class="sidebar" style="margin-top: 0px; height: 100%;">
@@ -10,15 +9,17 @@
 
 
     <!-- SidebarSearch Form -->
-    
-    <div style="padding-top: 10px; text-align: center;">
+
+    <div style=" text-align: center;">
       <a href="?lang=vi">
-        <button type="submit" name="lang" class="btn btn-primary" value="vi"
-          th:text="#{menu.transactions.vn}"></button>
+        <button class="flag-button btn btn-primary" type="submit" name="lang" value="vi">
+          <span class="flag-icon flag-icon-vn"></span> VN
+        </button>
       </a>
       <a href="?lang=en">
-        <button type="submit" name="lang" class="btn btn-primary" value="en"
-          th:text="#{menu.transactions.en}"></button>
+        <button class="flag-button btn btn-primary" type="submit" name="lang" value="en">
+          <span class="flag-icon flag-icon-gb"></span> EN
+        </button>
       </a>
     </div>
 
@@ -150,123 +151,137 @@
   </div>
   <!-- /.sidebar -->
 </aside>
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-      <!-- Content Header (Page header) -->
-      <div class="content-header">
-        <div class="container-fluid">
-          <div class="row mb-2">
-            <div class="col-sm-6">
-              <h1 class="m-0">Đơn hàng</h1>
-            </div>
-            <!-- /.col -->
-            <div class="col-sm-6">
-              <ol class="breadcrumb float-sm-right">
-
-                <li class="breadcrumb-item active">Đơn hàng</li>
-              </ol>
-            </div>
-            <!-- /.col -->
-          </div>
-          <!-- /.row -->
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <div class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1 class="m-0">Đơn hàng</h1>
         </div>
-        <!-- /.container-fluid -->
+        <!-- /.col -->
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+
+            <li class="breadcrumb-item active">Đơn hàng</li>
+          </ol>
+        </div>
+        <!-- /.col -->
       </div>
-      <!-- /.content-header -->
+      <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+  </div>
+  <!-- /.content-header -->
 
-      <!-- Main content -->
-      <section class="content">
-        <div class="container mt-4">
-          <ul class="nav nav-tabs" id="myTab" role="tablist">
-            <li class="nav-item">
-              <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
-                aria-selected="true">Danh sách</a>
-            </li>
-            <li class="nav-item">
+  <!-- Main content -->
+  <section class="content">
+    <div class="container mt-4">
+      <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item">
+          <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
+            aria-selected="true">Danh sách</a>
+        </li>
+        <li class="nav-item">
 
-            </li>
-          </ul>
-          <div class="tab-content" id="myTabContent">
-            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-              <table id="example1" class="table table-bordered table-striped">
-                <style>
-                  div.dataTables_wrapper div.dataTables_filter label {
-                    display: none;
-                  }
+        </li>
+      </ul>
+      <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+          <table id="example1" class="table table-bordered table-striped">
+            <style>
+              div.dataTables_wrapper div.dataTables_filter label {
+                display: none;
+              }
 
-                  div.dataTables_wrapper div.dataTables_filter input {
-                    display: none;
-                  }
+              div.dataTables_wrapper div.dataTables_filter input {
+                display: none;
+              }
 
-                  .pagination {
-                    display: none;
-                  }
+              .pagination {
+                display: none;
+              }
 
-                  .dataTables_empty {
-                    display: none;
-                  }
-                </style>
-                <thead>
-                  <tr>
-                    <th>STT</th>
-                    <th>Tên khách hàng</th>
-                    <th>Số điện thoại</th>
-                    <th>Ngày đặt hàng</th>
-                    <th>Tổng tiền</th>
-                    <th>Sản phẩm Đã mua</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr ng-repeat="item in pager.items">
-                    <td>{{ $index + 1 }}</td>
-                    <td>{{item.fullname}}</td>
-                    <td>{{item.phoneNumber}}</td>
-                    <td>{{item.orderDate | date:'dd-MM-yyyy HH:mm:ss'}}</td>
-                    <td>{{item.totalPrice | number:0 }} VND</td>
-                    <td>{{item.productNames}}</td>
-                  </tr>
-                </tbody>
-              </table>
-              <div class="panel-footer text-center">
-                <button ng-click="pager.first()" class="btn btn-primary">
-                  <i class="fas fa-arrow-circle-up"></i>
-                </button>
-                <button ng-click="pager.prev()" class="btn btn-primary">
-                  <i class="fas fa-arrow-circle-left"></i>
-                </button>
-                <button class="btn btn-success">{{pager.page +1}} of {{pager.count}}</button>
-                <button ng-click="pager.next()" class="btn btn-primary">
-                  <i class="fas fa-arrow-circle-right"></i>
-                </button>
-                <button ng-click="pager.last()" class="btn btn-primary">
-                  <i class="fas fa-arrow-circle-down"></i>
-                </button>
-              </div>
-            </div>
-            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+              .dataTables_empty {
+                display: none;
+              }
+            </style>
+            <thead>
+              <tr>
+                <th>STT</th>
+                <th>Order ID</th>
+                <th>Tên khách hàng</th>
+                <th>Số điện thoại</th>
+                <th>Ngày đặt hàng</th>
+                <th>Tổng tiền</th>
+                <th>Mã giao dịch</th>
+                <th>Địa chỉ giao hàng</th>
+                <th>xã</th>
+                <th>Huyện</th>
+                <th>Thành phố/tỉnh</th>
+                <th>Trạng thái</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="item in pager.items">
+                <td>{{ $index + 1 }}</td>
+                <td>{{item.id}}</td>
+                <td>{{item.user.fullName}}</td>
+                <td>{{item.phoneNumber}}</td>
+                <td>{{item.orderDate | date:'dd-MM-yyyy HH:mm:ss'}}</td>
+                <td>{{item.totalPrice | number:0 }} VND</td>
+                <td>{{item.ordresCode ? item.ordresCode : 'COD'}}</td>
+                <td>{{item.adress}}</td>
+                <td>{{item.wards}}</td>
+                <td>{{item.district}}</td>
+                <td>{{item.country}}</td>
+                <td>{{item.active ? 'Đã thanh toán' : 'Chưa thanh toán'}}</td>
+            </tr>
+            
 
-            </div>
+            </tbody>
+          </table>
+          <div class="panel-footer text-center">
+            <button ng-click="pager.first()" class="btn btn-primary">
+              <i class="fas fa-arrow-circle-up"></i>
+            </button>
+            <button ng-click="pager.prev()" class="btn btn-primary">
+              <i class="fas fa-arrow-circle-left"></i>
+            </button>
+            <button class="btn btn-success">{{pager.page +1}} of {{pager.count}}</button>
+            <button ng-click="pager.next()" class="btn btn-primary">
+              <i class="fas fa-arrow-circle-right"></i>
+            </button>
+            <button ng-click="pager.last()" class="btn btn-primary">
+              <i class="fas fa-arrow-circle-down"></i>
+            </button>
           </div>
         </div>
-        <!-- /.card-body -->
-    </div>
-    </section>
-    <!-- /.content -->
-  </div>
-  <!-- /.content-wrapper -->
-  <!-- Control Sidebar -->
-  <aside class="control-sidebar control-sidebar-dark">
-    <!-- Control sidebar content goes here -->
+        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
 
-    <div class="card">
-      <div class="card-header">
-        <h3 class="card-title">DataTable with default features</h3>
+        </div>
       </div>
-      <!-- /.card-header -->
-      <!-- /.card-body -->
     </div>
-  </aside>
-  <!-- /.control-sidebar -->
-  <!-- Main Footer -->
+    <!-- /.card-body -->
+</div>
+</section>
+<!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+<!-- Control Sidebar -->
+<aside class="control-sidebar control-sidebar-dark">
+  <!-- Control sidebar content goes here -->
+
+  <div class="card">
+    <div class="card-header">
+      <h3 class="card-title">DataTable with default features</h3>
+    </div>
+    <!-- /.card-header -->
+    <!-- /.card-body -->
   </div>
-  <!-- ./wrapper -->
+</aside>
+<!-- /.control-sidebar -->
+<!-- Main Footer -->
+</div>
+<!-- ./wrapper -->

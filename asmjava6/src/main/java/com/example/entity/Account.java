@@ -2,6 +2,8 @@ package com.example.entity;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -46,10 +48,12 @@ public class Account implements Serializable {
 
     // Constructors, getters, setters, and other methods as needed.
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "addresscity_id")
     private AddressCity addressCity;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "addressdistrict_id")
     private AddressDistrict addressDistrict;
 }

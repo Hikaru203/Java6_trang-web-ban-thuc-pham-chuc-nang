@@ -64,7 +64,8 @@ public class CartRestController {
 
 	@PostMapping("/add-to-cart/{ProductId}/{UserId}/{quantity}")
 	public ResponseEntity<String> addToCart(@PathVariable("ProductId") Integer productId,
-			@PathVariable("UserId") Integer userId, @PathVariable("quantity") int quantity,HttpServletRequest request,HttpSession session) {
+			@PathVariable("UserId") Integer userId, @PathVariable("quantity") int quantity, HttpServletRequest request,
+			HttpSession session) {
 
 		Product product = productService.findById(productId);
 		Account user = userRepository.findById(userId).orElse(null);
@@ -75,7 +76,7 @@ public class CartRestController {
 
 		// Kiểm tra xem người dùng đã có giỏ hàng hay chưa
 		Cart cart = dao.findByUserAndProduct(user, product);
-		
+
 		if (cart == null) {
 			cart = new Cart();
 			cart.setUser(user);
@@ -85,12 +86,12 @@ public class CartRestController {
 			cart = cartRepository.save(cart);
 		} else {
 			if (cart.isActive()) {
-				
+
 				cart.setQuantity(cart.getQuantity() + 1);
 				cart.setActive(true);
 				cart = cartRepository.save(cart);
 			} else {
-				
+
 				cart.setQuantity(1);
 				cart.setActive(true);
 				cart = cartRepository.save(cart);
@@ -127,6 +128,23 @@ public class CartRestController {
 		cartRepository.save(cart);
 
 		return ResponseEntity.ok("{\"message\": \"Cart marked as inactive!\"}");
+	}
+
+	@PutMapping("/removeAllItems/{userId}")
+	public ResponseEntity<String> removeAllItems() {
+		List<Cart> userCarts = cartService.findAll();
+
+		if (userCarts.isEmpty()) {
+			return ResponseEntity.notFound().build();
+		}
+
+		for (Cart cart : userCarts) {
+			cart.setActive(false);
+		}
+
+		cartRepository.saveAll(userCarts);
+
+		return ResponseEntity.ok("{\"message\": \"All items removed successfully!\"}");
 	}
 
 }

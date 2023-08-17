@@ -35,6 +35,11 @@ public class OrderServiceImpl implements OrderService {
         OrderRepository.save(order);
 
     }
+    @Override
+	public List<Order> findAll() {
+
+		return OrderRepository.findAll();
+	}
 
     @Override
     public List<OrderDTO> getComplexOrders() {
@@ -50,6 +55,9 @@ public class OrderServiceImpl implements OrderService {
             orderDTO.setOrderDate((Timestamp) row[4]);
             orderDTO.setTotalPrice((BigDecimal) row[5]);
             orderDTO.setProductNames((String) row[6]);
+            orderDTO.setWards((String) row[7]);
+            orderDTO.setDistrict((String) row[8]);
+            orderDTO.setCountry((String) row[9]);
             complexOrders.add(orderDTO);
         }
         return complexOrders;

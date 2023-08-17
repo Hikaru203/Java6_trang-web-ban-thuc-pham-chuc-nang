@@ -14,7 +14,9 @@ public class OrderDTO {
     private Timestamp orderDate;
     private BigDecimal totalPrice;
     private String productNames;
-
+    private String wards;
+    private String district;
+    private String country;
     // Getters and setters
 }
 

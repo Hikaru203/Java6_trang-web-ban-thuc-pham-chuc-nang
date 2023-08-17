@@ -3,14 +3,15 @@ var jsonData = queryString.get('data');
 var form = JSON.parse(decodeURIComponent(jsonData));
 var fileNameLabel = document.querySelector('.custom-file-label');
 
-app.controller("myCtrl2", function ($scope, $http, $window) {
 
+app.controller("myCtrl2", function ($scope, $http, $window) {
+	$scope.isSubcreateing = false;
+	$scope.isSubediting = true;
+	$scope.isSubreseting = false;
 	$scope.form = {};
 	$scope.items = [];
 	$scope.currentPage = 1;
 	$scope.itemsPerPage = 2;
-	$scope.isSubmitting = false;
-	$scope.isSubediting = true;
 	$scope.users = [];
 	$scope.formErrors = {}; // Khởi tạo biến lưu trữ các thông báo lỗi
 	$scope.user = {};
@@ -21,6 +22,9 @@ app.controller("myCtrl2", function ($scope, $http, $window) {
 		$scope.usersBlock = [];
 		$scope.load_all();
 		$(".nav-tabs button:eq(0)").tab('show');
+		$scope.isSubcreateing = false;
+		$scope.isSubediting = true;
+		$scope.isSubreseting = false;
 	};
 
 	$scope.load_all = function () {
@@ -125,6 +129,9 @@ app.controller("myCtrl2", function ($scope, $http, $window) {
 				alert("Không thể sửa tài khoản admin");
 			} else {
 				$(".nav-tabs button:eq(2)").tab('show');
+				$scope.isSubcreateing = true;
+				$scope.isSubediting = false;
+				$scope.isSubreseting = false;
 			}
 		}).catch(error => {
 			console.log(error);
@@ -134,16 +141,15 @@ app.controller("myCtrl2", function ($scope, $http, $window) {
 	$scope.create = function () {
 		// Kiểm tra và gán thông báo lỗi vào biến formErrors
 		$scope.formErrors = {};
-		var item = angular.copy($scope.form);
+		var item = angular.copy($scope.formInput);
 		var url = host + '/ManagedAccount';
-
+		item.isActive = true;
+		console.log(item);
 		// Gọi hàm validateProduct để kiểm tra và lấy thông báo lỗi
 		var isValid = validateAccount(item);
 		if (!isValid) {
 			return; // Nếu có lỗi, không submit form
 		}
-
-		alert("Thêm thành công");
 		$http.post(url, item).then(resp => {
 			$scope.reset();
 			$scope.load_all();
@@ -244,12 +250,12 @@ app.controller("myCtrl2", function ($scope, $http, $window) {
 		$scope.formErrors = {};
 
 		// Kiểm tra trường họ và tên
-		if (!$scope.form.fullName) {
+		if (!Account.fullName) {
 			$scope.formErrors.fullName = "Vui lòng nhập họ và tên.";
 		}
 
 		// Kiểm tra trường email
-		if (!$scope.form.email) {
+		if (!Account.email) {
 			$scope.formErrors.email = "Vui lòng nhập địa chỉ email.";
 		} else if ($scope.users.some(user => user.email === $scope.form.email)) {
 			console.log($scope.form.email);
@@ -266,7 +272,7 @@ app.controller("myCtrl2", function ($scope, $http, $window) {
 		}
 
 		// Kiểm tra trường username
-		if (!$scope.form.userName) {
+		if (!Account.userName) {
 			$scope.formErrors.userName = "Vui lòng nhập tên người dùng.";
 		} else if ($scope.users.some(user => user.userName === $scope.form.userName)) {
 			console.log($scope.form.userName);
@@ -283,7 +289,7 @@ app.controller("myCtrl2", function ($scope, $http, $window) {
 		}
 
 		// Kiểm tra trường password
-		if (!$scope.form.password) {
+		if (!Account.password) {
 			$scope.formErrors.password = "Vui lòng nhập mật khẩu.";
 		}
 

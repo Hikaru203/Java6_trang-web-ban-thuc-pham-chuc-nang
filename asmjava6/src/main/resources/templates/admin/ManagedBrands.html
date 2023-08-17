@@ -10,12 +10,16 @@
 
     <!-- SidebarSearch Form -->
 
-    <div style="padding-top: 10px; text-align: center;">
+    <div style=" text-align: center;">
       <a href="?lang=vi">
-        <button type="submit" name="lang" class="btn btn-primary" value="vi" th:text="#{menu.transactions.vn}"></button>
+        <button class="flag-button btn btn-primary" type="submit" name="lang" value="vi">
+          <span class="flag-icon flag-icon-vn"></span>  VN
+        </button>
       </a>
       <a href="?lang=en">
-        <button type="submit" name="lang" class="btn btn-primary" value="en" th:text="#{menu.transactions.en}"></button>
+        <button class="flag-button btn btn-primary" type="submit" name="lang" value="en">
+          <span class="flag-icon flag-icon-gb"></span>  EN
+        </button>
       </a>
     </div>
 

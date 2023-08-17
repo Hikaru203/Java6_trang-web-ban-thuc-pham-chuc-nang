@@ -7,10 +7,14 @@
     <!-- SidebarSearch Form -->
     <div style=" text-align: center;">
       <a href="?lang=vi">
-        <button type="submit" name="lang" class="btn btn-primary" value="vi" th:text="#{menu.transactions.vn}"></button>
+        <button class="flag-button btn btn-primary" type="submit" name="lang" value="vi">
+          <span class="flag-icon flag-icon-vn"></span> VN
+        </button>
       </a>
       <a href="?lang=en">
-        <button type="submit" name="lang" class="btn btn-primary" value="en" th:text="#{menu.transactions.en}"></button>
+        <button class="flag-button btn btn-primary" type="submit" name="lang" value="en">
+          <span class="flag-icon flag-icon-gb"></span> EN
+        </button>
       </a>
     </div>
 
@@ -341,21 +345,20 @@
               <div class="form-group">
                 <label for="exampleInputEmail1">Họ và tên</label>
                 <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Nhập họ tên"
-                  ng-model="form.fullName" />
+                  ng-model="formInput.fullName" />
                 <div ng-show="formErrors.fullName" class="error-message">{{ formErrors.fullName }}</div>
               </div>
-
               <div class="form-group">
                 <label for="exampleInputEmail1">Email</label>
                 <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Nhập email"
-                  ng-model="form.email" />
+                  ng-model="formInput.email" />
                 <div ng-show="formErrors.email" class="error-message">{{ formErrors.email }}</div>
               </div>
 
               <div class="form-group">
                 <label for="exampleInputEmail1">Username</label>
                 <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Nhập username"
-                  ng-model="form.userName" />
+                  ng-model="formInput.userName" />
                 <div ng-show="formErrors.userName" class="error-message">{{ formErrors.userName }}</div>
               </div>
 
@@ -363,9 +366,9 @@
                 <label for="exampleInputPassword1">Password</label>
                 <div class="input-group">
                   <input ng-if="!showPassword" type="password" class="form-control" id="exampleInputPassword1"
-                    placeholder="Password" ng-model="form.password" />
+                    placeholder="Password" ng-model="formInput.password" />
                   <input ng-if="showPassword" type="text" class="form-control" id="exampleInputPassword1"
-                    placeholder="Password" ng-model="form.password" />
+                    placeholder="Password" ng-model="formInput.password" />
                   <div class="input-group-append">
                     <button class="btn btn-outline-secondary" type="button" ng-click="showPassword = !showPassword">
                       <i class="fa" ng-class="{'fa-eye': !showPassword, 'fa-eye-slash': showPassword}"></i>
@@ -378,25 +381,25 @@
               <div class="form-group">
                 <div class="custom-control custom-radio">
                   <input class="custom-control-input" type="radio" id="customRadio1" name="customRadio"
-                    ng-model="form.admin" ng-value="true" />
+                    ng-model="formInput.admin" ng-value="true" />
                   <label for="customRadio1" class="custom-control-label">Admin</label>
                 </div>
                 <div class="custom-control custom-radio">
                   <input class="custom-control-input" type="radio" id="customRadio2" name="customRadio"
-                    ng-model="form.admin" ng-value="false" />
+                    ng-model="formInput.admin" ng-value="false" />
                   <label for="customRadio2" class="custom-control-label">User</label>
                 </div>
               </div>
             </div>
           </form>
           <div class="panel-footer text-center">
-            <button ng-click="create()" class="btn btn-primary">
+            <button ng-click="create()" class="btn btn-primary" ng-disabled="isSubcreateing" id="createButton">
               <i class="fas fa-plus"></i> lưu
             </button>
-            <button ng-click="update()" class="btn btn-success">
+            <button ng-click="update()" class="btn btn-success" ng-disabled="isSubediting" id="updateButton">
               <i class="fas fa-save"></i> cập nhật
             </button>
-            <button ng-click="reset()" class="btn btn-info">
+            <button ng-click="reset()" class="btn btn-info" ng-disabled="isSubreseting" id="resetButton">
               <i class="fas fa-redo-alt"></i> làm mới
             </button>
           </div>

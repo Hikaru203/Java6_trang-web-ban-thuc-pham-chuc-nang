@@ -74,6 +74,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(new AntPathRequestMatcher("/admin/**")).hasRole("ADMIN")
                         .requestMatchers(new AntPathRequestMatcher("/client/cart/**")).hasAnyRole("USER", "ADMIN")
+                        .requestMatchers(new AntPathRequestMatcher("/client/favorite/**")).hasAnyRole("USER", "ADMIN")
                         .requestMatchers(
                                 new AntPathRequestMatcher("/client/**"))
                         .permitAll())

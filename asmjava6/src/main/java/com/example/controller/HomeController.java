@@ -177,6 +177,8 @@ public class HomeController {
 
 	@RequestMapping(value = "/client/update/account", method = RequestMethod.GET)
 	public String showUpdateAccountForm(Model model, HttpServletRequest request) {
+		// Đọc giá trị cookie "username"
+		
 		// ...
 		return "redirect:/capnhat"; // Trả về template để hiển thị form
 	}

@@ -6,7 +6,7 @@ app.filter("vnCurrency", function () {
 		return currency(input, { symbol: "₫", separator: ",", precision: 0 }).format();
 	};
 });
-app.controller("shopping-cart-ctrl", ['$scope', '$http', '$cookies', function ($scope, $http, $cookies) {
+app.controller("shopping-cart-ctrl", ['$scope', '$http', '$cookies','$window', function ($scope, $http, $cookies, $window) {
 	// Định nghĩa biến username và gán giá trị cho nó
 	$scope.items = [];
 	$scope.form = {};
@@ -82,7 +82,16 @@ app.controller("shopping-cart-ctrl", ['$scope', '$http', '$cookies', function ($
 				console.error(error);
 			});
 		},
-
+		checkAndProceedToPayment() {
+			if ($scope.items.length > 0) {
+				$window.location.href = '/client/checkout';
+			} else {
+				// Cart is empty, show a message or perform desired action
+				alert("Giỏ hàng của bạn đang trống. Vui lòng thêm sản phẩm trước khi thanh toán.");
+				return;
+			}
+		}
+	
 	};
 
 
@@ -137,6 +146,22 @@ app.controller("shopping-cart-ctrl", ['$scope', '$http', '$cookies', function ($
 				console.error(error);
 			});
 	};
+	$scope.removeAllItems = function() {
+		var userId = $cookies.get('userId'); // Thay đổi tên biến cho phù hợp
+		
+		$http.put(`/rest/carts/removeAllItems/${userId}`)
+			.then(response => {
+				// Xử lý phản hồi thành công (nếu cần)
+				
+				$scope.initialize(); // Gọi lại hàm để cập nhật danh sách giỏ hàng sau khi xóa
+			})
+			.catch(error => {
+				// Xử lý lỗi (nếu cần)
+				console.error(error);
+			});
+	};
+	
+	
 	$scope.alertSuccess = function (message) {
 		Toastify({
 			text: message,

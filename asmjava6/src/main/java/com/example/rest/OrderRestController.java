@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.entity.AddressDistrict;
+import com.example.entity.Order;
 import com.example.entity.OrderDTO;
 import com.example.jparepository.AddressDistrictJpaRepository;
 import com.example.service.OrderService;
@@ -18,7 +19,12 @@ import com.example.service.OrderService;
 @RequestMapping("/rest/orders")
 public class OrderRestController {
 	private final AddressDistrictJpaRepository addressDistrictRepository;
+	
 
+    @GetMapping("/all")
+    public List<Order> getAll() {
+        return orderService.findAll();
+    }
 	@Autowired
 	public OrderRestController(AddressDistrictJpaRepository addressDistrictRepository) {
 		this.addressDistrictRepository = addressDistrictRepository;

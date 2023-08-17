@@ -8,7 +8,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 public interface OrderService {
      List<OrderDTO> getComplexOrders();
-
+     List<Order> findAll();
      Order create(JsonNode orderData);
 
      void save(Order order);

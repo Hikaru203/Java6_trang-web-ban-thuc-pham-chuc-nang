@@ -9,12 +9,16 @@
 
 
     <!-- SidebarSearch Form -->
-    <div style="padding-top: 10px; text-align: center;">
+    <div style=" text-align: center;">
       <a href="?lang=vi">
-        <button type="submit" name="lang" class="btn btn-primary" value="vi" th:text="#{menu.transactions.vn}"></button>
+        <button class="flag-button btn btn-primary" type="submit" name="lang" value="vi">
+          <span class="flag-icon flag-icon-vn"></span>  VN
+        </button>
       </a>
       <a href="?lang=en">
-        <button type="submit" name="lang" class="btn btn-primary" value="en" th:text="#{menu.transactions.en}"></button>
+        <button class="flag-button btn btn-primary" type="submit" name="lang" value="en">
+          <span class="flag-icon flag-icon-gb"></span>  EN
+        </button>
       </a>
     </div>
 
@@ -310,16 +314,16 @@
 
           </form>
           <div class="panel-footer text-center">
-            <button ng-click="create()" class="btn btn-primary">
+            <button ng-click="create()" ng-disabled="isSubcreateing" class="btn btn-primary">
               <i class="fas fa-plus"></i>
               lưu
             </button>
-            <button ng-click="update()" class="btn btn-success">
+            <button ng-click="update()" ng-disabled="isSubediting" class="btn btn-success">
               <i class="fas fa-save"></i>
               cập nhật
             </button>
 
-            <button ng-click="reset()" class="btn btn-info">
+            <button ng-click="reset()" ng-disabled="isSubreseting" class="btn btn-info">
               <i class="fas fa-redo-alt"></i>
               làm mới
             </button>
