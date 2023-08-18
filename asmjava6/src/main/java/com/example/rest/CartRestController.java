@@ -3,27 +3,25 @@ package com.example.rest;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.entity.Account;
-import com.example.entity.Brand;
 import com.example.entity.Cart;
 import com.example.entity.Product;
 import com.example.jparepository.AccountRepository;
 import com.example.jparepository.CartRepository;
-import com.example.jparepository.ProductRepository;
 import com.example.service.CartService;
 import com.example.service.ProductService;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 @CrossOrigin("*")
 @RestController
@@ -66,7 +64,8 @@ public class CartRestController {
 
 	@PostMapping("/add-to-cart/{ProductId}/{UserId}/{quantity}")
 	public ResponseEntity<String> addToCart(@PathVariable("ProductId") Integer productId,
-			@PathVariable("UserId") Integer userId, @PathVariable("quantity") int quantity) {
+			@PathVariable("UserId") Integer userId, @PathVariable("quantity") int quantity, HttpServletRequest request,
+			HttpSession session) {
 
 		Product product = productService.findById(productId);
 		Account user = userRepository.findById(userId).orElse(null);
@@ -87,19 +86,18 @@ public class CartRestController {
 			cart = cartRepository.save(cart);
 		} else {
 			if (cart.isActive()) {
-				System.out.println(1);
+
 				cart.setQuantity(cart.getQuantity() + 1);
 				cart.setActive(true);
 				cart = cartRepository.save(cart);
 			} else {
-				System.out.println(2);
+
 				cart.setQuantity(1);
 				cart.setActive(true);
 				cart = cartRepository.save(cart);
 			}
 		}
-
-		return ResponseEntity.ok("{\"message\": \"Added to cart successfully!\"}");
+		return ResponseEntity.ok("{\"message\": \"Thêm Thành Công\"}");
 	}
 
 	@PutMapping("/update-quantity/{id}/{quantity}")
@@ -130,6 +128,23 @@ public class CartRestController {
 		cartRepository.save(cart);
 
 		return ResponseEntity.ok("{\"message\": \"Cart marked as inactive!\"}");
+	}
+
+	@PutMapping("/removeAllItems/{userId}")
+	public ResponseEntity<String> removeAllItems() {
+		List<Cart> userCarts = cartService.findAll();
+
+		if (userCarts.isEmpty()) {
+			return ResponseEntity.notFound().build();
+		}
+
+		for (Cart cart : userCarts) {
+			cart.setActive(false);
+		}
+
+		cartRepository.saveAll(userCarts);
+
+		return ResponseEntity.ok("{\"message\": \"All items removed successfully!\"}");
 	}
 
 }

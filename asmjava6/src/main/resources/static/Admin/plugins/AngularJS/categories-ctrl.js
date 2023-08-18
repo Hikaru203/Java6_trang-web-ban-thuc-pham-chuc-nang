@@ -1,5 +1,5 @@
-var host = "http://localhost:8080";
-app.controller("myCtrl", function ($scope, $http) {
+
+app.controller("myCtrl4", function ($scope, $http) {
   $scope.form = {};
   $scope.categories = [];
   $scope.items = [];
@@ -77,11 +77,11 @@ app.controller("myCtrl", function ($scope, $http) {
     // Kiểm tra và gán thông báo lỗi vào biến formErrors
     $scope.formErrors = {};
     var item = angular.copy($scope.form);
+    console.log(item);
     var url = host + '/ManagedCategories';
-    // Gọi hàm validateDiscount để kiểm tra và lấy thông báo lỗi // Thay đổi tên hàm 'validateAccount' thành 'validateDiscount'
-    var isValid = validateCategory(item); // Thay đổi tên hàm 'validateAccount' thành 'validateDiscount'
+    var isValid = validateCategory(item);
     if (!isValid) {
-      return; // Nếu có lỗi, không submit form
+      return;
     }
 
     alert("Thêm thành công");
@@ -136,7 +136,7 @@ app.controller("myCtrl", function ($scope, $http) {
     $scope.formErrors = {};
 
     // Kiểm tra trường name
-    if (!category.name || category.name.trim() === '') { // Thay đổi tên biến 'discount' thành 'category'
+    if (!category.name) { // Thay đổi tên biến 'discount' thành 'category'
       $scope.formErrors.name = "Vui lòng nhập tên danh mục.";
       console.log($scope.formErrors.name);
     }
@@ -146,5 +146,31 @@ app.controller("myCtrl", function ($scope, $http) {
   };
 
 
+  function getCookieValue(cookieName) {
+    const cookies = document.cookie.split(';');
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      if (cookie.startsWith(cookieName + '=')) {
+        return cookie.substring(cookieName.length + 1);
+      }
+    }
+    return null;
+  }
+
+  const usernameCookie = getCookieValue('id');
+  if (usernameCookie !== null) {
+    console.log('Giá trị của cookie username là:', usernameCookie);
+  } else {
+    console.log('Cookie username không tồn tại.');
+  }
+  $scope.user = function () {
+    $http.get("http://localhost:8080/ManagedAccountByUserName/" + usernameCookie).then(resp => {
+      $scope.userLogin = resp.data; // Thay đổi tên biến 'users' thành 'discounts'
+      console.log($scope.userLogin);
+    }).catch(error => {
+      console.log(error);
+    });
+  };
+  $scope.user();
   $scope.load_all();
 });
